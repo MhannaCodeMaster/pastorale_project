@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../includes/head.ejs')%>
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body class="text-center" data-new-gr-c-s-check-loaded="14.1111.0" data-gr-ext-installed="">
+    
+    <main>
+        <div id="container" class="container d-flex align-items-center justify-content-center vh-100">
+            <!-------Login form------->
+            <form action="/login" method="post" id="loginForm" <%= ( (err === 'login' || err !== 'forgotPass') && !success) ? 'style=display:block;': 'style=display:none;'%>>
+                <h1 class="h3 mb-5 fw-normal"><b>Login</b></h1>
+                <%if(err === 'login'){%>
+                    <span class="error-message"><%=msg%></span><br>
+                <%}%>
+                <div class="form-floating mb-3">
+                    <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username" required autocomplete="off">
+                    <label for="floatingInput">username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                    <label for="floatingPassword">Password</label>
+                </div>
+            
+                <button class="btn-primary w-100 mb-4" type="submit">Login</button>
+                <a style="cursor: pointer;" onclick="showForgotPasswordForm()">forgot password?</a>
+                <p class="mt-5 mb-3 text-muted">© 2023</p>
+            </form>
+          
+            <!-------Forgot password form------->
+            <form action="/forgot-password" method="post" id="forgotPasswordForm" <%= (err === 'forgotPass' || success) ? 'style=display:block;' : 'style=display:none;'%>>
+                <h1 class="h3 mb-5 fw-normal"><b>Reset Password</b></h1>
+                
+                <%if(err === 'forgotPass'){%>
+                    <span class="error-message"><%=msg%></span><br>
+                <%}%>
+                <%if(success){%>
+                    <span class="error-message" style="color: green;"><%=msg%></span><br>
+                <%}%>
+                
+                <div class="form-floating mb-3">
+                    <input type="email" name="email" class="form-control" id="floatingInput1" placeholder="username" required autocomplete="off">
+                    <label for="floatingInput1">email</label>
+                </div>
+                <button id="sendEmail" onclick="sendEmail()" class="btn-primary w-100 mb-4" type="submit"><%= success ? 'resend link' : 'send a reset link'%></button>
+                <a style="cursor: pointer;" onclick="goBack()">Back To Login</a>
+                <p class="mt-5 mb-3 text-muted">© 2023</p>
+            </form>
+        </div>
+    </main>
+        
+</body>
+<script src="./JS/login.js"></script>
+</html>
