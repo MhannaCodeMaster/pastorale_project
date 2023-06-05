@@ -1,0 +1,71 @@
+<!-- views/editDonation.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Donation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    form {
+      width: 40%;
+      margin: 20px auto;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 200px;
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ddd;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Edit Donation</h1>
+  <form action="/donations/<%= donation[0].donation_id %>" method="POST">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="<%= donation[0].donator_name %>" required>
+    </div>
+    <div class="form-group">
+      <label for="amount">Amount:</label>
+      <input type="text" id="amount" name="amount" value="<%= donation[0].donation_content %>" required>
+    </div>
+    <input type="submit" value="Save">
+  </form>
+</body>
+</html>
