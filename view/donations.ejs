@@ -59,21 +59,24 @@
   <h1>Donations</h1>
   <input type="text" id="searchInput" onkeyup="filterDonations()" placeholder="Search by name">
   <br><br>
+  <a href="/donations/add"><button id="addDonationButton">Add Donation</button></a>
   <table id="donationsTable">
     <thead>
       <tr>
-        <th>ID</th>
+        <th>Date</th>
         <th>Name</th>
-        <th>Amount</th>
+        <th>Donation</th>
+        <th>Donator</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <% donations.forEach((donation) => { %>
         <tr>
-          <td><%= donation.donation_id %></td>
+          <td><%= donation.donation_date %></td>
           <td><%= donation.donator_name %></td>
           <td><%= donation.donation_content %></td>
+          <td><%= donation.recipient_desc %></td>
           <td>
             <a href="/donations/<%= donation.donation_id %>/edit" class="edit-button">Edit</a>
           </td>

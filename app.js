@@ -21,9 +21,14 @@ app.get('/donations', donationController.getAllDonations);
 app.get('/donations/:id/edit', donationController.editDonationForm);
 
 // Route to update a donation
+
+
+app.get('/donations/add', donationController.emptyDonationForm);
+
+
+app.post('/donations/submit', donationController.insertDonation)
+
 app.post('/donations/:id', donationController.updateDonation);
-
-
 
 app.listen(3000,()=>{
     console.log('Server listening on port 3000');

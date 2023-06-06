@@ -54,8 +54,55 @@ function updateDonation(req, res) {
 //   
 }
 
+function emptyDonationForm(req, res){
+  donationModel.selectAllAvailableFamilies().then(([families])=>{
+    donationModel.selectDonationTypes().then(([donationTypes])=>{
+      donationModel.selectRecipient().then(([recipients])=>{
+        console.log(recipients)
+        res.render('../view/add_donation', {
+          families: families,
+          donationTypes: donationTypes,
+          recipients: recipients
+        });
+  
+      }).catch((err)=>{
+        res.status(400).send("something went wrong")
+      })
+    }).catch((err)=>{
+      res.status(400).send("something went wrong")
+    })
+  }).catch((err)=>{
+    res.status(400).send("something went wrong")
+  })
+}
+
+function insertDonation(req, res){
+  const selectedFamilies = req.body.selectedFamilies
+  const donationData = req.body
+  console.log(donationData)
+  donationModel.insertDonation(donationData).then(([result])=>{
+    console.log(result)
+  }).catch((err)=>{
+    console.log(err)
+  });
+
+  let i = 0
+  // selectedFamilies.forEach(familyId =>{
+     
+  //     // The checkbox is checked, add it to the database
+  //     const comment = req.body.familyComments[i]
+  //     // Add logic to insert the family and comment into the database
+  //     console.log(familyId, comment)
+  //   i++
+  // });
+  
+  
+}
+
 module.exports = {
   getAllDonations,
   editDonationForm,
-  updateDonation
+  updateDonation,
+  emptyDonationForm,
+  insertDonation
 };

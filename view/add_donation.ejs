@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Donation</title>
+    <!-- <link rel="stylesheet" type="text/css" href="./css/donations.css"> -->
+    
+    <style>body {
+        font-family: Arial, sans-serif;
+      }
+      
+      .form-container {
+        width: 40%;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      
+      h2 {
+        text-align: center;
+        margin-top: 20px;
+      }
+      
+      .form-group {
+        margin-bottom: 10px;
+      }
+      
+      label {
+        display: inline-block;
+        width: 150px;
+        font-weight: bold;
+      }
+      
+      input[type="text"],
+      input[type="date"],
+      select {
+        width: 200px;
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+      }
+      
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      
+      .family-table {
+        margin-top: 20px;
+      }
+      
+      .family-table table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      
+      .family-table th,
+      .family-table td {
+        padding: 5px;
+        border: 1px solid #ccc;
+      }
+      </style>
+  </head>
+  <body>
+    <div id="donationFormContainer" class="form-container">
+        <h2>Add Donation</h2>
+        <form action="/donations/submit" method="POST">
+          <div class="form-group">
+            <label for="donationDate">Date of Donation</label>
+            <input type="date" id="donationDate" name="donationDate" required>
+          </div>
+      
+          <div class="form-group">
+            <label for="donatorName">Donator Name</label>
+            <input type="text" id="donatorName" name="donatorName" required>
+          </div>
+      
+          <div class="form-group">
+            <label for="donationType">Donation Type</label>
+            <select id="donationType" name="donationType">
+              <% donationTypes.forEach(donationType => { %>
+                <option value="<%= donationType.type_id %>"><%= donationType.donation_type %></option>
+              <% }) %>
+            </select>
+          </div>
+      
+          <div class="form-group">
+            <label for="donationContent">Donation Content</label>
+            <input type="text" id="donationContent" name="donationContent" required>
+          </div>
+      
+          <div class="form-group">
+            <label>Recipient Type</label>
+            <% recipients.forEach(recipient => { %>
+            <label>
+              
+                <input type = "radio" name ="recipientType" value="<%= recipient.recipient_id %>" checked><%= recipient.recipient_desc %>
+             
+            </label>
+            <% }) %>
+            
+          </div>
+      
+          <!-- Families table -->
+          <div id="familyTable" class="family-table">
+            <h3>Available Families</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Family Name</th>
+                  <th>Select</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% families.forEach(family => { %>
+                  <tr>
+                    <td><%= family.first_name %> <%= family.middle_name %> <%= family.last_name %></td>
+                    <td>
+                      <input type="checkbox" name="selectedFamilies" value="<%= family.b_id %>">
+                    </td>
+                    <td>
+                      <input type="text" name="familyComments[<%= family.b_id %>]" value="">
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+      
+          <div class="form-group">
+            <input type="submit" value="Save Donation">
+          </div>
+        </form>
+      </div>
+      
+      
+  </body>
+  <script>
+
+const familyTable = document.getElementById('familyTable');
+    const recipientType = document.getElementsByName('recipientType');
+
+    // Function to handle the recipient type change event
+    const handleRecipientTypeChange = () => {
+      const selectedRecipientType = document.querySelector('input[name="recipientType"]:checked').value;
+      if (selectedRecipientType === 'Families') {
+        familyTable.style.display = 'block';
+      } else {
+        familyTable.style.display = 'none';
+      }
+    };
+
+    // Add event listener to the parent container of radio buttons
+    document.addEventListener('change', (event) => {
+      if (event.target.name === 'recipientType') {
+        handleRecipientTypeChange();
+      }
+    });
+    </script>
+
+</html>
