@@ -25,14 +25,14 @@ app.use((req, res, next)=>{
     else{
         next();
     }
-})
+});
 
 app.use(settingsRoute);
 app.use(adminRoute);
 
 app.use((req,res,next)=>{
     res.status(404).render('error404',{pageTitle: 'Page Not Found'});
-})
+});
 
 app.listen(3000,()=>{
     console.log('Server listening on port 3000');
