@@ -4,6 +4,10 @@
   padding-right:70px;
 }
 
+.btn-primary{
+  margin: 5px 0px 0px 5px;
+}
+
 nav ul{
   list-style-type: none;
   width: 100%;

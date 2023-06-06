@@ -19,13 +19,14 @@ app.use(authRoute);
 
 //Checking if the user have start a session
 app.use((req, res, next)=>{
-    if(!req.session.isLogged){
+    if(!req.session.user_id){
         res.redirect('/login');
     }
     else{
         next();
     }
 })
+
 app.use(settingsRoute);
 app.use(adminRoute);
 

@@ -12,7 +12,7 @@
             <form action="/login" method="post" id="loginForm" <%= ( (err === 'login' || err !== 'forgotPass') && !success) ? 'style=display:block;': 'style=display:none;'%>>
                 <h1 class="h3 mb-5 fw-normal"><b>Login</b></h1>
                 <%if(err === 'login'){%>
-                    <span class="error-message"><%=msg%></span><br>
+                    <span class="error_message"><%=msg%></span><br>
                 <%}%>
                 <div class="form-floating mb-3">
                     <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username" required autocomplete="off">
@@ -33,10 +33,10 @@
                 <h1 class="h3 mb-5 fw-normal"><b>Reset Password</b></h1>
                 
                 <%if(err === 'forgotPass'){%>
-                    <span class="error-message"><%=msg%></span><br>
+                    <span class="error_message"><%=msg%></span><br>
                 <%}%>
                 <%if(success){%>
-                    <span class="error-message" style="color: green;"><%=msg%></span><br>
+                    <span class="success_message"><%=msg%></span><br>
                 <%}%>
                 
                 <div class="form-floating mb-3">

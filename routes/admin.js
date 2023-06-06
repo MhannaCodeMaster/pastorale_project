@@ -4,4 +4,5 @@ const adminController = require('../controllers/admin-controller');
 
 app.get('/',adminController.getIndex);
 
+
 module.exports = app;

@@ -10,23 +10,23 @@ exports.getLogin = (req,res,next)=>{
 exports.postLogin = (req,res,next)=> {
     const username = req.body.username;
     const password = req.body.password;
-    console.log('username:',username, 'password:',password);
+    //console.log('username:',username, 'password:',password);
 
     User.checkUser(username, password)
     .then(([result])=>{
         if(result.length !==0){
             //console.log(result);
-            req.session.isLogged = result[0].user_name;
+            req.session.user_id = result[0].user_id;
             res.redirect('/');
         }
         else{
-            console.log(result);
-            res.redirect('/login?err=login&&msg=email or password incorrect!');
+            //console.log(result);
+            res.redirect('/login?err=login&msg=email or password incorrect!');
         }
     })
     .catch(err=>{
         console.log(err);
-        res.status(400).redirect('/login?err=login&&msg=Something went wrong!');
+        res.status(400).redirect('/login?err=login&msg=Something went wrong!');
     });  
 }
 
@@ -43,15 +43,15 @@ exports.logout = (req,res,next) =>{
 
 exports.forgotPass = (req,res,next) =>{
     const user_email = req.body.email;
-    User.getUserEmail(user_email)
+    User.getUserByEmail(user_email)
     .then(([result])=>{
         if(result.length === 0){
-            res.redirect('/login?err=forgotPass&&msg=email not found!');
+            res.redirect('/login?err=forgotPass&msg=email not found!');
         }else{
             const email = result.user_email;
-            res.redirect('/login?success=true&&msg=link has been sent');
+            res.redirect('/login?success=true&msg=link has been sent');
         }
     }).catch(err=>{
-        res.redirect('/login?err=forgotPass&&msg=Something went wrong');
+        res.redirect('/login?err=forgotPass&msg=Something went wrong');
     });
 }
