@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="./styles.css"> <!-- Replace with the path to your compiled CSS file -->
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Social and family situation form</h2>
+    </div>
+    <div class="form-field">
+    <label class="form-label title">BENIFICIARY</label>
+    </div>
+    <form action="/submit" method="POST">
+      <div class="form-field">
+        <p>
+        <label for="fname" class="form-label">First Name</label>
+        <input type="text" id="fname" name="fname" class="form-input" placeholder="Enter your First Name">
+      </div>
+      <div class="form-field">
+        <label for="fathername" class="form-label">Father Name</label>
+        <input type="text" id="fathername" name="fathername" class="form-input" placeholder="Enter your Father Name">
+      </div>
+      <div class="form-field">
+        <label for="lname" class="form-label">Last Name</label>
+        <input type="text" id="lname" name="lname" class="form-input" placeholder="Enter your Last Name">
+      </div>
+      <div class="form-field">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="text" id="phone" name="phone" class="form-input" placeholder="Enter your phone">
+      </div>
+      <button type="submit" class="form-submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
