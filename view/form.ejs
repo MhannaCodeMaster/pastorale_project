@@ -14,23 +14,83 @@
     <form action="/submit" method="POST">
       <div class="form-field">
         <p>
-        <label for="fname" class="form-label">First Name</label>
+        <label for="fname" class="form-label1">First Name</label>
         <input type="text" id="fname" name="fname" class="form-input" placeholder="Enter your First Name">
       </div>
       <div class="form-field">
-        <label for="fathername" class="form-label">Father Name</label>
+        <label for="fathername" class="form-label1">Father Name</label>
         <input type="text" id="fathername" name="fathername" class="form-input" placeholder="Enter your Father Name">
       </div>
       <div class="form-field">
-        <label for="lname" class="form-label">Last Name</label>
+        <label for="lname" class="form-label1">Last Name</label>
         <input type="text" id="lname" name="lname" class="form-input" placeholder="Enter your Last Name">
       </div>
       <div class="form-field">
-        <label for="phone" class="form-label">Phone</label>
+        <label for="phone" class="form-label1">Phone</label>
         <input type="text" id="phone" name="phone" class="form-input" placeholder="Enter your phone">
       </div>
-      <button type="submit" class="form-submit">Submit</button>
-    </form>
+      <div class="form-container">
+          <label for="date" class="form-label1">BirthDate</label>
+          <input type="date" id="date" name="date" class="form" placeholder="Enter your phone">
+          <input type="text" id="date" name="age" class="form1" placeholder="age">
+      </div>
+    <div class="form-field">
+      <label class="form-label title">ADDRESS</label>
+    </div>
+        <div class="form-container">
+          <label for="fname" class="form-label1">Neighborhood</label>
+          <input type="text" id="fname" name="neighborhood" class="form1" placeholder="Enter your Neighborhood">
+        </div>
+        <div class="form-container">
+          <label for="fathername" class="form-label1">Street</label>
+          <input type="text" id="fathername" name="street" class="form1" placeholder="Enter your Street">
+        </div>
+        <div class="form-container">
+          <label for="lname" class="form-label1">Building</label>
+          <input type="text" id="lname" name="buildiing" class="form1" placeholder="Enter your Building">
+        </div>
+        <div class="form-container">
+          <label for="phone" class="form-label1">Floor</label>
+          <input type="text" id="phone" name="Floor" class="form1" placeholder="Enter your Floor">
+        </div>
+        <div class="form-container">
+            <label for="date" class="form-label1">Additional Information</label>
+            <input type="text" id="date" name="additionalinfo" class="form1" placeholder="Additional Information">
+        </div>
+        <div class="form-container">
+          <% property.forEach(properti =>{ %>
+            <label class ="radio">
+            <input type="radio"  name="property_type" class="radio"  id="<%= properti.status_desc %>" value="<%= properti.status_id %>" ><%= properti.status_desc %></label>
+            </label>
+          <% }) %>
+          <label id="myform1" class="radio" style="display:none;">
+            Rent Price
+           <input   type="text" id="date" name="rentprice" class="form1" placeholder="age">
+          </label>
+      </div>
+        <button type="submit" class="form-submit">Submit</button>
+      </form>
   </div>
 </body>
+<script>
+  var radioBtn1 =document.getElementById('rent');
+  var form1=document.getElementById('myform1');
+  radioBtn1.addEventListener('click',function(){
+    if(this.checked){
+      form1.style.display='block'
+    }else{
+      form1.style.display='none'
+    }
+  })
+  var radioBtn1 =document.getElementById('owner');
+  var form1=document.getElementById('myform1');
+  radioBtn1.addEventListener('click',function(){
+    if(this.checked){
+      form1.style.display='none'
+    }else{
+      form1.style.display='block'
+    }
+  })
+
+</script>
 </html>
