@@ -3,74 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Add Donation</title>
-    <!-- <link rel="stylesheet" type="text/css" href="./css/donations.css"> -->
+    <link rel="stylesheet" type="text/css" href="../css/donation_form.css"> 
     
-    <style>body {
-        font-family: Arial, sans-serif;
-      }
-      
-      .form-container {
-        width: 40%;
-        margin: 20px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      
-      h2 {
-        text-align: center;
-        margin-top: 20px;
-      }
-      
-      .form-group {
-        margin-bottom: 10px;
-      }
-      
-      label {
-        display: inline-block;
-        width: 150px;
-        font-weight: bold;
-      }
-      
-      input[type="text"],
-      input[type="date"],
-      select {
-        width: 200px;
-        padding: 5px;
-        border-radius: 3px;
-        border: 1px solid #ddd;
-      }
-      
-      input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 5px 10px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        border-radius: 3px;
-        cursor: pointer;
-      }
-      
-      input[type="submit"]:hover {
-        background-color: #45a049;
-      }
-      
-      .family-table {
-        margin-top: 20px;
-      }
-      
-      .family-table table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      
-      .family-table th,
-      .family-table td {
-        padding: 5px;
-        border: 1px solid #ccc;
-      }
-      </style>
+    
   </head>
   <body>
     <div id="donationFormContainer" class="form-container">
@@ -124,17 +59,18 @@
                 </tr>
               </thead>
               <tbody>
-                <% families.forEach(family => { %>
+                <% families.forEach((family, index) => { %>
                   <tr>
                     <td><%= family.first_name %> <%= family.middle_name %> <%= family.last_name %></td>
                     <td>
-                      <input type="checkbox" name="selectedFamilies" value="<%= family.b_id %>">
+                      <input type="checkbox" name="familyPair[]" value="<%= family.b_id %>">
                     </td>
                     <td>
-                      <input type="text" name="familyComments[<%= family.b_id %>]" value="">
+                      <input type="text" name="familyPair[]" value="">
                     </td>
                   </tr>
                 <% }) %>
+                
               </tbody>
             </table>
           </div>
@@ -145,29 +81,8 @@
         </form>
       </div>
       
-      
+      <script src="../JS/donation_form.js"></script>
   </body>
-  <script>
-
-const familyTable = document.getElementById('familyTable');
-    const recipientType = document.getElementsByName('recipientType');
-
-    // Function to handle the recipient type change event
-    const handleRecipientTypeChange = () => {
-      const selectedRecipientType = document.querySelector('input[name="recipientType"]:checked').value;
-      if (selectedRecipientType === 'Families') {
-        familyTable.style.display = 'block';
-      } else {
-        familyTable.style.display = 'none';
-      }
-    };
-
-    // Add event listener to the parent container of radio buttons
-    document.addEventListener('change', (event) => {
-      if (event.target.name === 'recipientType') {
-        handleRecipientTypeChange();
-      }
-    });
-    </script>
+  
 
 </html>

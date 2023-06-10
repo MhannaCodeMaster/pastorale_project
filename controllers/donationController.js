@@ -1,5 +1,5 @@
 // controllers/donationController.js
-
+const moment = require('moment')
 const donationModel = require('../models/donation');
 
 // Render the donations view with all donations
@@ -16,17 +16,37 @@ function getAllDonations(req, res) {
 // Render the edit donation form
 function editDonationForm(req, res) {
     const donationId = req.params.id;
+    console.log(donationId)
     // Retrieve the donation data from the database based on the donationId
     donationModel.selectDonation(donationId)
       .then((result) => {
-        if (result.length > 0) {
-          const donation = result[0];
-          // Access the donation data
-          
-          res.render('../view/edit_donation', { donation });
-        } else {
-          res.status(404).send("Donation not found");
-        }
+        const donation = result[0]; // Access the first object in the result array
+        console.log({ donation });
+        donationModel.selectDonationTypes().then(([donationTypes])=>{
+          console.log(donationTypes)
+          donationModel.selectRecipient().then(([recipients])=>{
+            console.log(recipients)
+            donationModel.selectAllAvailableFamilies().then(([families])=>{
+              console.log(families)
+              donationModel.selectSelectedFamilies(donationId).then(([selectedFamilies])=>{
+                console.log(selectedFamilies)
+                const familyCommentsMap = selectedFamilies.reduce((map, family) => {
+                  map[family.family_id] = family.comment;
+                  return map;
+                }, {});
+                console.log(familyCommentsMap)
+
+                res.render("../view/edit_donation.ejs", {
+                  donation, donationTypes, recipients, families, familyCommentsMap, moment
+                })
+              })
+            })
+          })
+        }).catch((err)=>{
+          console.log(err)
+        })
+
+        
       })
       .catch((err) => {
         console.error(err);
@@ -77,27 +97,49 @@ function emptyDonationForm(req, res){
 }
 
 function insertDonation(req, res){
-  const selectedFamilies = req.body.selectedFamilies
+  
+    const familyPairs = req.body.familyPair;
+    const selectedFamilies = req.body.selectedFamilies
   const donationData = req.body
   console.log(donationData)
   donationModel.insertDonation(donationData).then(([result])=>{
-    console.log(result)
-  }).catch((err)=>{
-    console.log(err)
-  });
+    if(donationData.recipientType == '2'){
+  
+      for (let i = 0; i < familyPairs.length; i += 2) {
+          const checkboxValue = familyPairs[i];
+        const commentValue = familyPairs[i + 1];
+        if (checkboxValue == '') {
+         i--
+          continue;
+        }
+        donationModel.insertFamilyDonation(checkboxValue, result.insertId, commentValue).then(([famdon])=>{
+        console.log(checkboxValue, commentValue, result.insertId)
 
-  let i = 0
-  // selectedFamilies.forEach(familyId =>{
-     
-  //     // The checkbox is checked, add it to the database
-  //     const comment = req.body.familyComments[i]
-  //     // Add logic to insert the family and comment into the database
-  //     console.log(familyId, comment)
-  //   i++
-  // });
+        }).catch((err)=>{
+          console.log(err)
+        })
+           
+      }
+    }
+      console.log(req.body)}).catch((err)=>{
+        console.log(err)
+     })
+
+     res.redirect("/donations")
+  }
+
   
   
-}
+
+
+
+   
+
+      
+
+  
+
+
 
 module.exports = {
   getAllDonations,

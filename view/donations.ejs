@@ -5,55 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Donations</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    h1 {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 8px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .edit-button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 5px 10px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      border-radius: 3px;
-    }
-
-    .edit-button:hover {
-      background-color: #45a049;
-    }
-
-    input[type="text"] {
-      padding: 5px;
-      border-radius: 3px;
-      border: 1px solid #ddd;
-    }
-    .highlight {
-    background-color: yellow;
-  }
-  </style>
+  <link rel="stylesheet" type="text/css" href="../css/donations.css"> 
+  
 </head>
 <body>
   <h1>Donations</h1>
@@ -73,49 +26,22 @@
     <tbody>
       <% donations.forEach((donation) => { %>
         <tr>
-          <td><%= donation.donation_date %></td>
+          <td><%= donation.donation_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></td>
           <td><%= donation.donator_name %></td>
           <td><%= donation.donation_content %></td>
           <td><%= donation.recipient_desc %></td>
           <td>
-            <a href="/donations/<%= donation.donation_id %>/edit" class="edit-button">Edit</a>
+            <a href="/donations/edit/<%= donation.donation_id %>" class="edit-button">Edit</a>
           </td>
         </tr>
       <% }) %>
     </tbody>
   </table>
-  <script>
-    // JavaScript function to filter donations based on search input
-    function filterDonations() {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("searchInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("donationsTable");
-      tr = table.getElementsByTagName("tr");
+  <script src="../JS/donations.js"></script>
+  
+    
+    
 
-      // Loop through all table rows and hide those that do not match the search query
-      for (i = 0; i < tr.length; i++) {
-        td1 = tr[i].getElementsByTagName("td")[1]; // Assuming the name column is the second column
-        td2 = tr[i].getElementsByTagName("td")[2];
-        if (td1 || td2) {
-            txtValue1 = td1.textContent || td1.innerText;
-            txtValue2 = td2.textContent || td2.innerText;
-          if (txtValue1.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
-            td1.innerHTML = txtValue1.replace(
-            new RegExp("(" + filter + ")", "gi"),
-            "<span class='highlight'>$1</span>"
-          );
-          td2.innerHTML = txtValue2.replace(
-            new RegExp("(" + filter + ")", "gi"),
-            "<span class='highlight'>$1</span>"
-          );
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-  </script>
+  
 </body>
 </html>

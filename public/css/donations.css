@@ -1,65 +1,49 @@
-body {
-  font-family: Arial, sans-serif;
-}
 
-.form-container {
-  width: 40%;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+    body {
+      font-family: Arial, sans-serif;
+    }
 
-h2 {
-  text-align: center;
-  margin-top: 20px;
-}
+    h1 {
+      margin-top: 20px;
+      text-align: center;
+    }
 
-.form-group {
-  margin-bottom: 10px;
-}
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
 
-label {
-  display: inline-block;
-  width: 150px;
-  font-weight: bold;
-}
+    th, td {
+      padding: 8px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
 
-input[type="text"],
-input[type="date"],
-select {
-  width: 200px;
-  padding: 5px;
-  border-radius: 3px;
-  border: 1px solid #ddd;
-}
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
 
-input[type="submit"] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 3px;
-  cursor: pointer;
-}
+    .edit-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 3px;
+    }
 
-input[type="submit"]:hover {
-  background-color: #45a049;
-}
+    .edit-button:hover {
+      background-color: #45a049;
+    }
 
-.family-table {
-  margin-top: 20px;
-}
-
-.family-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.family-table th,
-.family-table td {
-  padding: 5px;
-  border: 1px solid #ccc;
-}
+    input[type="text"] {
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ddd;
+    }
+    .highlight {
+    background-color: yellow;
+  }
+  
