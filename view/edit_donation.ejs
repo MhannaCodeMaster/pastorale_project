@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Edit Donation</title>
+    <link rel="stylesheet" type="text/css" href="../../css/donation_form.css"> 
+  </head>
+  <body>
+    <div id="donationFormContainer" class="form-container">
+      <h2>Edit Donation</h2>
+      <form action="/donations/update/<%= donation[0].donation_id %>" method="POST">
+        <div class="form-group">
+          <label for="donationDate">Date of Donation</label>
+          <input type="date" id="donationDate" name="donationDate" value="<%= moment(donation[0].donation_date).format('yyyy-MM-DD') %>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="donatorName">Donator Name</label>
+          <input type="text" id="donatorName" name="donatorName" value="<%= donation[0].donator_name %>" required>
+        </div>
+
+        <div class="form-group">
+          <label for="donationType">Donation Type</label>
+          <select id="donationType" name="donationType">
+            <% donationTypes.forEach(donationType => { %>
+              <option value="<%= donationType.type_id %>" <%= donationType.type_id == donation[0].donation_type ? 'selected' : '' %>>
+                <%= donationType.donation_type %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="donationContent">Donation Content</label>
+          <input type="text" id="donationContent" name="donationContent" value="<%= donation[0].donation_content %>" required>
+        </div>
+
+        <div class="form-group">
+          <label>Recipient Type</label>
+          <% recipients.forEach(recipient => { %>
+            <label>
+              <input type="radio" name="recipientType" value="<%= recipient.recipient_id %>" <%= recipient.recipient_id == donation[0].recipient_type ? 'checked' : '' %>>
+              <%= recipient.recipient_desc %>
+            </label>
+          <% }) %>
+        </div>
+
+        <!-- Families table -->
+        <div id="familyTable" class="family-table">
+          <h3>Available Families</h3>
+          <input type="text" id="searchFamily" name="searchFamily" placeholder="Enter family name" oninput="filterFamilies()">
+          <table>
+            <thead>
+              <tr>
+                <th>Family Name</th>
+                <th>Select</th>
+                <th>Comment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tbody>
+                <% families.forEach((family, index) => { %>
+                  <tr>
+                    <td><%= family.first_name %> <%= family.middle_name %> <%= family.last_name %></td>
+                    <td>
+                      <input type="checkbox" name="familyPair[]" value="<%= family.b_id %>" <% if (familyCommentsMap.hasOwnProperty(family.b_id)) { %>checked<% } %>>
+                    </td>
+                    <td>
+                      <input type="text" name="familyPair[]" value="<%= familyCommentsMap[family.b_id] || '' %>">
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+              
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-group">
+          <input type="submit" value="Update Donation">
+        </div>
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+    <script src="../../JS/donation_form.js"></script>
+  </body>
+</html>

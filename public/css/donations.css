@@ -1,0 +1,48 @@
+
+body {
+    font-family: Arial, sans-serif;
+  }
+
+  h1 {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .edit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 3px;
+  }
+
+  .edit-button:hover {
+    background-color: #45a049;
+  }
+
+  input[type="text"] {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+  }
+  .highlight {
+  background-color: yellow;
+}

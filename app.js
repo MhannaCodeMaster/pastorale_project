@@ -8,6 +8,7 @@ const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
 const settingsRoute = require('./routes/settings');
 const allBeneficiariesRoute = require('./routes/beneficiary_table');
+const donationRoute = require('./routes/donations');
 
 const csrfProtection = csrf();
 
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 
 app.use(settingsRoute);
 app.use(allBeneficiariesRoute);
+app.use(donationRoute);
 app.use(adminRoute);
 
 // 404 error handling middleware
