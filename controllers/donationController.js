@@ -1,6 +1,8 @@
 // controllers/donationController.js
 const moment = require('moment')
 const donationModel = require('../models/donation');
+const beneficiaryModel = require('../models/beneficiary')
+const familyDonationModel = require('../models/familyDonation')
 
 // Render the donations view with all donations
 function getAllDonations(req, res) {
@@ -26,9 +28,9 @@ function editDonationForm(req, res) {
           console.log(donationTypes)
           donationModel.selectRecipient().then(([recipients])=>{
             console.log(recipients)
-            donationModel.selectAllAvailableFamilies().then(([families])=>{
+            beneficiaryModel.selectAllAvailableFamilies().then(([families])=>{
               console.log(families)
-              donationModel.selectSelectedFamilies(donationId).then(([selectedFamilies])=>{
+              familyDonationModel.selectSelectedFamilies(donationId).then(([selectedFamilies])=>{
                 console.log(selectedFamilies)
                 const familyCommentsMap = selectedFamilies.reduce((map, family) => {
                   map[family.family_id] = family.comment;
@@ -59,23 +61,44 @@ function editDonationForm(req, res) {
 
 // Update a donation
 function updateDonation(req, res) {
-  const donationId = req.params.id;
-  const updatedData = req.body;
-  console.log(updatedData.name, updatedData.content)
-  // Update the donation in the database based on the donationId and updatedData
-  donationModel.updateDonation(donationId, updatedData).then(({result})=>{
-    res.redirect('/donations');
-  }).catch((err)=>{
-    res.status(400).send("something went wrong")
-  })
+  const donationId = req.params.id
+  const updatedData = req.body
+  const familyPairs = req.body.familyPair
+  console.log(updatedData)
 
+  donationModel.updateDonation(updatedData, donationId).then(([result])=>{
+    
+    familyDonationModel.deleteFamilyDonations(donationId).then(([deletion])=>{
+
+    
+      if(updatedData.recipientType == '2'){
   
+        for (let i = 0; i < familyPairs.length; i += 2) {
+            const checkboxValue = familyPairs[i];
+          const commentValue = familyPairs[i + 1];
+          if (checkboxValue == '') {
+          i--
+           continue;
+        }
+          familyDonationModel.insertFamilyDonation(checkboxValue, donationId, commentValue).then(([famdon])=>{
+          console.log(checkboxValue, commentValue, donationId)
 
-//   
+          }).catch((err)=>{
+            console.log(err)
+          })
+           
+        }
+      }
+    })
+      console.log(req.body)}).catch((err)=>{
+        console.log(err)
+     })
+
+     res.redirect("/donations")
 }
 
 function emptyDonationForm(req, res){
-  donationModel.selectAllAvailableFamilies().then(([families])=>{
+  beneficiaryModel.selectAllAvailableFamilies().then(([families])=>{
     donationModel.selectDonationTypes().then(([donationTypes])=>{
       donationModel.selectRecipient().then(([recipients])=>{
         console.log(recipients)
@@ -112,7 +135,7 @@ function insertDonation(req, res){
          i--
           continue;
         }
-        donationModel.insertFamilyDonation(checkboxValue, result.insertId, commentValue).then(([famdon])=>{
+        familyDonationModel.insertFamilyDonation(checkboxValue, result.insertId, commentValue).then(([famdon])=>{
         console.log(checkboxValue, commentValue, result.insertId)
 
         }).catch((err)=>{
@@ -129,7 +152,11 @@ function insertDonation(req, res){
   }
 
   
-  
+
+
+
+
+
 
 
 
@@ -147,4 +174,5 @@ module.exports = {
   updateDonation,
   emptyDonationForm,
   insertDonation
+  
 };

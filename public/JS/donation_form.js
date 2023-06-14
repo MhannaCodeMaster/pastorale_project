@@ -17,15 +17,32 @@ const familyTable = document.getElementById('familyTable');
         handleRecipientTypeChange();
       }
     });
-function formatDate(dateString) {
-      const date = new Date(dateString);
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-      return `${padZero(day)}/${padZero(month)}/${year}`;
+handleRecipientTypeChange();
+
+
+
+  // Get all the checkbox elements
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][name="familyPair[]"]');
+
+  // Loop through the checkboxes
+  checkboxes.forEach((checkbox, index) => {
+    const commentInput = checkbox.parentNode.nextElementSibling.querySelector('input[type="text"][name="familyPair[]"]');
+
+    // Add event listener to each checkbox
+    checkbox.addEventListener('change', () => {
+      if (!checkbox.checked) {
+        commentInput.disabled = true; // Disable the comment input if the checkbox is not checked
+        commentInput.value = ''; 
+      } else {
+        commentInput.disabled = false; // Enable the comment input if the checkbox is checked
+      }
+    });
+
+    // Disable the comment input if the checkbox is initially unchecked
+    if (!checkbox.checked) {
+      commentInput.disabled = true;
+      commentInput.value = ''; 
     }
-    
-    function padZero(value) {
-      return value.toString().padStart(2, '0');
-    }
-    
+  });
+
+

@@ -20,18 +20,14 @@ function selectDonation(donationId) {
 }
 
 // Update a donation in the database
-function updateDonation(donationId, updatedData) {
+function updateDonation(data, donationId) {
   
-  const query = "UPDATE donations SET donator_name = ?, donation_content = ? WHERE donation_id = ?";
+  const query = "UPDATE donation SET donator_name = ?, donation_content = ?, donation_date = ?, recipient_type = ?, donation_type = ? WHERE donation_id = ?";
   console.log(query)
-  return pool.execute(query, [updatedData.name, updatedData.amount, donationId])
+  return pool.execute(query, [data.donatorName, data.donationContent, data.donationDate, data.recipientType, data.donationType, donationId])
 }
 
-function selectAllAvailableFamilies(){
-  const query = "SELECT b_id, first_name, middle_name, last_name FROM beneficiary WHERE main_beneficiary = 'yes' AND decision_closure_date IS NULL;";
-  
-  return pool.execute(query)
-}
+
 
 function selectDonationTypes(){
   const query= "SELECT * FROM donation_type"
@@ -43,22 +39,18 @@ function selectRecipient(){
   return pool.execute(query)
 }
 
-function insertFamilyDonation(familyId, donationId, comment){
-  const query = "INSERT INTO family_donation(family_id, donation_id, comment) VALUES (?, ?, ?)"
-  return pool.execute(query, [familyId, donationId, comment] )
-}
-function selectSelectedFamilies(donationId){
-  const query = "SELECT * FROM family_donation WHERE donation_id = ?"
-  return pool.execute(query,[donationId])
-}
+
+
+
+
+
 module.exports = {
   getAllDonations,
   updateDonation,
   selectDonation,
-  selectAllAvailableFamilies,
+  
   selectDonationTypes,
   selectRecipient,
-  insertDonation,
-  insertFamilyDonation,
-  selectSelectedFamilies
+  insertDonation
+  
 };

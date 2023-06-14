@@ -8,7 +8,7 @@
   <body>
     <div id="donationFormContainer" class="form-container">
       <h2>Edit Donation</h2>
-      <form action="/donations/update" method="POST">
+      <form action="/donations/update/<%= donation[0].donation_id %>" method="POST">
         <div class="form-group">
           <label for="donationDate">Date of Donation</label>
           <input type="date" id="donationDate" name="donationDate" value="<%= moment(donation[0].donation_date).format('yyyy-MM-DD') %>" required>

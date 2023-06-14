@@ -15,6 +15,8 @@ app.get('/donations/add', donationController.emptyDonationForm);
 
 app.post('/donations/submit', donationController.insertDonation)
 
-app.post('/donations/:id', donationController.updateDonation);
+
+
+app.post('/donations/update/:id', donationController.updateDonation)
 
 module.exports = app
