@@ -14,16 +14,31 @@ background-color: #fff;
 color: #222;
 }
 
+.custom-nav{
+    background-color: rgb(182, 181, 189);
+}
+.custom-nav li.active{
+    border-bottom: 4px solid rgb(161, 161, 199);
+}
+
+
 .error_message{
     color: red;
-    margin: 6px 0px;
-    font-size: large;
+    font-size: medium;
+    padding: 2px 30px;
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: rgb(250, 186, 186);
  }
 
  .success_message{
-    color: green;
+    color: rgb(21, 167, 21);
     margin: 6px 0px;
     font-size: large;
+    padding: 2px 30px;
+    border: 1px solid rgb(21, 167, 21);
+    border-radius: 10px;
+    background-color: rgb(153, 255, 153);
  }
 
 .btn-primary{
@@ -58,6 +73,10 @@ color: #222;
     background-color: red;
     border: 1px solid red;
     transition: .3s;
+}
+
+ td a.btn-primary {
+    padding: 2px 7px;
 }
 
 

@@ -1,35 +1,44 @@
 .container-xl{
-  padding-top: 20px;
-  padding-left:70px;
-  padding-right:70px;
+  padding-left:20px;
+  padding-right:55px;
 }
 
 .btn-primary{
   margin: 5px 0px 0px 5px;
 }
-
-nav ul{
-  list-style-type: none;
-  width: 100%;
-  padding: 0px;
+.fixed-nav{
+  border-right: 1px solid rgb(189, 189, 189);
 }
 
-nav ul li{
-  padding:10px 20px;
-  font-size: 20px;
-  cursor: pointer;
+ul{
+  list-style: none;
+  margin: 0px;
+  padding: 10px;
+}
+ul li a{
+  padding: 10px 5px;
   border-radius: 10px;
 }
-
-nav ul li:hover{
-  background-color: rgb(219, 219, 219);
-}
-
-nav ul a{
-  text-decoration: none;
-  color: black;
+ul li a:hover{
+  background-color: rgb(189, 189, 189);
 }
 
 .section{
   margin-bottom: 30px;
+}
+
+.content{
+  max-height: calc(100vh - 100px); /* Adjust the height as needed */
+  overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: transparent transparent; /* For Firefox */
+  scroll-behavior: smooth;
+}
+
+.content::-webkit-scrollbar {
+  width: 0.5rem; /* Adjust the width as needed */
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: transparent; /* For Chrome, Safari, and Opera */
 }

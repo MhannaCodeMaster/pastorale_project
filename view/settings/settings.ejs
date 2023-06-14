@@ -5,117 +5,165 @@
     <link rel="stylesheet" href="./css/settings.css">
 </head>
 <body>
-  <div class="container-xl h-100">
-    <h1>Settings</h1>
-    <div class="container p-3">
+  <%-include('../includes/nav.ejs')%>
+  <div class="container-xxl h-100">
+    <div class="row">
+      <div class="col-md-2 mt-2 fixed-nav">
+        <h1>Settings</h1>
+        <ul>
+          <li class="nav-item">
+            <a class="nav-link" href="#account">Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#changePass">Change Password</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#create">Create Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#member">Add Member</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#delete">Delete Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        </ul>
+      </div>
 
-      <div class="section">
-        <h4 id="account">Account</h4>
-        <hr>
-        <%if(section === 'account'){%>
-          <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
-        <%}%>
-        <form action="/settings/change-username" id="username_form" method="post">
-          <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" name="username" value="<%= (username)?username:''%>" class="form-control" id="username" required disabled>
-            <div style="display: flex;">
-              <button id="change_username" type="button" class="btn-primary">Change</button>
-              <button id="save_username" type="submit" style="display: none;" class="btn-primary">Save</button>
-              <button id="cancel_username" type="reset" style="display: none;" class="btn-primary">Cancel</button>
+      <div class="col-md-9 ml-9 mt-3 content">
+
+        <div class="section">
+          <h4 id="account">Account</h4>
+          <hr>
+          <%if(section === 'account'){%>
+            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+          <%}%>
+          <form action="/settings/change-username" id="username_form" method="post">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" name="username" value="<%= (username)?username:''%>" class="form-control" id="username" required disabled>
+              <div style="display: flex;">
+                <button id="change_username" type="button" class="btn-primary">Change</button>
+                <button id="save_username" type="submit" style="display: none;" class="btn-primary">Save</button>
+                <button id="cancel_username" type="reset" style="display: none;" class="btn-primary">Cancel</button>
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+              </div>
             </div>
-          </div>
-        </form>
-  
-        <form action="/settings/change-email" method="post" id="email_form">
-          <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" value="<%= (email)?email:''%>" class="form-control" id="email" required disabled>
-            <div style="display: flex;">
-              <button id="change_email" type="button" class="btn-primary">Change</button>
-              <button id="save_email" type="submit" style="display: none;" class="btn-primary">Save</button>
-              <button id="cancel_email" type="reset" style="display: none;" class="btn-primary">Cancel</button>
+          </form>
+    
+          <form action="/settings/change-email" method="post" id="email_form">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" name="email" value="<%= (email)?email:''%>" class="form-control" id="email" required disabled>
+              <div style="display: flex;">
+                <button id="change_email" type="button" class="btn-primary">Change</button>
+                <button id="save_email" type="submit" style="display: none;" class="btn-primary">Save</button>
+                <button id="cancel_email" type="reset" style="display: none;" class="btn-primary">Cancel</button>
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+              </div>
+          </form>
+        </div>
+        
+        <div class="section">
+          <h4 id="changePass">Change password</h4>
+          <hr>
+          <%if(section === 'changePass'){%>
+            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+          <%}%>
+          <form onsubmit="return checkChangedPassword()" action="/settings/change-password" method="post">
+            <div class="mb-3">
+              <label for="old_pass" class="form-label">Old password</label>
+              <input type="password" name="old_password" class="form-control" id="old_pass" required>
             </div>
-        </form>
+
+            <div class="mb-3">
+              <label for="new_pass" class="form-label">New password</label>
+              <input type="password" name="new_password" class="form-control" id="new_pass" required pattern="^(?=.*\d).{8,}$" >
+              <span>minimum length 8 and at least 1 number</span>
+            </div>
+
+            <div class="mb-3">
+              <label for="c_pass" class="form-label">Confirm password</label>
+              <input type="password" class="form-control" id="c_pass" required>
+              <span class="error_message" id="new_pass_error" style="display: none;"></span>
+              <button class="btn-primary mt-2">Save</button>
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+            </div>
+
+          </form>
+        </div>
+        
+        <div class="section">
+          <h4 id="create">Create account</h4>
+          <hr>
+          <%if(section === 'create'){%>
+            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+          <%}%>
+          <form onsubmit="return checkNewUserPassword()" action="/settings/create-user" method="post">
+            <div class="mb-3">
+              <label for="create_username" class="form-label">Username</label>
+              <input type="text" name="create_username" class="form-control" id="create_username" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="create_email" class="form-label">Email</label>
+              <input type="email" name="create_email" class="form-control" id="create_email" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="create_pass" class="form-label">Password</label>
+              <input type="password" name="create_pass" class="form-control" id="create_pass" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirm_pass" class="form-label">Confirm password</label>
+              <input type="password" name="confirm_pass" class="form-control" id="confirm_pass" required>
+              <span class="error_message" id="password_error" style="display: none;"></span>
+              <button class="btn-primary mt-2">Create</button>
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+            </div>
+
+          </form>
+        </div>
+
+        <div class="section">
+          <h4 id="member">Add member</h4>
+          <hr>
+          <%if(section === 'member'){%>
+            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+          <%}%>
+          <form onsubmit="return checkNewUserPassword()" action="/settings/create-user" method="post">
+            <div class="mb-3">
+              <label for="create_username" class="form-label">Username</label>
+              <input type="text" name="create_username" class="form-control" id="create_username" required>
+              <button class="btn-primary mt-2">Add</button> 
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>">         
+            </div>
+          </form>
+        </div>
+        
+        <div class="section">
+          <h4 style="color: red;" id="delete">Delete account</h4>
+          <hr>
+          <%if(section === 'delete'){%>
+            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+          <%}%>
+          <form action="/settings/delete-user" method="post">
+            <div class="mb-3">
+              <label for="FormControlInput5" class="form-label">username</label>
+              <input type="text" name="username" class="form-control" id="FormControlInput5" required>
+              <button class="btn-danger mt-2">Delete</button>
+              <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+            </div>
+          </form>
+        </div>
+
       </div>
-      
-      <div class="section">
-        <h4 id="changePass">Change password</h4>
-        <hr>
-        <%if(section === 'changePass'){%>
-          <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
-        <%}%>
-        <form onsubmit="return checkChangedPassword()" action="/settings/change-password" method="post">
-          <div class="mb-3">
-            <label for="old_pass" class="form-label">Old password</label>
-            <input type="password" name="old_password" class="form-control" id="old_pass" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="new_pass" class="form-label">New password</label>
-            <input type="password" name="new_password" class="form-control" id="new_pass" required pattern="^(?=.*\d).{8,}$" >
-            <span>minimum length 8 and at least 1 number</span>
-          </div>
-
-          <div class="mb-3">
-            <label for="c_pass" class="form-label">Confirm password</label>
-            <input type="password" class="form-control" id="c_pass" required>
-            <span class="error_message" id="new_pass_error" style="display: none;"></span>
-            <button class="btn-primary mt-2">Save</button>
-          </div>
-
-        </form>
-      </div>
-      
-      <div class="section">
-        <h4 id="create">Create account</h4>
-        <hr>
-        <%if(section === 'create'){%>
-          <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
-        <%}%>
-        <form onsubmit="return checkNewUserPassword()" action="/settings/create-user" method="post">
-          <div class="mb-3">
-            <label for="create_username" class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" id="create_username" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="create_email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="create_email" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="create_pass" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="create_pass" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="confirm_pass" class="form-label">Confirm password</label>
-            <input type="password" name="password" class="form-control" id="confirm_pass" required>
-            <span class="error-message" id="password_error" style="display: none;"></span>
-            <button class="btn-primary mt-2">Create</button>
-          </div>
-
-        </form>
-      </div>
-      
-      <div class="section">
-        <h4 style="color: red;" id="delete">Delete account</h4>
-        <hr>
-        <%if(section === 'delete'){%>
-          <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
-        <%}%>
-        <form action="/settings/delete-user" method="post">
-          <div class="mb-3">
-            <label for="FormControlInput5" class="form-label">username</label>
-            <input type="text" name="username" class="form-control" id="FormControlInput5" required>
-            <button class="btn-danger mt-2">Delete</button>
-          </div>
-        </form>
-      </div>
-
     </div>
   </div>
+
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
   <script src="./JS/script.js"></script>
   <script src="./JS/settings.js"></script>

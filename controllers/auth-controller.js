@@ -1,4 +1,6 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const sendFrogotPassEmail = require('../util/email'); 
 
 exports.getLogin = (req,res,next)=>{
     const err = req.query.hasOwnProperty('err') ? req.query.err : null;
@@ -11,23 +13,30 @@ exports.postLogin = (req,res,next)=> {
     const username = req.body.username;
     const password = req.body.password;
     //console.log('username:',username, 'password:',password);
-
-    User.checkUser(username, password)
+    User.getUserByName(username)
     .then(([result])=>{
-        if(result.length !==0){
-            //console.log(result);
-            req.session.user_id = result[0].user_id;
-            res.redirect('/');
+        if(result.length === 0){
+            res.redirect('/login?err=login&msg=Invalid username or password');
         }
-        else{
-            //console.log(result);
-            res.redirect('/login?err=login&msg=email or password incorrect!');
+        else {
+            bcrypt.compare(password, result[0].user_password)
+            .then(doMatch=>{
+                if(doMatch){
+                    req.session.user_id = result[0].user_id;
+                }else{
+                    res.redirect('/login?err=login&msg=Invalid username or password');
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+                res.status(400).redirect('/login?err=login&msg=Something went wrong!');
+            })
         }
     })
     .catch(err=>{
         console.log(err);
         res.status(400).redirect('/login?err=login&msg=Something went wrong!');
-    });  
+    })
 }
 
 exports.logout = (req,res,next) =>{
@@ -49,9 +58,17 @@ exports.forgotPass = (req,res,next) =>{
             res.redirect('/login?err=forgotPass&msg=email not found!');
         }else{
             const email = result.user_email;
-            res.redirect('/login?success=true&msg=link has been sent');
+            return sendFrogotPassEmail(result[0].user_email);
         }
-    }).catch(err=>{
+    })
+    .then(()=>{
+        res.redirect('/login?success=true&msg=link has been sent');
+    })
+    .catch(err=>{
         res.redirect('/login?err=forgotPass&msg=Something went wrong');
     });
+}
+
+exports.getResetPage = (req,res,next) =>{
+    res.render('../view/auth/forgot-password.ejs',{pageTitle:'Reset',err:'',msg:''});
 }

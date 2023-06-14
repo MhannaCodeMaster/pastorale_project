@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.getSettingsPage = (req,res,next) => {
@@ -69,27 +70,66 @@ exports.changePassword = (req,res,next) => {
     });
 }
 
+exports.createNewUser = (req,res,next) =>{
+    let msg,err = true, section = 'create';
+    const {create_username,create_pass,create_email} = req.body;
+    //console.log('User email:',create_email);
+    bcrypt.hash(create_pass, 12)
+    .then((hashedPass)=>{
+        const user = new User(undefined, create_username, hashedPass, create_email);
+        user.createUser()
+        .then(result=>{
+            console.log(result);
+            if(result.created){
+                err = false;
+                msg = 'User created.';
+            }
+            else if(result.userExists){
+                msg = 'User already exists.';
+            }
+            else if(result.insertError){
+                msg = 'User already exists';
+            }else{
+                console.log('return:',result);
+                msg = 'Something went wrong!';
+            }
+            res.redirect('/settings?err='+err+'&section='+section+'&msg='+msg);
+        })
+        .catch(error=>{
+            console.log(error);
+            msg = 'Something went wrong! Try again.';
+            res.redirect('/settings?err='+err+'&section='+section+'&msg='+msg);
+        });
+
+    })
+    .catch(error=>{
+        console.log(error);
+        msg = 'Something went wrong! Try again.';
+        res.redirect('/settings?err='+err+'&section='+section+'&msg='+msg);
+    });
+}
+
 exports.deleteUser = (req,res,next) => {
     const username = req.body.username;
     const user_id = req.session.user_id;
     let msg, section = 'delete',err=true;
     User.deleteUser(user_id, username).then(result=>{
         //console.log(result);
-        if (result === 0){
+        if (result.userDeleted){
             msg = 'User deleted';
             err = false;
-        }else if(result === 1){
+        }else if(result.notFound){
             msg = 'User not found';
-        }else if(result === 2){
+        }else if(result.currentUser){
             msg = 'Cannot delete your account!';
         }else{
             console.log(result);
-            msg = 'Something went wrong!aaaa';
+            msg = 'Something went wrong!';
         }
         res.redirect('/settings?err='+err+'&section='+section+'&msg='+msg);
     }).catch(error=>{
         console.log('delete error:',error);
-        msg = 'Something went wrong!';
+        msg = 'delete error!';
         res.redirect('/settings?err='+err+'&section='+section+'&msg='+msg);
     });
 }

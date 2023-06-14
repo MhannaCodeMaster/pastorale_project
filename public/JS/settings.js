@@ -21,6 +21,7 @@ const username_input = document.getElementById('username');
 /*---Listener for username change button---*/
 change_username.addEventListener('click', function(event) {
     username_input.disabled = false;
+    username_input.focus();
     save_username.style='display:block';
     cancel_username.style='display:block';
     change_username.style='display:none';
@@ -40,6 +41,7 @@ const email_input = document.getElementById('email');
 /*---Listener for username change button---*/
 change_email.addEventListener('click', function(event) {
     email_input.disabled = false;
+    email_input.focus();
     save_email.style='display:block';
     cancel_email.style='display:block';
     change_email.style='display:none';
