@@ -1,0 +1,47 @@
+<!-- views/donations.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Donations</title>
+  <link rel="stylesheet" type="text/css" href="../css/donations.css"> 
+  
+</head>
+<body>
+  <h1>Donations</h1>
+  <input type="text" id="searchInput" onkeyup="filterDonations()" placeholder="Search by name">
+  <br><br>
+  <a href="/donations/add"><button id="addDonationButton">Add Donation</button></a>
+  <table id="donationsTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Donation</th>
+        <th>Donator</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% donations.forEach((donation) => { %>
+        <tr>
+          <td><%= donation.donation_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></td>
+          <td><%= donation.donator_name %></td>
+          <td><%= donation.donation_content %></td>
+          <td><%= donation.recipient_desc %></td>
+          <td>
+            <a href="/donations/edit/<%= donation.donation_id %>" class="edit-button">Edit</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <script src="../JS/donations.js"></script>
+  
+    
+    
+
+  
+</body>
+</html>
