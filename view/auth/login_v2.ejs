@@ -24,7 +24,7 @@
                 </div>
             
                 <button class="btn-primary w-100 mb-4" type="submit">Login</button>
-                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                
                 <a style="cursor: pointer;" onclick="showForgotPasswordForm()">forgot password?</a>
                 <p class="mt-5 mb-3 text-muted">© 2023</p>
             </form>
@@ -45,7 +45,7 @@
                     <label for="floatingInput1">email</label>
                 </div>
                 <button id="sendEmail" onclick="sendEmail()" class="btn-primary w-100 mb-4" type="submit"><%= success ? 'resend link' : 'send a reset link'%></button>
-                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                
                 <a style="cursor: pointer;" onclick="goBack()">Back To Login</a>
                 <p class="mt-5 mb-3 text-muted">© 2023</p>
             </form>

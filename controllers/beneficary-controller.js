@@ -1,7 +1,7 @@
 const Beneficiary = require('../models/beneficiary.js');
 
 exports.getTable = (req,res,next) =>{
-    Beneficiary.getAll()
+    Beneficiary.Beneficiary.getAll()
     .then(([result])=>{
         res.render('../view/beneficiary_table',{pageTitle:'All Forms',result:result});
     })
