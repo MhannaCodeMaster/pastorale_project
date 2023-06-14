@@ -1,0 +1,22 @@
+.column{
+    background-color: rgb(211, 211, 211);
+    box-shadow: 0px 6px 3px rgb(196, 189, 189);
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+
+.column:hover{
+    transition: 0.2s;
+    translate: 0px 4px;
+}
+
+.column p{
+    margin-top: 5px;
+}
+
+.row a{
+    text-decoration: none;
+    color: black;
+    font-weight:600;
+}

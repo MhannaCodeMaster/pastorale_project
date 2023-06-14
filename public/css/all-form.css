@@ -1,0 +1,35 @@
+.table-container {
+    max-height: calc(100vh - 140px); /* Adjust the subtracted value as needed */
+    overflow-y: auto;
+    padding-right: 20px;
+  }
+  
+.table-container table {
+  width: 100%;
+}
+
+.table-container thead {
+  position: sticky;
+  top: 0;
+  background-color: #f8f9fa;
+}
+
+.table-container tbody {
+  max-height: calc(100vh - 200px); /* Adjust the subtracted value as needed */
+  overflow-y: auto;
+}
+
+.table-container td,
+.table-container th {
+  white-space: nowrap;
+}
+
+.button-active{
+  color: white;
+  background-color: rgb(3, 4, 37);
+}
+
+input[type="checkbox"]{
+  cursor: pointer;
+}
+  

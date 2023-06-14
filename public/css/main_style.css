@@ -1,0 +1,91 @@
+body{
+    scroll-behavior:auto;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #222;
+    color: #fff;
+  }
+  
+/* Light Mode */
+body.light-mode {
+background-color: #fff;
+color: #222;
+}
+
+.custom-nav{
+    background-color: rgb(182, 181, 189);
+}
+.custom-nav li.active{
+    border-bottom: 4px solid rgb(161, 161, 199);
+}
+
+
+.error_message{
+    color: red;
+    font-size: medium;
+    padding: 2px 30px;
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: rgb(250, 186, 186);
+ }
+
+ .success_message{
+    color: rgb(21, 167, 21);
+    margin: 6px 0px;
+    font-size: large;
+    padding: 2px 30px;
+    border: 1px solid rgb(21, 167, 21);
+    border-radius: 10px;
+    background-color: rgb(153, 255, 153);
+ }
+
+.btn-primary{
+    color:  rgb(3, 4, 37);
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid rgb(3, 4, 37);
+    padding: 7px;
+    border-radius: 10px;
+    transition: .3s;
+    
+}
+
+.btn-primary:hover{
+    color: white;
+    background-color: rgb(3, 4, 37);
+    transition: .3s;
+}
+
+.btn-danger{
+    color:  red;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid red;
+    padding: 7px;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.btn-danger:hover{
+    color:  white;
+    background-color: red;
+    border: 1px solid red;
+    transition: .3s;
+}
+
+ td a.btn-primary {
+    padding: 2px 7px;
+}
+
+
+
+input.form-control{
+    border: 1px solid rgb(175, 175, 175);
+}
+
+input.form-control:focus{
+    box-shadow: none;
+    border: 1px solid rgb(3, 4, 37);
+}
