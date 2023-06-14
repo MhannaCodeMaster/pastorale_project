@@ -32,7 +32,6 @@
       <div class="form-container">
           <label for="date" class="form-label1">BirthDate</label>
           <input type="date" id="date" name="date" class="form" placeholder="Enter your phone">
-          <input type="text" id="date" name="age" class="form1" placeholder="age">
       </div>
     <div class="form-field">
       <label class="form-label title">ADDRESS</label>
@@ -64,33 +63,413 @@
             </label>
           <% }) %>
           <label id="myform1" class="radio" style="display:none;">
-            Rent Price
-           <input   type="text" id="date" name="rentprice" class="form1" placeholder="age">
+            Rent price
+            <input   type="text" id="date" name="rentprice" class="form2" placeholder="Rent Price">
           </label>
       </div>
+      <div class="form-field">
+        <label class="form-label title">PROFESIONAL STATUS</label>
+      </div>
+      <div  class="form-container">
+        <% profesional.forEach(profesional =>{%>
+          <label class ="radio">
+          <input type="radio" name="profesional_status" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
+        <%})%>
+        <label class="radio">
+          <input type="text"   class="form1" placeholder="other">
+        </label>
+      </div>
+      <div class="form-container1" id="myform2" style="display:none;">
+        <label class="radio" >
+          Job desc
+          <input type="text"  name="job_desc" class="form3" placeholder="job descritpion">
+        </label>
+        <label class="radio" >
+          Sector
+          <select name="sectors" class="form4">
+            <% sector.forEach(sectorr =>{%>
+              <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+            <%})%>
+          </select>
+        </label>
+        <label class="radio" >
+          Adress
+          <input type="text"  name="job_address" class="form3" placeholder="adress">
+        </label>
+        <label class="radio" >
+          Salary
+          <input type="text"  name="job_salary" class="form3" placeholder="salary">
+        </label>
+        <label class="radio">
+          Remarque
+          <input type="text"  name="job_remark" class="form-input" placeholder="remark">
+        </label>
+      </div>
+      <div class="form-field">
+        <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+      </div>
+      <div class="form-container">
+        <% services.forEach(service =>{%>
+          <label class ="radio">
+          <input type="radio" name="health_service" class="radio2"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
+        <%})%>
+        <label class="radio" >
+          <input type="text"   class="form3" placeholder="salary">
+        </label>
+        <label class="radio">
+          Remarque
+          <input type="text" name="health" class="form3">       </label>
+      </div>
+      <div class="form-field">
+        <label class="form-label title">HEALTH SITUATION</label>
+      </div>
+      <label id="checks" style="font-weight: bold;">
+      <input  type="checkbox" >Add to the list
+      </label>
+      <table style="display: none;" border="1" id="mytable">
+        <thead>
+          <tr>
+            <th>Disease</th>
+            <th>Medication</th>
+            <th>To buy</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="row1">
+          <td>
+            <div id="arr">
+            <select  name="medi[]"  class="form5" >
+            <% medications.forEach(medication =>{ %>
+              <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+
+            <%})%>
+            </select>
+            </div>
+          </td>
+          <td>
+            <select  name="dis[]" class="form5" >
+              <% disease.forEach(diseases =>{%>
+                <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+              <%})%>
+              </select>
+          </td>
+          <td>
+            <input name="buy[]" id="check"type="checkbox">
+          </td>
+          <td>
+            <input id="start" name="std[]" type="date"   class="form5" placeholder="start date">
+          </td>
+          <td><input id="end"name="endt[]" type="date"  class="form5" placeholder="end date"></td>
+          <td>
+            <input id="comment" name="comments[]" type="text"   class="form5" placeholder="comment">
+          </td>
+          <td>
+            <a  onclick="addRow()">+</button></a>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-container">
+      <label class="radio">
+        Remarque
+        <input type="text" name="healthyremark"   class="form-input" placeholder="health_remark">
+        </label>
+        </div>
+        <div class="form-field">
+          <label class="form-label title">FAMILY SITUATION</label>
+        </div>
+        <div class="form-container">
+          <% family.forEach(families =>{%>
+            <label class ="radio">
+              <input type="radio" name="familysituation" id="<%= families.situation_desc %>"class="radio3" value="<%= families.situation_id %>"><%= families.situation_desc %></label>
+
+          <%})%>
+          <label class="radio">
+            Children number
+            <input type="text" name="numchildren" class="form3" placeholder="children_number">
+          </label>
+
+        </div>
+        <div id="joint">
+        <div class="form-field" style="display:block;">
+          <label class="form-label title">JOINT</label>
+          </div>
+            <div class="form-field">
+              <p>
+              <label for="fname1" class="form-label1">First Name</label>
+              <input type="text" id="fname" name="fname1" class="form-input" placeholder="Enter your First Name">
+            </div>
+            <div class="form-field">
+              <label for="fathername" class="form-label1">Father Name</label>
+              <input type="text" id="fathername" name="fathername1" class="form-input" placeholder="Enter your Father Name">
+            </div>
+            <div class="form-field">
+              <label for="lname" class="form-label1">Last Name</label>
+              <input type="text" id="lname" name="lname1" class="form-input" placeholder="Enter your Last Name">
+            </div>
+            <div class="form-field">
+              <label for="phone" class="form-label1">Phone</label>
+              <input type="text" id="phone" name="phone1" class="form-input" placeholder="Enter your phone">
+            </div>
+            <div class="form-container">
+                <label for="date" class="form-label1">BirthDate</label>
+                <input type="date" id="date" name="date1" class="form" placeholder="Enter your phone">
+            </div>
+            <div class="form-field">
+              <label class="form-label title">PROFESIONAL STATUS</label>
+            </div>
+            <div  class="form-container">
+              <% profesional.forEach(profesional =>{%>
+                <label class ="radio">
+                <input type="radio" name="profesional_status1" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
+              <%})%>
+              <label class="radio">
+                <input type="text"   class="form1" placeholder="other">
+              </label>
+            </div>
+            <div class="form-container1" id="myform4" style="display:none;">
+              <label class="radio" >
+                Job desc
+                <input type="text"  name="job_desc1" class="form3" placeholder="job descritpion">
+              </label>
+              <label class="radio" >
+                Sector
+                <select name="sectors1" class="form4">
+                  <% sector.forEach(sectorr =>{%>
+                    <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+                  <%})%>
+                </select>
+              </label>
+              <label class="radio" >
+                Adress
+                <input type="text"  name="job_address1" class="form3" placeholder="adress">
+              </label>
+              <label class="radio" >
+                Salary
+                <input type="text"  name="job_salary1" class="form3" placeholder="salary">
+              </label>
+              <label class="radio">
+                Remarque
+                <input type="text"  name="job_remark1" class="form-input" placeholder="remark">
+              </label>
+            </div>
+            <div class="form-field">
+              <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+            </div>
+            <div class="form-container">
+              <% services.forEach(service =>{%>
+                <label class ="radio">
+                <input type="radio" name="health_service1" class="radio2"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
+              <%})%>
+              <label class="radio" >
+                <input type="text"   class="form3" placeholder="salary">
+              </label>
+              <label class="radio">
+                Remarque
+                <input type="text" name="health1" class="form3">       </label>
+            </div>
+            <div class="form-field">
+              <label class="form-label title">HEALTH SITUATION</label>
+            </div>
+            <label id="checks1" style="font-weight: bold;">
+            <input  type="checkbox" >Add to the list
+            </label>
+            <table style="display: none;" border="1" id="mytable1">
+              <thead>
+                <tr>
+                  <th>Disease</th>
+                  <th>Medication</th>
+                  <th>To buy</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="row2">
+                <td>
+                  <select  name="medi1"  class="form5" >
+                  <% medications.forEach(medication =>{ %>
+                    <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+      
+                  <%})%>
+                  </select>
+                </td>
+                <td>
+                  <select  name="dis1" class="form5" >
+                    <% disease.forEach(diseases =>{%>
+                      <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+                    <%})%>
+                    </select>
+                </td>
+                <td>
+                  <input name="buy1" id="check"type="checkbox">
+                </td>
+                <td>
+                  <input id="start" name="std1" type="date"   class="form5" placeholder="start date">
+                </td>
+                <td><input id="end"name="endt1" type="date"  class="form5" placeholder="end date"></td>
+                <td>
+                  <input id="comment" name="comments1" type="text"   class="form5" placeholder="comment">
+                </td>
+                <td>
+                  <a  onclick="addRow1()">+</button></a>
+                </tr>
+              </tbody>
+            </table>
+            <div class="form-container">
+            <label class="radio">
+              Remarque
+              <input type="text" name="healthyremark1"   class="form-input" placeholder="health_remark">
+              </label>
+              </div>
+              </div>
+              <div id="children">
+                <div class="form-field" >
+                  <label class="form-label title">CHILDREN</label>
+                  </div>
+                    <div class="form-field">
+                      <p>
+                      <label for="fname1" class="form-label1">First Name</label>
+                      <input type="text" id="fname" name="fname2" class="form-input" placeholder="Enter your First Name">
+                    </div>
+                    <div class="form-container">
+                        <label for="date" class="form-label1">BirthDate</label>
+                        <input type="date" id="date" name="date2" class="form" placeholder="Enter your phone">
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label title">SCOLAIRE SITUATION/PROFESIONAL STATUS</label>
+                    </div>
+                    <div  class="form-container">
+                      <label id="checks2" style="font-weight: bold;">
+                        <input  type="checkbox" >Student
+                        </label>
+                      <% profesional.forEach(profesional =>{%>
+                        <label class ="radio">
+                        <input type="radio" name="profesional_status2" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
+                      <%})%>
+                      <label class="radio">
+                        <input type="text"   class="form1" placeholder="other">
+                      </label>
+                    </div>
+                    <div class="form-container1" id="myform5" >
+                      <label class="radio" >
+                        Class
+                        <input type="text"  name="cls" class="form3" placeholder="Class">
+                      </label>
+                      <label class="radio" >
+                        Establishment
+                        <input type="text"  name="establishment" class="form3" placeholder="Establishment">
+                      </label>
+                      <label class="radio" >
+                        Address
+                        <input type="text"  name="sch_Address" class="form3" placeholder="Address">
+                      </label>
+                    <div class="form-container1" id="myform6" >
+                      <label class="radio" >
+                        Job desc
+                        <input type="text"  name="job_desc2" class="form3" placeholder="job descritpion">
+                      </label>
+                      <label class="radio" >
+                        Sector
+                        <select name="sectors2" class="form4">
+                          <% sector.forEach(sectorr =>{%>
+                            <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+                          <%})%>
+                        </select>
+                      </label>
+                      <label class="radio" >
+                        Adress
+                        <input type="text"  name="job_address2" class="form3" placeholder="adress">
+                      </label>
+                      <label class="radio" >
+                        Salary
+                        <input type="text"  name="job_salary2" class="form3" placeholder="salary">
+                      </label>
+                      <label class="radio">
+                        Remarque
+                        <input type="text"  name="job_remark2" class="form-input" placeholder="remark">
+                      </label>
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+                    </div>
+                    <div class="form-container">
+                      <% services.forEach(service =>{%>
+                        <label class ="radio">
+                        <input type="radio" name="health_service2" class="radio2"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
+                      <%})%>
+                      <label class="radio" >
+                        <input type="text"   class="form3" placeholder="salary">
+                      </label>
+                      <label class="radio">
+                        Remarque
+                        <input type="text" name="health2" class="form3">       </label>
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label title">HEALTH SITUATION</label>
+                    </div>
+                    <label id="checks3" style="font-weight: bold;">
+                    <input  type="checkbox" >Add to the list
+                    </label>
+                    <table style="display: none;" border="1" id="mytable3">
+                      <thead>
+                        <tr>
+                          <th>Disease</th>
+                          <th>Medication</th>
+                          <th>To buy</th>
+                          <th>Start Date</th>
+                          <th>End Date</th>
+                          <th>Comment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr id="row2">
+                        <td>
+                          <select  name="medi2"  class="form5" >
+                          <% medications.forEach(medication =>{ %>
+                            <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+              
+                          <%})%>
+                          </select>
+                        </td>
+                        <td>
+                          <select  name="dis2" class="form5" >
+                            <% disease.forEach(diseases =>{%>
+                              <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+                            <%})%>
+                            </select>
+                        </td>
+                        <td>
+                          <input name="buy2" id="check"type="checkbox">
+                        </td>
+                        <td>
+                          <input id="start" name="std2" type="date"   class="form5" placeholder="start date">
+                        </td>
+                        <td><input id="end"name="endt2" type="date"  class="form5" placeholder="end date"></td>
+                        <td>
+                          <input id="comment" name="comments2" type="text"   class="form5" placeholder="comment">
+                        </td>
+                        <td>
+                          <a  onclick="addRow1()">+</button></a>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="form-container">
+                    <label class="radio">
+                      Remarque
+                      <input type="text" name="healthyremark2"   class="form-input" placeholder="health_remark">
+                      </label>
+                      </div>
+                      </div>
+                      
         <button type="submit" class="form-submit">Submit</button>
       </form>
+      
   </div>
 </body>
-<script>
-  var radioBtn1 =document.getElementById('rent');
-  var form1=document.getElementById('myform1');
-  radioBtn1.addEventListener('click',function(){
-    if(this.checked){
-      form1.style.display='block'
-    }else{
-      form1.style.display='none'
-    }
-  })
-  var radioBtn1 =document.getElementById('owner');
-  var form1=document.getElementById('myform1');
-  radioBtn1.addEventListener('click',function(){
-    if(this.checked){
-      form1.style.display='none'
-    }else{
-      form1.style.display='block'
-    }
-  })
-
+<script src="./code.js">
 </script>
 </html>

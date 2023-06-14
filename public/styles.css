@@ -1,7 +1,12 @@
 /* Form container */
 .form-container {
-    max-width: 700px;
+    max-width: 1000px;
     margin: 0 auto;
+  }
+  .form-container1 {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 20px;
   }
   
   /* Form header */
@@ -42,6 +47,7 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-top: 15px;
   }
   .form-input1 {
     width: 50%;
@@ -51,10 +57,29 @@
     border-radius: 4px;
   }
   .radio {
-    padding: 10px;
+    padding: 5px;
     font-weight: bold;
     margin-bottom: 5px;
-    margin-top:15px
+    margin-top:20px;
+    width:25%
+  }
+  .radio1 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:15%
+  }
+  .radio2 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:10%
+  }
+  .radio3 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:15%
   }
   
   /* Submit button */
@@ -94,5 +119,39 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
+  }
+  .form4 {
+    width: 20%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    width: 17%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form5 {
+    width: 100%;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form2 {
+    display: inline-block;
+    width: 40%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form3 {
+    display: inline-block;
+    width: 15%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
   }
   
