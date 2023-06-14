@@ -15,7 +15,7 @@ function getAllDonations(req, res) {
     
 }
 
-// Render the edit donation form
+//Render the edit donation form
 function editDonationForm(req, res) {
     const donationId = req.params.id;
     console.log(donationId)
@@ -23,23 +23,47 @@ function editDonationForm(req, res) {
     donationModel.selectDonation(donationId)
       .then((result) => {
         const donation = result[0]; // Access the first object in the result array
-        console.log({ donation });
+       
         donationModel.selectDonationTypes().then(([donationTypes])=>{
-          console.log(donationTypes)
+          
           donationModel.selectRecipient().then(([recipients])=>{
-            console.log(recipients)
+            
             beneficiaryModel.selectAllAvailableFamilies().then(([families])=>{
-              console.log(families)
+              
               familyDonationModel.selectSelectedFamilies(donationId).then(([selectedFamilies])=>{
                 console.log(selectedFamilies)
+
                 const familyCommentsMap = selectedFamilies.reduce((map, family) => {
                   map[family.family_id] = family.comment;
                   return map;
                 }, {});
-                console.log(familyCommentsMap)
 
+                const filteredFamilies = families.map(family => {
+                  const comment = familyCommentsMap[family.family_id] || '';
+                  return { ...family, comment };
+                });
+          
+                const selectedFamilyIds = selectedFamilies.map(family => family.family_id);
+                const shiftedFamilies = filteredFamilies.sort((a, b) => {
+                  const isSelectedA = selectedFamilyIds.includes(a.b_id);
+                  const isSelectedB = selectedFamilyIds.includes(b.b_id);
+                  if (isSelectedA && !isSelectedB) {
+                    return -1;
+                  } else if (!isSelectedA && isSelectedB) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                });
+                
+          
+                
+                console.log(familyCommentsMap)
+                console.log(filteredFamilies)
+                console.log(shiftedFamilies)
+                console.log(selectedFamilyIds)
                 res.render("../view/edit_donation.ejs", {
-                  donation, donationTypes, recipients, families, familyCommentsMap, moment
+                  donation, donationTypes, recipients, families: shiftedFamilies, familyCommentsMap, moment
                 })
               })
             })
@@ -55,6 +79,9 @@ function editDonationForm(req, res) {
         res.status(500).send("Something went wrong");
       });
   }
+
+
+
 
   
 
