@@ -23,6 +23,7 @@ exports.postLogin = (req,res,next)=> {
             .then(doMatch=>{
                 if(doMatch){
                     req.session.user_id = result[0].user_id;
+                    res.redirect("/")
                 }else{
                     res.redirect('/login?err=login&msg=Invalid username or password');
                 }

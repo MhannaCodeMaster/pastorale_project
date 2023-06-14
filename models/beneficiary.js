@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const db = require('../util/database');
 
 class Beneficiary{
@@ -10,8 +9,7 @@ class Beneficiary{
         return db.execute("SELECT * FROM beneficiary WHERE main_beneficiary = 'YES'");
     }
 }
-module.exports = Beneficiary;
-=======
+
 const pool = require('../util/database');
 
 function selectAllAvailableFamilies(){
@@ -21,6 +19,6 @@ function selectAllAvailableFamilies(){
 }
 
 module.exports= {
-    selectAllAvailableFamilies
+    selectAllAvailableFamilies,
+    Beneficiary
 }
->>>>>>> Stephan

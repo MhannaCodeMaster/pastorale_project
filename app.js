@@ -3,15 +3,13 @@ const app = express();
 const path = require('path');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-<<<<<<< HEAD
-const csrf = require('csurf');
+// const csrf = require('csurf');
 const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
 const settingsRoute = require('./routes/settings');
 const allBeneficiariesRoute = require('./routes/beneficiary_table');
 
-const csrfProtection = csrf();
-=======
+//const csrfProtection = csrf();
 const db = require('./util/database');
 const donationRoute = require('./routes/donations')
 
@@ -19,24 +17,22 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(session({secret: 'my secret', resave: false, saveUninitialized: false}));
->>>>>>> Stephan
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'view'));
 
-<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'images')));
 
 app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false }));
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
 // Set the CSRF token in res.locals
-app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.csrfToken = req.csrfToken();
+//   next();
+// });
 
 // Route for login and forgot password link
 app.use(authRoute);
@@ -49,10 +45,11 @@ app.use((req, res, next) => {
     next();
   }
 });
-
 app.use(settingsRoute);
+
 app.use(allBeneficiariesRoute);
 app.use(adminRoute);
+app.use(donationRoute)
 
 // 404 error handling middleware
 app.use((req, res, next) => {
@@ -68,15 +65,10 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
-=======
-
-app.use(donationRoute)
 
 
 
 
 
-app.listen(3000,()=>{
-    console.log('Server listening on port 3000');
-});
->>>>>>> Stephan
+
+
