@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="../../styles.css"> <!-- Replace with the path to your compiled CSS file -->
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+          <h2>Social and family situation form</h2>
+        </div>
+        <div class="form-field">
+        <label class="form-label title">BENIFICIARY</label>
+        </div>
+        <form action="/edit" method="POST">
+          <div class="form-field">
+            <p>
+            <label for="fname" class="form-label1">First Name</label>
+            <input type="text" id="fname" value="<%= mainbeni[0].first_name %>" name="fname" class="form-input" placeholder="Enter your First Name">
+          </div>
+          <div class="form-field">
+            <label for="fathername" class="form-label1">Father Name</label>
+            <input type="text" id="fathername" value="<%= mainbeni[0].middle_name %>"  name="fathername" class="form-input" placeholder="Enter your Father Name">
+          </div>
+          <div class="form-field">
+            <label for="lname" class="form-label1">Last Name</label>
+            <input type="text" id="lname" value="<%= mainbeni[0].last_name %>"  name="lname" class="form-input" placeholder="Enter your Last Name">
+          </div>
+          <div class="form-field">
+            <label for="phone" class="form-label1">Phone</label>
+            <input type="text" id="phone"  value="<%= mainbeni[0].phone_number %>" name="phone" class="form-input" placeholder="Enter your phone">
+          </div>
+          <div class="form-container">
+              <label for="date" class="form-label1">BirthDate</label>
+              <input type="date" id="date" value="<%= moment(mainbeni[0].birth_date).format('yyyy-MM-DD') %>"  name="date" class="form" placeholder="Enter your phone">
+          </div>
+          <div class="form-field">
+            <label class="form-label title">ADDRESS</label>
+          </div>
+              <div class="form-container">
+                <label for="fname" class="form-label1">Neighborhood</label>
+                <input type="text" id="fname" value="<%= mainbeni[0].neighborhood_address %>" name="neighborhood" class="form1" placeholder="Enter your Neighborhood">
+              </div>
+              <div class="form-container">
+                <label for="fathername" class="form-label1">Street</label>
+                <input type="text" id="fathername" value="<%=mainbeni[0].street_address %>" name="street" class="form1" placeholder="Enter your Street">
+              </div>
+              <div class="form-container">
+                <label for="lname" class="form-label1">Building</label>
+                <input type="text" id="lname" value="<%=mainbeni[0].house_address %>" name="buildiing" class="form1" placeholder="Enter your Building">
+              </div>
+              <div class="form-container">
+                <label for="phone" class="form-label1">Floor</label>
+                <input type="text" id="phone" name="Floor" value="<%= mainbeni[0].house_floor %>" class="form1" placeholder="Enter your Floor">
+              </div>
+              <div class="form-container">
+                  <label for="date" class="form-label1">Additional Information</label>
+                  <input type="text" id="date" name="additionalinfo" value="<%= mainbeni[0].address_details %>" class="form1" placeholder="address">
+              </div>
+              <div class="form-container">
+                <% property.forEach(pros =>{%>
+                  <label class="radio">
+                    <input type="radio" name="property_type" class="radio" value="<%= pros.status_id %>" <%= pros.status_id == mainbeni[0].property_status_id ? 'checked' : '' %>><%= pros.status_desc %>
+                  </label>
+
+                <% }) %>
+       
+                <label id="myform1" class="radio" >
+                  Rent price
+                  <input   type="text" id="date" name="rentprice" class="form4" value="<%= mainbeni[0].price_of_rent %>" placeholder="Rent Price">
+                </label>
+            </div>
+            <div class="form-field">
+              <label class="form-label title">PROFESIONAL STATUS</label>
+            </div>
+            <div  class="form-container">
+              <% profesional.forEach(profesional =>{%>
+                <label class ="radio">
+                <input type="radio" name="profesional_status" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" <%= profesional.p_id == mainbeni[0].professional_status_id ? 'checked' : '' %>><%= profesional.p_desc %></label>
+              <%})%>
+              <label class="radio">
+                <input type="text"   class="form1" placeholder="other">
+              </label>
+            </div>
+            <div class="form-container1" id="myform2" >
+              <label class="radio" >
+                Job desc
+                <input type="text" value="<%= mainbeni[0].job_desc %>" name="job_desc" class="form3" placeholder="job descritpion">
+              </label>
+              <label class="radio" >
+                Sector
+                <select name="sectors" class="form4">
+                  <% sector.forEach(sectorr =>{%>
+                    <option   value="<%= sectorr.sector_id %>" <%= sectorr.sector_id == mainbeni[0].sector_id ? 'selected' : '' %>><%= sectorr.sector_type %></option>
+                  <%})%>
+                </select>
+              </label>
+              <label class="radio" >
+                Adress
+                <input type="text"  name="job_address" value="<%= mainbeni[0].job_address %>" class="form3" placeholder="adress">
+              </label>
+              <label class="radio" >
+                Salary
+                <input type="text"  name="job_salary" value="<%= mainbeni[0].job_salary %>" class="form3" placeholder="salary">
+              </label>
+              <label class="radio">
+                Remarque
+                <input type="text"  name="job_remark" value="<%= mainbeni[0].job_remark %>" class="form-input" placeholder="remark">
+              </label>
+            </div>
+            <div class="form-field">
+              <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+            </div>
+            <div class="form-container">
+              <% services.forEach(service =>{%>
+                <label class ="radio">
+                <input type="radio" name="health_service" class="radio2"  value="<%= service.hss_id %>"  <%= service.hss_id == mainbeni[0].hss_id ? 'checked' : '' %> ><%= service.hss_desc %></label>
+              <%})%>
+              <label class="radio" >
+                <input type="text"   class="form3" placeholder="salary">
+              </label>
+              <label class="radio">
+                Remarque
+                <input type="text" value="<%= mainbeni[0].social_service_remark %>" name="health" class="form3">   
+                </label>
+            </div>
+            <div class="form-field">
+              <label class="form-label title">HEALTH SITUATION</label>
+            </div>
+            <label id="checks" style="font-weight: bold;">
+            <input  type="checkbox" >Add to the list
+            </label>
+            <table  border="1" id="mytable">
+              <thead>
+                <tr>
+                  <th>Disease</th>
+                  <th>Medication</th>
+                  <th>To buy</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% healthes.forEach(heal=>{ %>
+
+                
+                <tr id="row1">
+                <td>
+                  <div id="arr">
+                  <select  name="medi"  class="form5" >
+                  <% medications.forEach(medication =>{ %>
+                    <option value="<%= medication.medicine_id %>" <%= medication.medicine_id == heal.medicine_id ? 'selected' : '' %>><%= medication.medicine_name %></option>
+      
+                  <%})%>
+                  </select>
+                  </div>
+                </td>
+                <td>
+                  <select  name="dis" class="form5" >
+                    <% disease.forEach(diseases =>{%>
+                      <option value="<%= diseases.disease_id %>"  <%= diseases.disease_id == heal.disease_id ? 'selected' : '' %> ><%= diseases.disease_name %></option>
+                    <%})%>
+                    </select>
+                </td>
+                <td>
+                  <input name="buy" <%= heal.bought == "yes" ? 'checked' : '' %> id="check"type="checkbox">
+                </td>
+                <td>
+                  <input id="start" name="std" type="date"  value="<%= moment(heal.start_date).format('yyyy-MM-DD') %>" class="form5" placeholder="start date">
+                </td>
+                <td><input id="end"name="endt" type="date" value="<%= moment(heal.end_date).format('yyyy-MM-DD') %>" class="form5" placeholder="end date"></td>
+                <td>
+                  <input id="comment" name="comments" type="text" value="<%= heal.remark %>"   class="form5" placeholder="comment">
+                </td>
+                <td>
+                  <a  onclick="addRow()">+</button></a>
+                </tr>
+                <%})%>
+              </tbody>
+            </table>
+            <div class="form-container">
+            <label class="radio">
+              Remarque
+              <input type="text" name="healthyremark" value="<%= mainbeni[0].health_remark %>"   class="form-input" placeholder="health_remark">
+            </label>
+              </div>
+              <div class="form-field">
+                <label class="form-label title">FAMILY SITUATION</label>
+              </div>
+              <div class="form-container">
+                <% family.forEach(families =>{%>
+                  <label class ="radio">
+                    <input type="radio" name="familysituation" id="<%= families.situation_desc %>"class="radio3" value="<%= families.situation_id %>" <%= families.situation_id == mainbeni[0].family_situation_id ? 'checked' : '' %>><%= families.situation_desc %></label>
+      
+                <%})%>
+                <label class="radio">
+                  Children number
+                  <input type="text" name="numchildren" value="<%= mainbeni[0].number_of_children %>" class="form3" placeholder="children_number">
+                </label>
+              </div>
+              <% if (joints.length >0 ) { %>
+              <div class="form-field">
+                <label class="form-label title">JOINT</label>
+                </div>
+                <form action="/edit" method="POST">
+                  <div class="form-field">
+                    <p>
+                    <label for="fname" class="form-label1">First Name</label>
+                    <input type="text" id="fname" value="<%= joints[0].first_name %>" name="fname" class="form-input" placeholder="Enter your First Name">
+                  </div>
+                  <div class="form-field">
+                    <label for="fathername" class="form-label1">Father Name</label>
+                    <input type="text" id="fathername" value="<%= joints[0].middle_name %>"  name="fathername" class="form-input" placeholder="Enter your Father Name">
+                  </div>
+                  <div class="form-field">
+                    <label for="lname" class="form-label1">Last Name</label>
+                    <input type="text" id="lname" value="<%= joints[0].last_name %>"  name="lname" class="form-input" placeholder="Enter your Last Name">
+                  </div>
+                  <div class="form-field">
+                    <label for="phone" class="form-label1">Phone</label>
+                    <input type="text" id="phone"  value="<%= joints[0].phone_number %>" name="phone" class="form-input" placeholder="Enter your phone">
+                  </div>
+                  <div class="form-container">
+                      <label for="date" class="form-label1">BirthDate</label>
+                      <input type="date" id="date" value="<%= moment(joints[0].birth_date).format('yyyy-MM-DD') %>"  name="date" class="form" placeholder="Enter your phone">
+                  </div>
+                    <div class="form-field">
+                      <label class="form-label title">PROFESIONAL STATUS</label>
+                    </div>
+                    <div  class="form-container">
+                      <% profesional.forEach(profesional =>{%>
+                        <label class ="radio">
+                        <input type="radio" name="profesional_status" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" <%= profesional.p_id == joints[0].professional_status_id ? 'checked' : '' %>><%= profesional.p_desc %></label>
+                      <%})%>
+                      <label class="radio">
+                        <input type="text"   class="form1" placeholder="other">
+                      </label>
+                    </div>
+                    <div class="form-container1" id="myform2" >
+                      <label class="radio" >
+                        Job desc
+                        <input type="text" value="<%= joints[0].job_desc %>" name="job_desc" class="form3" placeholder="job descritpion">
+                      </label>
+                      <label class="radio" >
+                        Sector
+                        <select name="sectors" class="form4">
+                          <% sector.forEach(sectorr =>{%>
+                            <option   value="<%= sectorr.sector_id %>" <%= sectorr.sector_id == joints[0].sector_id ? 'selected' : '' %>><%= sectorr.sector_type %></option>
+                          <%})%>
+                        </select>
+                      </label>
+                      <label class="radio" >
+                        Adress
+                        <input type="text"  name="job_address" value="<%= joints[0].job_address %>" class="form3" placeholder="adress">
+                      </label>
+                      <label class="radio" >
+                        Salary
+                        <input type="text"  name="job_salary" value="<%= joints[0].job_salary %>" class="form3" placeholder="salary">
+                      </label>
+                      <label class="radio">
+                        Remarque
+                        <input type="text"  name="job_remark" value="<%= joints[0].job_remark %>" class="form-input" placeholder="remark">
+                      </label>
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+                    </div>
+                    <div class="form-container">
+                      <% services.forEach(service =>{%>
+                        <label class ="radio">
+                        <input type="radio" name="health_service" class="radio2"  value="<%= service.hss_id %>"  <%= service.hss_id == joints[0].hss_id ? 'checked' : '' %> ><%= service.hss_desc %></label>
+                      <%})%>
+                      <label class="radio" >
+                        <input type="text"   class="form3" placeholder="salary">
+                      </label>
+                      <label class="radio">
+                        Remarque
+                        <input type="text" value="<%= joints[0].social_service_remark %>" name="health" class="form3">   
+                        </label>
+                    </div>
+                    <div class="form-field">
+                      <label class="form-label title">HEALTH SITUATION</label>
+                    </div>
+                    <label id="checks" style="font-weight: bold;">
+                    <input  type="checkbox" >Add to the list
+                    </label>
+                    <table  border="1" id="mytable1">
+                      <thead>
+                        <tr>
+                          <th>Disease</th>
+                          <th>Medication</th>
+                          <th>To buy</th>
+                          <th>Start Date</th>
+                          <th>End Date</th>
+                          <th>Comment</th>
+                        </tr>
+                        <a  onclick="addRow1()">+</button></a>
+                      </thead>
+                      <tbody>
+                        <tr id="row2" style="display: none;">
+                          <td>
+                            <div id="arr">
+                            <select  name="medi"  class="form5" >
+                            <% medications.forEach(medication =>{ %>
+                              <option value="<%= medication.medicine_id %>" ><%= medication.medicine_name %></option>
+                
+                            <%})%>
+                            </select>
+                            </div>
+                          </td>
+                          <td>
+                            <select  name="dis" class="form5" >
+                              <% disease.forEach(diseases =>{%>
+                                <option value="<%= diseases.disease_id %>"   ><%= diseases.disease_name %></option>
+                              <%})%>
+                              </select>
+                          </td>
+                          <td>
+                            <input name="buy"  id="check"type="checkbox">
+                          </td>
+                          <td>
+                            <input id="start" name="std" type="date"   class="form5" placeholder="start date">
+                          </td>
+                          <td><input id="end"name="endt" type="date"  class="form5" placeholder="end date"></td>
+                          <td>
+                            <input id="comment" name="comments" type="text"    class="form5" placeholder="comment">
+                          </td>
+            
+                           
+                          </tr>
+                        <% jointhealth.forEach(heals=>{ %>
+                        <tr>
+                        <td>
+                          <div id="arr">
+                          <select  name="medi"  class="form5" >
+                          <% medications.forEach(medication =>{ %>
+                            <option value="<%= medication.medicine_id %>" <%= medication.medicine_id == heals.medicine_id ? 'selected' : '' %>><%= medication.medicine_name %></option>
+              
+                          <%})%>
+                          </select>
+                          </div>
+                        </td>
+                        <td>
+                          <select  name="dis" class="form5" >
+                            <% disease.forEach(diseases =>{%>
+                              <option value="<%= diseases.disease_id %>"  <%= diseases.disease_id == heals.disease_id ? 'selected' : '' %> ><%= diseases.disease_name %></option>
+                            <%})%>
+                            </select>
+                        </td>
+                        <td>
+                          <input name="buy" <%= heals.bought == "yes" ? 'checked' : '' %> id="check"type="checkbox">
+                        </td>
+                        <td>
+                          <input id="start" name="std" type="date"  value="<%= moment(heals.start_date).format('yyyy-MM-DD') %>" class="form5" placeholder="start date">
+                        </td>
+                        <td><input id="end"name="endt" type="date" value="<%= moment(heals.end_date).format('yyyy-MM-DD') %>" class="form5" placeholder="end date"></td>
+                        <td>
+                          <input id="comment" name="comments" type="text" value="<%= heals.remark %>"   class="form5" placeholder="comment">
+                        </td>
+          
+                         
+                        </tr>
+                        <%})%>
+                      </tbody>
+                    </table>
+                    <div class="form-container">
+                    <label class="radio">
+                      Remarque
+                      <input type="text" name="healthyremark" value="<%= joints[0].health_remark %>"   class="form-input" placeholder="health_remark">
+                    </label>
+                      </div>
+                      <% } %>
+            
+        
+          
+            </div>
+            <button type="submit" class="form-submit">Submit</button>
+            </form>
+</body>
+<script>
+</script>
+</html>

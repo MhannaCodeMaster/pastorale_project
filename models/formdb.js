@@ -8,15 +8,35 @@ function fillInformation1(FirstName,FatherName,LastName,Phone,date,profstatid,se
     const query=`INSERT INTO beneficiary (first_name,middle_name,last_name,phone_number,birth_date,professional_status_id,sector_id,job_desc,job_address,job_salary,job_remark,social_service_remark,hss_id,health_remark) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     return pool.execute(query,[FirstName,FatherName,LastName,Phone,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark])
 }
+//function fillInformation2(FirstName,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark,Cls,Establishment,School_address){
+   // const query=`INSERT INTO beneficiary (first_name,birth_date,professional_status_id,sector_id,job_desc,job_address,job_salary,job_remark,social_service_remark,hss_id,health_remark,class,establishment,school_address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+   // return pool.execute(query,[FirstName,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark,Cls,Establishment,School_address])
+//}
 function fillInformation2(FirstName,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark,Cls,Establishment,School_address){
     const query=`INSERT INTO beneficiary (first_name,birth_date,professional_status_id,sector_id,job_desc,job_address,job_salary,job_remark,social_service_remark,hss_id,health_remark,class,establishment,school_address) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
     return pool.execute(query,[FirstName,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark,Cls,Establishment,School_address])
+}
+// function insertRelation(benid1,benid2,relation){
+//     const query=`INSERT INTO beneficiar_relation (beneficiary1_id,beneficiary2_id,relation_desc,) VALUES(?,?,?)`;
+//     return pool.execute(query,[benid1,benid2,relation])
+// }
+function fillInformation3(FirstName,FatherName,LastName,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark){
+    const query=`INSERT INTO beneficiary (first_name,middle_name,last_name,birth_date,professional_status_id,sector_id,job_desc,job_address,job_salary,job_remark,social_service_remark,hss_id,health_remark) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    return pool.execute(query,[FirstName,FatherName,LastName,date,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark])
+}
+function relationss(beni1,beni2,rels){
+    const query=`INSERT INTO beneficiar_relation (beneficiary1_id,beneficiary2_id,relation_desc) VALUES(?,?,?)`;
+    return pool.execute(query,[beni1,beni2,rels])
 }
 function selectPropertyStatus(){
     const query="SELECT * FROM property_status"
     return pool.execute(query)
 }
 function fillHealthSituation(buys,startd,enddt,com,diseases,medicines,ben){
+    const query=`INSERT INTO health_situation (bought,start_date,end_date,remark,disease_id,medicine_id,beneficiary_id) VALUES (?,?,?,?,?,?,?)`;
+    return pool.execute(query,[buys,startd,enddt,com,diseases,medicines,ben])
+}
+function fillHealthSituation1(buys,startd,enddt,com,diseases,medicines,ben){
     const query=`INSERT INTO health_situation (bought,start_date,end_date,remark,disease_id,medicine_id,beneficiary_id) VALUES (?,?,?,?,?,?,?)`;
     return pool.execute(query,[buys,startd,enddt,com,diseases,medicines,ben])
 }
@@ -44,6 +64,10 @@ function selectFamilySituation(){
     const query="SELECT * FROM family_situation"
     return pool.execute(query)
 }
+function fillFinancialSituation(monthly_gains,monthly_spends,price_of_rents,price_of_dishs,price_of_internet_phones,price_of_cellulares,price_of_electricitys,price_of_generators,price_of_loans,price_otherss,remarks,beni_id){
+    const query="INSERT INTO financial_situation (monthly_gain,monthly_spend,price_of_rent,price_of_dish,price_of_internet_phone,price_of_cellular,price_of_electricity,price_of_generator,price_of_loan,price_others,remark,beni_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+    return pool.execute(query,[monthly_gains,monthly_spends,price_of_rents,price_of_dishs,price_of_internet_phones,price_of_cellulares,price_of_electricitys,price_of_generators,price_of_loans,price_otherss,remarks,beni_id])
+}
 module.exports = {
     fillInformation,
     selectPropertyStatus,
@@ -54,5 +78,9 @@ module.exports = {
     selectFamilySituation,
     fillHealthSituation,
     fillInformation1,
-    fillInformation2
+    fillInformation2,
+    fillFinancialSituation,
+    fillHealthSituation1,
+    relationss,
+    fillInformation3
 }
