@@ -7,8 +7,14 @@ const familyDonationModel = require('../models/familyDonation')
 // Render the donations view with all donations
 function getAllDonations(req, res) {
   donationModel.getAllDonations().then(([donations])=>{
+    donationModel.selectDonationTypes().then(([donationTypes])=>{
+      res.render('../view/donations.ejs',{donations, donationTypes, pageTitle: 'donations'})
+
+    }).catch((err)=>{
+      res.status(400).send("something went wrong")
+    })
     
-    res.render('../view/donations.ejs',{donations})
+    
   }).catch((err)=>{
     res.status(400).send("something went wrong")
   })
@@ -152,7 +158,10 @@ function insertDonation(req, res){
     const selectedFamilies = req.body.selectedFamilies
   const donationData = req.body
   console.log(donationData)
+  
+  console.log(donationData)
   donationModel.insertDonation(donationData).then(([result])=>{
+    
     if(donationData.recipientType == '2'){
   
       for (let i = 0; i < familyPairs.length; i += 2) {

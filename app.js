@@ -8,7 +8,7 @@ const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
 const settingsRoute = require('./routes/settings');
 const allBeneficiariesRoute = require('./routes/beneficiary_table');
-
+const exportRoute = require('./routes/exportRoute')
 //const csrfProtection = csrf();
 const db = require('./util/database');
 const donationRoute = require('./routes/donations')
@@ -50,7 +50,7 @@ app.use(settingsRoute);
 app.use(allBeneficiariesRoute);
 app.use(adminRoute);
 app.use(donationRoute)
-
+app.use(exportRoute);
 // 404 error handling middleware
 app.use((req, res, next) => {
   res.status(404).render('error404', { pageTitle: 'Page Not Found' });

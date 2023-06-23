@@ -6,8 +6,8 @@ function insertFamilyDonation(familyId, donationId, comment){
 }
 
 
-function selectSelectedFamilies(donationId){
-    const query = "SELECT * FROM family_donation WHERE donation_id = ?"
+async function selectSelectedFamilies(donationId){
+    const query = "SELECT * FROM family_donation, beneficiary WHERE donation_id = ? AND b_id = family_id"
     return pool.execute(query,[donationId])
 }
 

@@ -3,45 +3,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Donations</title>
-  <link rel="stylesheet" type="text/css" href="../css/donations.css"> 
   
+  <link rel="stylesheet" type="text/css" href="../css/donations.css"> 
+  <%-include('./includes/head.ejs') %>
 </head>
 <body>
-  <h1>Donations</h1>
-  <input type="text" id="searchInput" onkeyup="filterDonations()" placeholder="Search by name">
-  <br><br>
-  <a href="/donations/add"><button id="addDonationButton">Add Donation</button></a>
+  <%-include('./includes/nav.ejs') %>
+  <div class="container">
+  
+  
+    
+<div class="button-container">
+  <div class="left-buttons">
+    <a href="/donations/add"><button class="add-button">Add Donation</button></a>
+    <button class="export-button" onclick="exportForm.submit()">Export</button>
+  </div>
+  <div class="right-buttons">
+    <input type="text" id="searchInput" onkeyup="filterDonations()" placeholder="Search donator">
+   
+    <!-- <button class="delete-button">Delete</button> -->
+  </div>
+</div>
+  
+ 
+  <div id="tableContainer">
   <table id="donationsTable">
     <thead>
       <tr>
         <th>Date</th>
-        <th>Name</th>
+        <th>Name </th>
         <th>Donation</th>
+        <th><label for="donationTypeFilter">Donation Type:</label><br><select id="donationTypeFilter">
+          <option value="all">All</option>
+          <% donationTypes.forEach(donationType => { %>
+            <option value="<%= donationType.donation_type %>"><%= donationType.donation_type %></option>
+          <% }) %>
+        </select></th>
         <th>Donator</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
+      <form method="post" action="/export/donations" id="exportForm">
       <% donations.forEach((donation) => { %>
-        <tr>
+        
+        <tr onclick="toggleRowSelection(event, '<%= donation.donation_id %>')">
+          
+
           <td><%= donation.donation_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></td>
           <td><%= donation.donator_name %></td>
           <td><%= donation.donation_content %></td>
+          <td><%= donation.donation_type %></td>
           <td><%= donation.recipient_desc %></td>
           <td>
-            <a href="/donations/edit/<%= donation.donation_id %>" class="edit-button">Edit</a>
+            <input type ="button" class="edit-button" value="Edit" onclick="window.location.href='/donations/edit/<%= donation.donation_id %>';"> <input type = "checkbox" name ="export[]" value="<%= donation.donation_id %>" id="export_<%= donation.donation_id %>" onclick="event.stopPropagation();">
           </td>
         </tr>
+      
       <% }) %>
+    </form>
     </tbody>
   </table>
+</div>
   <script src="../JS/donations.js"></script>
   
     
     
-
+</div>
   
 </body>
 </html>
