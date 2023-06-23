@@ -34,8 +34,15 @@ app.use(session({ secret: 'my secret', resave: false, saveUninitialized: false }
 //   next();
 // });
 
+app.use(require('./routes/testing'));
+
 // Route for login and forgot password link
 app.use(authRoute);
+//Error 500 middlerware
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).render('error500', { pageTitle: 'Server Error',mg:'' });
+});
 
 // Checking if the user has started a session
 app.use((req, res, next) => {
@@ -46,20 +53,21 @@ app.use((req, res, next) => {
   }
 });
 app.use(settingsRoute);
-
+app.use(require('./routes/export'));
 app.use(allBeneficiariesRoute);
 app.use(adminRoute);
 app.use(donationRoute)
 
-// 404 error handling middleware
-app.use((req, res, next) => {
-  res.status(404).render('error404', { pageTitle: 'Page Not Found' });
-});
 
-// Error handling middleware
+//Error 500 middlerware
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).render('error500', { pageTitle: 'Server Error' });
+});
+
+// 404 error handling middleware
+app.use((req, res, next) => {
+  res.status(404).render('error404', { pageTitle: 'Page Not Found' });
 });
 
 app.listen(3000, () => {

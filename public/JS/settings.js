@@ -34,25 +34,25 @@ cancel_username.addEventListener('click', function(event) {
 });
 
 /*-----Handeling email input in section account------*/
-const change_email = document.getElementById('change_email');
-const save_email = document.getElementById('save_email');
-const cancel_email = document.getElementById('cancel_email');
-const email_input = document.getElementById('email');
-/*---Listener for username change button---*/
-change_email.addEventListener('click', function(event) {
-    email_input.disabled = false;
-    email_input.focus();
-    save_email.style='display:block';
-    cancel_email.style='display:block';
-    change_email.style='display:none';
+// const change_email = document.getElementById('change_email');
+// const save_email = document.getElementById('save_email');
+// const cancel_email = document.getElementById('cancel_email');
+// const email_input = document.getElementById('email');
+/*---Listener for email change button---*/
+// change_email.addEventListener('click', function(event) {
+//     email_input.disabled = false;
+//     email_input.focus();
+//     save_email.style='display:block';
+//     cancel_email.style='display:block';
+//     change_email.style='display:none';
 
-});
-cancel_email.addEventListener('click', function(event) {
-    email_input.disabled = true;
-    save_email.style='display:none';
-    cancel_email.style = 'display:none';
-    change_email.style='display:block';
-});
+// });
+// cancel_email.addEventListener('click', function(event) {
+//     email_input.disabled = true;
+//     save_email.style='display:none';
+//     cancel_email.style = 'display:none';
+//     change_email.style='display:block';
+// });
 
     
 /*------Check password for section change password------*/
@@ -77,8 +77,7 @@ const queryParams = new URLSearchParams(window.location.search);
 const section = queryParams.get('section');
 if(section){
     const sectionElement = document.getElementById(section);
-    console.log(section);
-    sectionElement.scrollIntoView({ behavior: 'smooth' });
+    sectionElement.scrollIntoView({ behavior: 'instant' });
 }
 
 

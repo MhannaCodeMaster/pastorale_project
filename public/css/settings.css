@@ -10,17 +10,19 @@
   border-right: 1px solid rgb(189, 189, 189);
 }
 
-ul{
+.setting-link ul{
   list-style: none;
   margin: 0px;
   padding: 10px;
+  font-weight: bold;
 }
-ul li a{
+.setting-link ul li a{
   padding: 10px 5px;
   border-radius: 10px;
+  font-size: 18px;
 }
-ul li a:hover{
-  background-color: rgb(189, 189, 189);
+.setting-link ul li a:hover{
+  background-color: rgb(238, 238, 238);
 }
 
 .section{
@@ -28,7 +30,7 @@ ul li a:hover{
 }
 
 .content{
-  max-height: calc(100vh - 100px); /* Adjust the height as needed */
+  max-height: calc(100vh - 66px); /* Adjust the height as needed */
   overflow-y: auto;
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: transparent transparent; /* For Firefox */

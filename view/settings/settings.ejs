@@ -8,7 +8,7 @@
   <%-include('../includes/nav.ejs')%>
   <div class="container-xxl h-100">
     <div class="row">
-      <div class="col-md-2 mt-2 fixed-nav">
+      <div class="col-md-2 mt-2 fixed-nav setting-link">
         <h1>Settings</h1>
         <ul>
           <li class="nav-item">
@@ -24,10 +24,7 @@
             <a class="nav-link" href="#member">Add Member</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#delete">Delete Account</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" style="color: red;" href="#delete">Remove Members</a>
           </li>
         </ul>
       </div>
@@ -38,8 +35,20 @@
           <h4 id="account">Account</h4>
           <hr>
           <%if(section === 'account'){%>
-            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+            <%if(err==='true'){%>
+              <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+            <%}else if(err==='false'){%>
+                <span class="success_message"><i class="bi bi-check-circle-fill"></i> <%=msg%></span>
+            <%}%>
           <%}%>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" name="email" value="<%= (email)?email:''%>" class="form-control" id="email" required disabled>
+            <div style="display: flex;">
+            </div>
+          </div>
+
           <form action="/settings/change-username" id="username_form" method="post">
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
@@ -48,30 +57,24 @@
                 <button id="change_username" type="button" class="btn-primary">Change</button>
                 <button id="save_username" type="submit" style="display: none;" class="btn-primary">Save</button>
                 <button id="cancel_username" type="reset" style="display: none;" class="btn-primary">Cancel</button>
-                
               </div>
             </div>
-          </form>
-    
-          <form action="/settings/change-email" method="post" id="email_form">
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" name="email" value="<%= (email)?email:''%>" class="form-control" id="email" required disabled>
-              <div style="display: flex;">
-                <button id="change_email" type="button" class="btn-primary">Change</button>
-                <button id="save_email" type="submit" style="display: none;" class="btn-primary">Save</button>
-                <button id="cancel_email" type="reset" style="display: none;" class="btn-primary">Cancel</button>
-                
-              </div>
-          </form>
+          </form>      
         </div>
         
         <div class="section">
           <h4 id="changePass">Change password</h4>
           <hr>
           <%if(section === 'changePass'){%>
-            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+
+            <%if(err==='true'){%>
+              <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+            <%}else if(err==='false'){%>
+                <span class="success_message"><i class="bi bi-check-circle-fill"></i> <%=msg%></span>
+            <%}%>
+
           <%}%>
+
           <form onsubmit="return checkChangedPassword()" action="/settings/change-password" method="post">
             <div class="mb-3">
               <label for="old_pass" class="form-label">Old password</label>
@@ -99,7 +102,11 @@
           <h4 id="create">Create account</h4>
           <hr>
           <%if(section === 'create'){%>
-            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+            <%if(err==='true'){%>
+              <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+            <%}else if(err==='false'){%>
+                <span class="success_message"><i class="bi bi-check-circle-fill"></i> <%=msg%></span>
+            <%}%>
           <%}%>
           <form onsubmit="return checkNewUserPassword()" action="/settings/create-user" method="post">
             <div class="mb-3">
@@ -132,35 +139,64 @@
           <h4 id="member">Add member</h4>
           <hr>
           <%if(section === 'member'){%>
-            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+            <%if(err==='true'){%>
+              <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+            <%}else if(err==='false'){%>
+                <span class="success_message"><i class="bi bi-check-circle-fill"></i> <%=msg%></span>
+            <%}%>
           <%}%>
-          <form onsubmit="return checkNewUserPassword()" action="/settings/create-user" method="post">
+          <form onsubmit="return checkNewUserPassword()" action="/settings/create-member" method="post">
             <div class="mb-3">
-              <label for="create_username" class="form-label">Username</label>
-              <input type="text" name="create_username" class="form-control" id="create_username" required>
-              <button class="btn-primary mt-2">Add</button> 
+              <label for="create_member" class="form-label">Full Name</label>
+              <input type="text" name="member_name" class="form-control" id="create_member" required>
+              <button class="btn-primary mt-2" type="submit">Add</button> 
               
             </div>
           </form>
         </div>
         
         <div class="section">
-          <h4 style="color: red;" id="delete">Delete account</h4>
+          <h4 style="color: red;" id="delete">Remove A Member</h4>
           <hr>
           <%if(section === 'delete'){%>
-            <span class="<%=err==='true'? 'error_message' : 'success_message'%>"><%=msg%></span>
+            <%if(err==='true'){%>
+              <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+            <%}else if(err==='false'){%>
+                <span class="success_message"><i class="bi bi-check-circle-fill"></i> <%=msg%></span>
+            <%}%>
           <%}%>
           <form action="/settings/delete-user" method="post">
             <div class="mb-3">
-              <label for="FormControlInput5" class="form-label">username</label>
-              <input type="text" name="username" class="form-control" id="FormControlInput5" required>
-              <button class="btn-danger mt-2">Delete</button>
-              <!-- 
-                
+              <label for="FormControlInput5" class="form-label">Name</label>
+              <select name="user_id" class="form-control" id="FormControlInput5" required>
+                <option value="" selected>Select a member</option>
+                <%allUsers.forEach(user=>{%>
+                  <option value="<%=user.user_id%>"><%=user.user_name%> (<%=user.user_type%>)</option>
+                <%})%>
+              </select>
+              <button class="btn-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                Remove
+              </button>
 
+              <!-- Confirmation Dialog Modal -->
+              <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure you want to delete this member?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn-primary" data-bs-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn-danger">Remove</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-
-               -->
             </div>
           </form>
         </div>
