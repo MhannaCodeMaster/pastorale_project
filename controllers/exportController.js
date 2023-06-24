@@ -77,9 +77,6 @@ function exportDonations(req, res) {
 }
 
 
-
-
-
 async function exportDonationsSelected(req, res) {
   try {
     const [results] = await donationModel.getSelectedDonations(req.body.export);
