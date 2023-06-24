@@ -16,7 +16,10 @@ const addNewChildForm = () =>{
     const newChildFormLayout = childrenFromToClone.cloneNode(true);
 
     const firstName = newChildFormLayout.querySelector("input[name='FirstName']");
-    const labelNameField = newChildFormLayout.querySelector("label[for='FirstName']");
+    const profother = newChildFormLayout.querySelector("input[name='profesional_status_other2']");
+    const healother = newChildFormLayout.querySelector("input[name='health_service_other2']");
+
+
     const date = newChildFormLayout.querySelector("input[name='BirthDate']");
     const childNumberTitle = newChildFormLayout.querySelector("h5");
     const healthTable = newChildFormLayout.querySelector("table[id = healthTable]");
@@ -57,6 +60,10 @@ const addNewChildForm = () =>{
     jobdes.id=childId
     remarc.name=`${childId}_healthyremark2`
     remarc.id=childId
+    profother.name=`${childId}_profesional_status_other2`
+    profother.id=childId
+    healother.name=`${childId}_health_service_other2`
+    healother.id=childId
     jobadd.name=`${childId}_job_address2`
     jobadd.id=childId
     jobsal.name=`${childId}_job_salary2`
@@ -69,8 +76,7 @@ const addNewChildForm = () =>{
 
     firstName.name = `${childId}_FirstName`;
     firstName.id = childId;
-    labelNameField.setAttribute("for", childId);
-    labelNameField.innerText = childId
+    
     date.name=`${childId}_birthDate`;
     date.id=childId;
     cls.name= `${childId}_class`
@@ -79,7 +85,7 @@ const addNewChildForm = () =>{
     establishment.id=childId
     schoolAddress.name= `${childId}_schoolAddress`
     schoolAddress.id=childId
-    childNumberTitle.innerText = "Child "+childCounter;
+    childNumberTitle.innerText = "Child"+childCounter;
     healthTable.id= childId+"_healthTable";
     healthRow.id = childId+"_healthRow"
     room.id=childId+"_room"
@@ -192,9 +198,11 @@ const addNewOtherForm = () =>{
 
     const firstName5 = newOtherFormLayout.querySelector("input[name='FirstName5']");
     const lastName5 = newOtherFormLayout.querySelector("input[name='LastName5']");
+    const pro = newOtherFormLayout.querySelector("input[name='profesional_status_other3']");
+    const helo = newOtherFormLayout.querySelector("input[name='health_service_other3']");
     const fatherName5 = newOtherFormLayout.querySelector("input[name='FatherName5']");
     const familylink5 = newOtherFormLayout.querySelector("input[name='FamilyLink5']");
-    const labelNameField5 = newOtherFormLayout.querySelector("label[for='FirstName5']");
+  
     const date5 = newOtherFormLayout.querySelector("input[name='BirthDate5']");
     const otherNumberTitle = newOtherFormLayout.querySelector("h4");
     const healthTable5 = newOtherFormLayout.querySelector("table[id = healthTable5]");
@@ -214,7 +222,7 @@ const addNewOtherForm = () =>{
     const jobsal5=newOtherFormLayout.querySelector("input[name='job_salary5']")
     const jobrem5=newOtherFormLayout.querySelector("input[name='job_remark5']")
     const sectors5 = newOtherFormLayout.querySelector("select[name='sectors5']");
-    const services5=newOtherFormLayout.querySelectorAll("input[class=service5]");
+    const services5=newOtherFormLayout.querySelectorAll("input[class=ser]");
     const health5=newOtherFormLayout.querySelector("input[name='healthes5']")
     const remarc5= newOtherFormLayout.querySelector("input[name='healthyremark5']");
     cheghlo5.forEach(cheghlos5 => {
@@ -226,6 +234,10 @@ const addNewOtherForm = () =>{
       servicess5.name=`${otherId}_health_service5`
       servicess5.id=otherId
     })
+    pro.name=`${otherId}_profesional_status_other3`
+    pro.id=otherId
+    helo.name=`${otherId}_health_service_other3`
+    helo.id=otherId
     jobdes5.name=`${otherId}_job_desc5`
     jobdes5.id=otherId
     remarc5.name=`${otherId}_healthyremark5`
@@ -248,8 +260,7 @@ const addNewOtherForm = () =>{
 
     firstName5.name = `${otherId}_FirstName5`;
     firstName5.id = otherId;
-    labelNameField5.setAttribute("for", otherId);
-    labelNameField5.innerText = otherId
+   
     date5.name=`${otherId}_birthDate5`;
     date5.id=otherId;
     otherNumberTitle.innerText = "Other "+otherCounter;
@@ -325,61 +336,61 @@ document.addEventListener("change", (event) => {
     }
 })
 addotherButton.addEventListener('click',addNewOtherForm);
+var financialCheckbox = document.getElementById('Financial');
 
-var radioBtn2 =document.getElementById('owner');
-var form1=document.getElementById('myform1');
-radioBtn2.addEventListener('click',function(){
-  if(this.checked){
-    form1.style.display='none'
-  }else{
-    form1.style.display='block'
-  }
-})
+// Get the input text element
+var inputText = document.getElementById('jik');
 
-var radioBtn2 =document.getElementById('owner');
-var form1=document.getElementById('myform1');
-radioBtn2.addEventListener('click',function(){
-  if(this.checked){
-    form1.style.display='none'
-  }else{
-    form1.style.display='block'
+// Add an event listener to the checkbox
+financialCheckbox.addEventListener('click', function() {
+  // Check if the checkbox is checked
+  if (financialCheckbox.checked) {
+    // Show the input text
+    inputText.style.display = 'block';
+  } else {
+    // Hide the input text
+    inputText.style.display = 'none';
   }
-})
+});
+var ScholarCheckbox = document.getElementById('Scolaire');
 
-var radioBtn3 =document.getElementById('job');
-var form2=document.getElementById('myform2');
-radioBtn3.addEventListener('click',function(){
-  if(this.checked){
-    form2.style.display='block'
-  }else{
-    form2.style.display='none'
+// Get the input text element
+var inputText1 = document.getElementById('jik1');
+
+// Add an event listener to the checkbox
+ScholarCheckbox.addEventListener('click', function() {
+  // Check if the checkbox is checked
+  if (ScholarCheckbox.checked) {
+    // Show the input text
+    inputText1.style.display = 'block';
+  } else {
+    // Hide the input text
+    inputText1.style.display = 'none';
   }
-})
-var radioBtn4 =document.getElementById('no job');
-var form2=document.getElementById('myform2');
-radioBtn4.addEventListener('click',function(){
-  if(this.checked){
-    form2.style.display='none'
-  }else{
-    form2.style.display='block'
+});
+var OtherCheckbox = document.getElementById('other_decision');
+
+// Get the input text element
+var inputText2 = document.getElementById('jik2');
+
+// Add an event listener to the checkbox
+OtherCheckbox.addEventListener('click', function() {
+  // Check if the checkbox is checked
+  if (OtherCheckbox.checked) {
+    // Show the input text
+    inputText2.style.display = 'block';
+  } else {
+    // Hide the input text
+    inputText2.style.display = 'none';
   }
-})
-var radioBtn5 =document.getElementById('other');
-var form2=document.getElementById('myform2');
-radioBtn5.addEventListener('click',function(){
+});
+var checkbox20 =document.getElementById('check10');
+var table20=document.getElementById('table10');
+checkbox20.addEventListener('click',function(){
   if(this.checked){
-    form2.style.display='none'
+    table20.style.display='block'
   }else{
-    form2.style.display='block'
-  }
-})
-var checkbox =document.getElementById('checks');
-var table=document.getElementById('mytable');
-checkbox.addEventListener('click',function(){
-  if(this.checked){
-    table.style.display='none'
-  }else{
-    table.style.display='block'
+    table20.style.display='none'
   }
 })
 var checkbox1 =document.getElementById('check2');
@@ -391,48 +402,93 @@ checkbox1.addEventListener('click',function(){
     table1.style.display='none'
   }
 })
-    const DisplayJoint = document.getElementById('join');
-    const familysituation = document.getElementsByName('familysituation');
+const Displayrent = document.getElementById('rento');
+const property_type = document.getElementsByName('property_type');
+const benijobs = document.getElementById('benijob');
+const profesional_status = document.getElementsByName('profesional_status');
+const jointjobs = document.getElementById('jointjob');
+const profesional_status1 = document.getElementsByName('profesional_status1');
+const DisplayJoint = document.getElementById('join');
+const familysituation = document.getElementsByName('familysituation');
+
+// Function to handle the recipient type change event
+const handleJointChange = () => {
+  const selectedfamilyType = document.querySelector('input[name="familysituation"]:checked').value;
+  if (selectedfamilyType === '2') {
+    DisplayJoint.style.display = 'block';
+  } else {
+    DisplayJoint.style.display = 'none';
+  }
+};
+
 
     // Function to handle the recipient type change event
-    const handleJointChange = () => {
-      const selectedfamilyType = document.querySelector('input[name="familysituation"]:checked').value;
-      if (selectedfamilyType === '2') {
-        DisplayJoint.style.display = 'block';
-      } else {
-        DisplayJoint.style.display = 'none';
-      }
-    };
-
-    // Add event listener to the parent container of radio buttons
-    document.addEventListener('change', (event) => {
-      if (event.target.name === 'familysituation') {
-        handleJointChange();
-      }
-    });
-handleJointChange();
-
-
-    const jointjobs = document.getElementById('jointjob');
-    const profesional_status1 = document.getElementsByName('profesional_status1');
-
-    // Function to handle the recipient type change event
-    const handlejointTypeChange = () => {
+const handlejointTypeChange = () => {
       const selectedjointType = document.querySelector('input[name="profesional_status1"]:checked').value;
       if (selectedjointType === '1') {
         jointjobs.style.display = 'block';
       } else {
         jointjobs.style.display = 'none';
       }
-    };
 
-    // Add event listener to the parent container of radio buttons
-    document.addEventListener('change', (event) => {
-      if (event.target.name === 'profesional_status1') {
-        handlejointTypeChange();
-      }
-    });
+    };
+// Function to handle the recipient type change event
+const handleRentChange = () => {
+const selectedpropertyType = document.querySelector('input[name="property_type"]:checked').value;
+if (selectedpropertyType === '2') {
+  Displayrent.style.display = 'block';
+} else {
+  Displayrent.style.display = 'none';
+}
+};
+const handlebeniTypeChange = () => {
+  const selectedbeniType = document.querySelector('input[name="profesional_status"]:checked').value;
+  if (selectedbeniType === '1') {
+    benijobs.style.display = 'block';
+  } else {
+    benijobs.style.display = 'none';
+  }
+  
+
+};
+// Add event listener to the parent container of radio buttons
+document.addEventListener('change', (event) => {
+  if (event.target.name === 'property_type') {
+    handleRentChange();
+  }
+  if (event.target.name === 'profesional_status') {
+    handlebeniTypeChange();
+  }
+  if (event.target.name === 'profesional_status1') {
+    handlejointTypeChange();
+  }
+  if (event.target.name === 'familysituation') {
+    handleJointChange();
+  }
+  });
+  
+handleRentChange();
+handlebeniTypeChange();
 handlejointTypeChange();
+handleJointChange();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 function addRow() {
@@ -446,24 +502,8 @@ function addRow() {
     newCell.innerHTML = cell.innerHTML; // Copy the content of the corresponding cell from the original row
   }
 }
-var checkbox1 =document.getElementById('checks1');
-var table1=document.getElementById('mytable1');
-checkbox1.addEventListener('click',function(){
-  if(this.checked){
-    table1.style.display='none'
-  }else{
-    table1.style.display='block'
-  }
-})
-var checkbox2 =document.getElementById('checks3');
-var table2=document.getElementById('myt');
-checkbox2.addEventListener('click',function(){
-  if(this.checked){
-    table2.style.display='none'
-  }else{
-    table2.style.display='block'
-  }
-})
+
+
 
 function addRow1() {
   var table1 = document.getElementById("mytable1");
@@ -499,6 +539,8 @@ function calculateSum() {
   // Set the sum value to the hidden form field
   document.getElementById("monthly_spend").value = sum;
 }
+
+
 
 
   
