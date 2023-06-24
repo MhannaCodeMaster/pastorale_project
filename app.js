@@ -8,6 +8,8 @@ const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
 const settingsRoute = require('./routes/settings');
 const allBeneficiariesRoute = require('./routes/beneficiary_table');
+
+const exportRoute = require('./routes/exportRoute')
 const donationRoute = require('./routes/donations')
 //const csrfProtection = csrf();
 
@@ -48,11 +50,10 @@ app.use((req, res, next) => {
 });
 
 app.use(settingsRoute);
-app.use(require('./routes/export'));
 app.use(allBeneficiariesRoute);
 app.use(adminRoute);
-app.use(donationRoute)
-
+app.use(donationRoute);
+app.use(exportRoute);
 
 //Error 500 middlerware
 app.use((err, req, res, next) => {

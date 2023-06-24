@@ -1,49 +1,203 @@
-
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    h1 {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 8px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    .edit-button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 5px 10px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      border-radius: 3px;
-    }
-
-    .edit-button:hover {
-      background-color: #45a049;
-    }
-
-    input[type="text"] {
-      padding: 5px;
-      border-radius: 3px;
-      border: 1px solid #ddd;
-    }
-    .highlight {
-    background-color: yellow;
-  }
+body {
+  display: flex;
+  flex-direction: column;
   
+  font-family: Arial, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: black;
+ 
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #ebebeb;
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 10px;
+}
+
+.container {
+  width: 90%;
+  
+  border-top: 1px solid black; /* Add black border on top */
+  border-bottom: 1px solid black; /* Add black border on bottom */
+  padding: 20px 0; /* Add padding for spacing */
+  position: relative;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+ margin-bottom: -20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid black; /* Add black border on bottom */
+  padding-bottom: 20px; /* Add padding for spacing */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  flex-grow: 1;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="text"] {
+  border-radius: 5px;
+  border: 0.5px solid rgb(120, 119, 119);
+  padding: 10px;
+  margin: 5px;
+  width:300px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color:  #f5f5f5;
+}
+select {
+  
+  border-radius: 5px;
+  border: none;
+  
+  
+  box-sizing: border-box;
+  background-color:  #f5f5f5;
+}
+
+#donationsTableContainer {
+  width: 100%;
+  overflow: auto; /* Added overflow property to enable scrolling */
+}
+
+#donationsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#donationsTable thead th {
+  background-color: black;
+  padding: 10px;
+  text-align: center;
+  color: #ffffff;
+  position: sticky; /* Added sticky positioning */
+  top: 0; /* Stick the header to the top */
+  z-index: 1; /* Added z-index to keep the header on top */
+}
+#donationsTable thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#donationsTable tbody td {
+  padding: 10px;
+  text-align: center;
+  color: #333;
+}
+
+#donationsTable tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#donationsTable tbody tr:hover {
+  background-color: #ebebeb;
+}
+
+#donationsTable tbody {
+  display: table-row-group;
+}
+
+#donationsTable tbody td:nth-child(1),
+#donationsTable tbody td:nth-child(2),
+#donationsTable tbody td:nth-child(3),
+#donationsTable tbody td:nth-child(4),
+#donationsTable tbody td:nth-child(5),
+#donationsTable tbody td:nth-child(6) {
+  display: table-cell;
+}
+
+.edit-button {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #555;
+}
+#addDonationButton {
+  background-color: #4CAF50; /* Green background color */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add padding */
+  border-radius: 5px; /* Add border radius */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Add cursor style */
+   
+}
+
+#addDonationButton:hover {
+  background-color: #45a049; /* Darker green color on hover */
+}
+
+#addDonationButton a {
+  color: white; /* Text color for button inside a link */
+  text-decoration: none; /* Remove underline */
+}
+
+#addDonationButtonContainer {
+  /* Center align the button container */
+   margin-bottom: 20px;/* Add top margin for spacing */
+}
+#tableContainer {
+  margin-bottom: 10px; /* Adjust the margin-bottom value as desired */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  
+}
+
+.add-button,
+.export-button,
+.delete-button {
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+}
+
+.add-button {
+  background-color: #3c6e71;
+}
+
+.export-button {
+  background-color: black;
+}
+
+.delete-button {
+  background-color: red;
+}

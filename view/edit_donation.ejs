@@ -1,54 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Edit Donation</title>
-    <link rel="stylesheet" type="text/css" href="../../css/donation_form.css"> 
-  </head>
-  <body>
-    <div id="donationFormContainer" class="form-container">
-      <h2>Edit Donation</h2>
-      <form action="/donations/update/<%= donation[0].donation_id %>" method="POST">
-        <div class="form-group">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Donation</title>
+  <link rel="stylesheet" type="text/css" href="../../css/donation_form.css"> 
+</head>
+<body>
+  <div id="donationFormContainer" class="form-container">
+    <form action="/donations/update/<%= donation[0].donation_id %>" method="POST">
+      
+      <div class="input-row">
+        <div class="input-group">
           <label for="donationDate">Date of Donation</label>
           <input type="date" id="donationDate" name="donationDate" value="<%= moment(donation[0].donation_date).format('yyyy-MM-DD') %>" required>
         </div>
-
-        <div class="form-group">
+        <div class="input-group">
           <label for="donatorName">Donator Name</label>
           <input type="text" id="donatorName" name="donatorName" value="<%= donation[0].donator_name %>" required>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="donationType">Donation Type</label>
-          <select id="donationType" name="donationType">
-            <% donationTypes.forEach(donationType => { %>
-              <option value="<%= donationType.type_id %>" <%= donationType.type_id == donation[0].donation_type ? 'selected' : '' %>>
-                <%= donationType.donation_type %>
-              </option>
-            <% }) %>
-          </select>
+      <div class="form-group">
+        <div class="input-row">
+          <div class="input-group">
+            <label for="donationType">Donation Type</label>
+            <select id="donationType" name="donationType">
+              <% donationTypes.forEach(donationType => { %>
+                <option value="<%= donationType.type_id %>" <%= donationType.type_id == donation[0].donation_type ? 'selected' : '' %>>
+                  <%= donationType.donation_type %>
+              <% }) %>
+              <option value="others">Others</option>
+            </select>
+          </div>
+          <div class="form-group" id="customDonationTypeContainer" style="display: none;">
+            <label for="customDonationType">Donation Type</label>
+            <input type="text" id="customDonationType" name="customDonationType" >
+          </div>
+          <div class="input-group">
+            <label for="donationContent">Donation Content</label>
+            <input type="text" id="donationContent" name="donationContent" value="<%= donation[0].donation_content %>" required>
+          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="donationContent">Donation Content</label>
-          <input type="text" id="donationContent" name="donationContent" value="<%= donation[0].donation_content %>" required>
-        </div>
+      <div class="form-group">
+        <label>Recipient Type</label>
+        <% recipients.forEach(recipient => { %>
+          <label>
+            <input type="radio" name="recipientType" value="<%= recipient.recipient_id %>" <%= recipient.recipient_id == donation[0].recipient_type ? 'checked' : '' %>>
+            <%= recipient.recipient_desc %>
+          </label>
+        <% }) %>
+      </div>
 
-        <div class="form-group">
-          <label>Recipient Type</label>
-          <% recipients.forEach(recipient => { %>
-            <label>
-              <input type="radio" name="recipientType" value="<%= recipient.recipient_id %>" <%= recipient.recipient_id == donation[0].recipient_type ? 'checked' : '' %>>
-              <%= recipient.recipient_desc %>
-            </label>
-          <% }) %>
-        </div>
-
-        <!-- Families table -->
-        <div id="familyTable" class="family-table">
-          <h3>Available Families</h3>
-          <input type="text" id="searchFamily" name="searchFamily" placeholder="Enter family name" oninput="filterFamilies()">
+      <!-- Families table -->
+      <div id="familyTable" class="family-table">
+        <h3>Available Families</h3>
+        <input type="text" id="searchFamily" name="searchFamily" placeholder="Enter family name" oninput="filterFamilies()">
+        <div class="table-container">
           <table>
             <thead>
               <tr>
@@ -58,32 +67,28 @@
               </tr>
             </thead>
             <tbody>
-              <tbody>
-                <% families.forEach((family, index) => { %>
-                  <tr>
-                    <td><%= family.first_name %> <%= family.middle_name %> <%= family.last_name %></td>
-                    <td>
-                      <input type="checkbox" name="familyPair[]" value="<%= family.b_id %>" <% if (familyCommentsMap.hasOwnProperty(family.b_id)) { %>checked<% } %>>
-                    </td>
-                    <td>
-                      <input type="text" name="familyPair[]" value="<%= familyCommentsMap[family.b_id] || '' %>">
-                    </td>
-                  </tr>
-                <% }) %>
-              </tbody>
-              
+              <% families.forEach((family, index) => { %>
+                <tr>
+                  <td><%= family.first_name %> <%= family.middle_name %> <%= family.last_name %></td>
+                  <td>
+                    <input type="checkbox" name="familyPair[]" value="<%= family.b_id %>" <% if (familyCommentsMap.hasOwnProperty(family.b_id)) { %>checked<% } %>>
+                  </td>
+                  <td>
+                    <input type="text" name="familyPair[]" value="<%= familyCommentsMap[family.b_id] || '' %>">
+                  </td>
+                </tr>
+              <% }) %>
             </tbody>
           </table>
         </div>
+      </div>
 
-        <div class="form-group">
-          <input type="submit" value="Update Donation">
-        </div>
-      </form>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-
-    <script src="../../JS/donation_form.js"></script>
-  </body>
+      <div class="form-group">
+        <input type="submit" value="Update Donation" class="btn">
+      </div>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="../../JS/donation_form.js"></script>
+</body>
 </html>

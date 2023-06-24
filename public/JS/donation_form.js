@@ -6,8 +6,14 @@ const familyTable = document.getElementById('familyTable');
       const selectedRecipientType = document.querySelector('input[name="recipientType"]:checked').value;
       if (selectedRecipientType === '2') {
         familyTable.style.display = 'block';
+        familyTable.classList.add('show');
+        familyTable.style.animation = "fadeIn 0.5s forwards";
+        
       } else {
         familyTable.style.display = 'none';
+        familyTable.classList.remove('show');
+        familyTable.style.animation = "fadeOut 0.5s forwards";
+        
       }
     };
 
@@ -66,4 +72,16 @@ handleRecipientTypeChange();
       }
     }
   }
-
+  const donationTypeSelect = document.getElementById('donationType');
+  const customDonationTypeContainer = document.getElementById('customDonationTypeContainer');
+  const customDonationTypeInput = document.getElementById("customDonationType");
+  donationTypeSelect.addEventListener('change', function() {
+    if (this.value === 'others') {
+      customDonationTypeContainer.style.display = 'block';
+      customDonationTypeInput.required = true;
+      
+    } else {
+      customDonationTypeContainer.style.display = 'none';
+      customDonationTypeInput.required = false;
+    }
+  });

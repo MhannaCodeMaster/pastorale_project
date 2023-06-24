@@ -20,6 +20,9 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.3.3",
     "nodemailer": "^6.9.3",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "xlsx": "^0.18.5",
+    "xlsx-populate": "^1.21.0",
+    "xlsx-style": "^0.8.13"
   }
 }
