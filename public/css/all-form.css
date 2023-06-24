@@ -1,13 +1,17 @@
 .table-container {
-    max-height: calc(100vh - 140px); /* Adjust the subtracted value as needed */
+    max-height: calc(100vh - 95px); /* Adjust the subtracted value as needed */
     overflow-y: auto;
-    padding-right: 20px;
+    
   }
   
 .table-container table {
   width: 100%;
 }
-
+.shadow-box{
+  box-shadow: 0px 0px 2px 1px rgba(187, 187, 187, 0.4);
+  border-radius: 5px;
+  padding: 0px;
+}
 .table-container thead {
   position: sticky;
   top: 0;
@@ -22,14 +26,43 @@
 .table-container td,
 .table-container th {
   white-space: nowrap;
+  vertical-align: middle;
+  padding: 3px;
 }
+
+.table-container table > tbody > tr:nth-child(odd) {
+  background-color: #ececec;
+}
+
+.table-container table > tbody > tr:nth-child(even) {
+  background-color: white;
+}
+
+.table-container table tbody tr:not(:last-child):hover{
+  background-color: #bbbbbb;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.table-container table tbody tr.row-selected{
+  background-color: #bbbbbb;
+  box-shadow: 0px 0px 3px 2px rgb(163, 163, 163);
+}
+
 
 .button-active{
   color: white;
-  background-color: rgb(3, 4, 37);
+  background-color: #333333;
 }
 
 input[type="checkbox"]{
   cursor: pointer;
 }
-  
+
+.arrow-icon{
+  color: #333333;
+}
+
+#searchFrom .input-group .form-control{
+  padding: 3px;
+  padding-left: 10px;
+}

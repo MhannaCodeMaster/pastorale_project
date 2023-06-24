@@ -1,5 +1,5 @@
 .column{
-    background-color: rgb(211, 211, 211);
+    background-color: rgb(241, 241, 241);
     box-shadow: 0px 6px 3px rgb(196, 189, 189);
     padding: 10px;
     border-radius: 5px;
@@ -19,4 +19,9 @@
     text-decoration: none;
     color: black;
     font-weight:600;
+}
+
+.column img{
+    height: 200px;
+    width: 100px;
 }
