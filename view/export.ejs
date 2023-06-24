@@ -12,25 +12,13 @@
                 <h1>Beneficiaries</h1>
                 <hr>
                 <form onsubmit="return checkDate('start_date','end_date')" action="/export/beneficiaries" method="post">
-                    <div style="display:flex;">
-                        <div class="w-100 me-1">
-                            <label for="start_date">Start Date</label>
-                            <input class="form-control" type="date" name="start_date" id="start_date">
-                        </div>
-                        <div class="w-100">
-                            <label for="end_date">End Date</label>
-                            <input type="date" name="end_date" class="form-control" id="end_date">
-                        </div>
-                    </div>
                     <select name="selected_data" class="form-control mt-2" id="select_table" required>
                         <option value="" selected>Select Which data to export</option>
                         <option value="all">All Data</option>
                         <option value="address">Address</option>
                         <option value="health">Health</option>
                     </select>
-                    <div style="text-align: center;" class="mt-2">
-                        <button type="submit" class="btn-export w-100 p-3">Export</button>
-                    </div>
+                    <button type="submit" class="btn-export w-100 p-3 mt-2">Export</button>
                 </form>
             </div>
         </div>
@@ -39,9 +27,19 @@
             <div class="col-md-7 p-4 column-style">
                 <h1>Donations</h1>
                 <hr>
-                <div>
-                    <a href="/export/donations"><button class="btn-export w-100 p-3">Export All Donations</button></a>
-                </div>
+                <form action="/export/donations" method="get">
+                    <div style="display:flex;">
+                        <div class="w-100 me-1">
+                            <label for="from_date">From</label>
+                            <input class="form-control" type="date" name="from_date" id="from_date">
+                        </div>
+                        <div class="w-100">
+                            <label for="to_date">To</label>
+                            <input type="date" name="to_date" class="form-control" id="tp_date">
+                        </div>
+                    </div>
+                    <button class="btn-export w-100 mt-2 p-3">Export All Donations</button>
+                </form>
             </div>
         </div>
 

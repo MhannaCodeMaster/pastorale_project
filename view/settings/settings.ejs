@@ -79,11 +79,19 @@
             <div class="mb-3">
               <label for="old_pass" class="form-label">Old password</label>
               <input type="password" name="old_password" class="form-control" id="old_pass" required>
+              <div class="d-flex mt-1 mb-3 mx-1" style="align-items: center;">
+                <input type="checkbox" id="passToggler" onchange="togglePassword('old_pass','textPass1')">
+                <p id="textPass1" style="font-size: 13px;" class="m-0 mx-1">See password</p>
+              </div>
             </div>
 
             <div class="mb-3">
               <label for="new_pass" class="form-label">New password</label>
               <input type="password" name="new_password" class="form-control" id="new_pass" required pattern="^(?=.*\d).{8,}$" >
+              <div class="d-flex mt-1 mb-3 mx-1" style="align-items: center;">
+                <input type="checkbox" id="passToggler" onchange="togglePassword('new_pass','textPass2')">
+                <p id="textPass2" style="font-size: 13px;" class="m-0 mx-1">See password</p>
+              </div>
               <span>minimum length 8 and at least 1 number</span>
             </div>
 
@@ -122,6 +130,10 @@
             <div class="mb-3">
               <label for="create_pass" class="form-label">Password</label>
               <input type="password" name="create_pass" class="form-control" id="create_pass" required>
+              <div class="d-flex mt-1 mb-3 mx-1" style="align-items: center;">
+                <input type="checkbox" id="passToggler" onchange="togglePassword('create_pass','textPass3')">
+                <p id="textPass3" style="font-size: 13px;" class="m-0 mx-1">See password</p>
+              </div>
             </div>
 
             <div class="mb-3">

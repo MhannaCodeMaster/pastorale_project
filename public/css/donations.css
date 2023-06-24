@@ -1,7 +1,5 @@
 body {
-  display: flex;
   flex-direction: column;
-  
   font-family: Arial, sans-serif;
   scrollbar-width: thin;
   scrollbar-color: black;
@@ -22,11 +20,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .container {
-  width: 90%;
-  
-  border-top: 1px solid black; /* Add black border on top */
-  border-bottom: 1px solid black; /* Add black border on bottom */
-  padding: 20px 0; /* Add padding for spacing */
+  margin-top: 5px;
   position: relative;
 }
 
@@ -35,7 +29,7 @@ form {
   flex-direction: row;
   align-items: center;
   justify-content: center;
- margin-bottom: -20px;
+  margin-bottom: -20px;
   flex-wrap: wrap;
   border-bottom: 1px solid black; /* Add black border on bottom */
   padding-bottom: 20px; /* Add padding for spacing */
@@ -45,7 +39,6 @@ h1 {
   text-align: center;
   color: #333;
 }
-
 
 .form-group {
   display: flex;
@@ -61,24 +54,15 @@ h1 {
   color: #333;
 }
 
-input[type="text"] {
+select {
   border-radius: 5px;
-  border: 0.5px solid rgb(120, 119, 119);
-  padding: 10px;
-  margin: 5px;
-  width:300px;
-  height: 40px;
+  border: none;
   box-sizing: border-box;
   background-color:  #f5f5f5;
 }
-select {
-  
-  border-radius: 5px;
-  border: none;
-  
-  
-  box-sizing: border-box;
-  background-color:  #f5f5f5;
+input[type=text]{
+  width: 600px;
+  padding: 3px;
 }
 
 #donationsTableContainer {
@@ -92,10 +76,8 @@ select {
 }
 
 #donationsTable thead th {
-  background-color: black;
-  padding: 10px;
-  text-align: center;
-  color: #ffffff;
+  background-color: #f8f9fa;
+  padding: 5px;
   position: sticky; /* Added sticky positioning */
   top: 0; /* Stick the header to the top */
   z-index: 1; /* Added z-index to keep the header on top */
@@ -107,17 +89,17 @@ select {
 }
 
 #donationsTable tbody td {
-  padding: 10px;
-  text-align: center;
-  color: #333;
+  padding: 5px;
 }
 
 #donationsTable tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #ececec;
 }
 
 #donationsTable tbody tr:hover {
-  background-color: #ebebeb;
+  background-color: #bbbbbb;
+  transition: 0.2s;
+  cursor: pointer;
 }
 
 #donationsTable tbody {
@@ -171,13 +153,14 @@ select {
    margin-bottom: 20px;/* Add top margin for spacing */
 }
 #tableContainer {
-  margin-bottom: 10px; /* Adjust the margin-bottom value as desired */
+  box-shadow: 0px 0px 2px 1px rgba(187, 187, 187, 0.4);
+  border-radius: 5px;
 }
 
 .button-container {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   
 }
 
