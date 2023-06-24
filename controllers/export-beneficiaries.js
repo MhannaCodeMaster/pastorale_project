@@ -81,17 +81,46 @@ function exportAllData(req,res,next){
     rows:[],
   });
 
+  healthSituation_sheet.addTable({
+    name: 'Beneficiary Health situation',
+    ref: 'A1',
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns:[
+      {name: 'Beneficiary'},
+      {name: 'Medicine'},
+      {name: 'Disease'},
+      {name: 'Buy'},
+      {name: 'Start Date'},
+      {name: 'End Date'},
+      {name: 'Remark'},
+    ],
+    rows:[],
+  });
+
   const main_table = mainBeneficiary_Sheet.getTable("Beneficary Families");
-  const related_table = relatedBeneficiries_sheet.getTable('Related Beneficiary');
-  let mainBeneficiary = [];
+  const related_table = relatedBeneficiries_sheet.getTable("Related Beneficiary");
+  const health_table = healthSituation_sheet.getTable("Beneficiary Health situation");
+  let mainBeneficiary;
   
   let beneficiary_ids = req.body.selected;
   if(!beneficiary_ids) beneficiary_ids = null;
   //console.log('export ids:' ,beneficiary_ids);
-  Beneficiary.Beneficiary.getAllBeneficiariesData(beneficiary_ids)
+  Beneficiary.Beneficiary.getBeneficiariesHealth()
+  .then(([result])=>{
+    const health_row = result.map(obj => Object.values(obj));
+    health_row.forEach(row=>{
+      health_table.addRow(row);
+    });
+    health_table.commit();
+    return Beneficiary.Beneficiary.getAllBeneficiariesData(beneficiary_ids)
+  })
   .then((result) => {
     //console.log('Beneficiary data: ',result);
-    mainBeneficiary = result;
+    if(!beneficiary_ids) mainBeneficiary = result[0];
+    else mainBeneficiary = result;
     const main_rows = mainBeneficiary.map(obj => {
       const { b_id, ...rest } = obj;
       return Object.values(rest);
@@ -99,7 +128,7 @@ function exportAllData(req,res,next){
     main_rows.forEach(row=>{
       main_table.addRow(row);
     })
-    main_table.commit();
+  
     let numberOfRowsAdded=1;
     const relatedPromises = mainBeneficiary.map(ben => {
       return Beneficiary.Beneficiary.getRealtedBeneficiaries(ben.b_id)
@@ -134,14 +163,19 @@ function exportAllData(req,res,next){
         });
     });
 
+
     Promise.all(relatedPromises)
       .then(() => {
+        main_table.commit();
         related_table.commit();
-        for(let i = 1;i<=33;i++){
+        for(let i = 1;i<=mainBeneficiary_Sheet.columnCount;i++){
           mainBeneficiary_Sheet.getColumn(i).width = 26;
         }
-        for(let i = 1;i<=12;i++){
+        for(let i = 1;i<=relatedBeneficiries_sheet.columnCount;i++){
           relatedBeneficiries_sheet.getColumn(i).width = 26;
+        }
+        for(let i = 1;i<=healthSituation_sheet.columnCount;i++){
+          healthSituation_sheet.getColumn(i).width = 26;
         }
 
         workbook.xlsx.writeBuffer()
@@ -229,7 +263,59 @@ function exportAddress(req,res,next){
 }
 
 function exportHealth(req,res,next){
+  const workbook = new excelJS.Workbook();
+  workbook.created = new Date();
+  workbook.modified = new Date();
+  
+  const healthSituation_sheet = workbook.addWorksheet("Beneficiary Health");
+  healthSituation_sheet.addTable({
+    name: 'Beneficiary Health situation',
+    ref: 'A1',
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns:[
+      {name: 'Beneficiary'},
+      {name: 'Medicine'},
+      {name: 'Disease'},
+      {name: 'Buy'},
+      {name: 'Start Date'},
+      {name: 'End Date'},
+      {name: 'Remark'},
+    ],
+    rows:[],
+  });
 
+  const health_table = healthSituation_sheet.getTable("Beneficiary Health situation");
+  Beneficiary.Beneficiary.getBeneficiariesHealth()
+  .then(([result])=>{
+    const health_row = result.map(obj => Object.values(obj));
+    health_row.forEach(row=>{
+      health_table.addRow(row);
+    });
+    health_table.commit();
+
+    for(let i = 1;i<=healthSituation_sheet.columnCount;i++){
+      healthSituation_sheet.getColumn(i).width = 26;
+    }
+
+    workbook.xlsx.writeBuffer()
+      .then((buffer) => {
+        // Set response headers for file download
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=beneficiary_families.xlsx');
+        res.setHeader('Content-Length', buffer.length);
+
+        // Send the buffer as the response
+        res.send(buffer);
+      })
+      .catch((error) => {
+        console.error('Error creating Excel file:', error);
+        res.status(500).send('Internal Server Error');
+      });
+
+  })
 }
 
 
@@ -244,16 +330,12 @@ exports.getPage = (req, res, next) => {
 }
 
 exports.postExport = (req, res, next)=>{
-  const start_date = req.body.start_date;
-  const end_date = req.body.end_date;
-  if(!start_date){
-    const dataToExtract = req.body.selected_data;
-    if(dataToExtract === 'all'){
-      exportAllData(req,res,next)
-    }else if(dataToExtract === 'address'){
-      exportAddress(req,res,next);
-    }else if(dataToExtract === 'health'){
-      exportHealth(req,res,next);
-    }
+  const dataToExtract = req.body.selected_data;
+  if(dataToExtract === 'all'){
+    exportAllData(req,res,next)
+  }else if(dataToExtract === 'address'){
+    exportAddress(req,res,next);
+  }else if(dataToExtract === 'health'){
+    exportHealth(req,res,next);
   }
 }
