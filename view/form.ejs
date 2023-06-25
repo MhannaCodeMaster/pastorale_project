@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="./styles.css"> <!-- Replace with the path to your compiled CSS file -->
+</head>
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Social and family situation form</h2>
+    </div>
+    <div class="form-field-title">
+    <label class="form-label title">BENIFICIARY</label>
+    </div>
+    <form action="/form" method="POST">
+      <div class="form-field">
+        <label for="fname" class="form-label1">First Name</label>
+        <input type="text" id="fname" name="fname" class="form-input" placeholder="First Name" required>
+      </div>
+      <div class="form-field">
+        <label for="fathername" class="form-label1">Father Name</label>
+        <input type="text" id="fathername" name="fathername" class="form-input" placeholder="Father Name" required>
+      </div>
+      <div class="form-field">
+        <label for="lname" class="form-label1">Last Name</label>
+        <input type="text" id="lname" name="lname" class="form-input" placeholder="Last Name" required>
+      </div>
+      <div class="form-field">
+        <label for="phone" class="form-label1">Phone</label>
+        <input type="text" id="phone" name="phone" class="form-input" placeholder="Phone Number" required>
+      </div> 
+      <div class="form-container">
+          <label for="date" class="form-label1">BirthDate</label>
+          <input type="date" id="date" name="date" class="form-input"  required>
+      </div>
+    <div class="form-field-title">
+      <label class="form-label title">ADDRESS</label>
+    </div>
+        <div class="form-container">
+          <label for="fname" class="form-label1">Neighborhood</label>
+          <input type="text" id="fname" name="neighborhood" class="form-input" placeholder="Neighborhood" required>
+        </div>
+        <div class="form-container">
+          <label for="fathername" class="form-label1">Street</label>
+          <input type="text" id="fathername" name="street" class="form-input" placeholder="Street" required>
+        </div>
+        <div class="form-container">
+          <label for="lname" class="form-label1">Building</label>
+          <input type="text" id="lname" name="buildiing" class="form-input" placeholder="Building" required>
+        </div>
+        <div class="form-container">
+          <label for="phone" class="form-label1">Floor</label>
+          <input type="text" id="phone" name="Floor" class="form1" placeholder="Floor" required>
+        </div>
+        <div class="form-container">
+            <label for="date" class="form-label1">Additional Information</label>
+            <input type="text" id="date" name="additionalinfo" class="form1" placeholder="Additional Information" required>
+        </div>
+        <div class="form-container">
+          <% property.forEach(properti =>{ %>
+            <label class ="radio">
+            <input type="radio"  name="property_type" class="radio"  id="<%= properti.status_desc %>" value="<%= properti.status_id %>" required><%= properti.status_desc %></label>
+            </label>
+          <% }) %>
+          <div id="rento"  style="display:none;">
+            <input   type="text" class="form1" name="rentprice"  placeholder="Rent Price">
+          </div>
+          
+      </div>
+      <div class="form-field-title">
+        <label class="form-label title">PROFESIONAL STATUS</label>
+      </div>
+      <div  class="form-container">
+        <% profesional.forEach(profesional =>{%>
+          <label class ="radio">
+          <input type="radio" name="profesional_status" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" required><%= profesional.p_desc %></label>
+        <%})%>
+        
+         <label class="radio" >
+          <input type="text" name="profesional_status_other"  class="form3" placeholder="other">
+        </label>
+        
+        
+      </div>
+      <div class="form-container1" id="benijob" style="display:none;">
+        <label class="radio" >
+          Job desc
+          <input type="text"  name="job_desc" class="formes" placeholder="job descritpion">
+        </label>
+        <label class="radio" >
+          Sector
+          <select name="sectors" class="form4">
+            <% sector.forEach(sectorr =>{%>
+              <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+            <%})%>
+          </select>
+        </label>
+        <label class="radio" >
+          Adress
+          <input type="text"  name="job_address" class="formes" placeholder="adress">
+        </label>
+        <label class="radio" >
+          Salary
+          <input type="text"  name="job_salary" class="formes" placeholder="salary">
+        </label>
+        
+        <label class="radio">
+          Remarque
+          <input type="text"  name="job_remark" class="form-input" placeholder="remark">
+        </label>
+        </div>
+      
+      
+      <div class="form-field-title">
+        <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+      </div>
+      <div class="form-container">
+        <% services.forEach(service =>{%>
+          <label class ="radio">
+          <input type="radio" name="health_service" class="radio2"  value="<%= service.hss_id %>" required><%= service.hss_desc %></label>
+        <%})%>
+        <label class="radio" >
+          <input type="text" name="health_service_other"  class="form3" placeholder="other">
+        </label>
+        <label class="radio">
+          Remarque
+          <input type="text" name="health" class="formrem" placeholder=" Social Service Health Remark" required>   
+          </label>
+      </div>
+      <div class="form-field-tiitle">
+        <label class="form-label title">HEALTH SITUATION</label>
+      </div>
+      <label  style="font-weight: bold;">
+      <input  type="checkbox" onclick="toggleTableVisibility()" id="check10">Add to the list
+      </label>
+      <table style="display: none;" border="1" id="table10">
+        <thead>
+          <tr>
+            <th>Disease</th>
+            <th>Medication</th>
+            <th>To buy</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Comment</th>
+            <th><button type="button" class="form-row" onclick="addRow()" >ADD</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="row1">
+          <td>
+            <div id="arr">
+            <select  name="medi[]"  class="form5" >
+            <% medications.forEach(medication =>{ %>
+              <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+
+            <%})%>
+            </select>
+            </div>
+          </td>
+          <td>
+            <select  name="dis[]" class="form5" >
+              <% disease.forEach(diseases =>{%>
+                <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+              <%})%>
+              </select>
+          </td>
+          <td>
+            <select  name="buy[]" class="form5" >
+                <option value="yes">yes</option>
+                <option value="no">no</option>
+
+              </select>
+          </td>
+          <td>
+            <input id="start" name="std[]" type="date"   class="form5" placeholder="start date" >
+          </td>
+          <td><input id="end"name="endt[]" type="date"  class="form5" placeholder="end date" ></td>
+          <td>
+            <input id="comment" name="comments[]" type="text"   class="form5" placeholder="comment" >
+          </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-container">
+      <label class="radio">
+        Remarque
+        <input type="text" name="healthyremark"   class="form-input" placeholder="health_remark" required>
+      </label>
+        </div>
+        <div class="form-field-title">
+          <label class="form-label title">FAMILY SITUATION</label>
+        </div>
+        <div class="form-container">
+          <% family.forEach(families =>{%>
+            <label class ="radio">
+              <input type="radio" name="familysituation" id="<%= families.situation_desc %>"class="radio3" value="<%= families.situation_id %>" required><%= families.situation_desc %></label>
+
+          <%})%>
+          <div class="form-container">
+          <label class="radio">
+            Children_Number
+            <input type="text" name="numchildren" class="form3" placeholder="children_number" required>
+          </label>
+          </div>
+
+        </div>
+        <div id="join" style="display:none;">
+        <div class="form-field-title" >
+          <label class="form-label title">JOINT</label>
+          </div>
+            <div class="form-field">
+              <p>
+              <label for="fname1" class="form-label1" >First Name</label>
+              <input type="text" id="fname" name="fname1" class="form-input" placeholder="Enter your First Name" >
+            </div>
+            <div class="form-field">
+              <label for="fathername" class="form-label1">Father Name</label>
+              <input type="text" id="fathername" name="fathername1" class="form-input" placeholder="Enter your Father Name" >
+            </div>
+            <div class="form-field">
+              <label for="lname" class="form-label1">Last Name</label>
+              <input type="text" id="lname" name="lname1" class="form-input" placeholder="Enter your Last Name" >
+            </div>
+            <div class="form-field">
+              <label for="phone" class="form-label1">Phone</label>
+              <input type="text" id="phone" name="phone1" class="form-input" placeholder="Enter your phone" >
+            </div>
+            <div class="form-container">
+                <label for="date" class="form-label1">BirthDate</label>
+                <input type="date" id="date" name="date1" class="form" placeholder="Enter your phone" >
+            </div>
+            <div class="form-field-title">
+              <label class="form-label title">PROFESIONAL STATUS</label>
+            </div>
+            <div  class="form-container">
+              <% profesional.forEach(profesional =>{%>
+                <label class ="radio">
+                <input type="radio" name="profesional_status1" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
+              <%})%>
+              <label class="radio">
+                <input type="text" name="profesional_status_other1"   class="form1" placeholder="other" >
+              </label>
+            </div>
+            <div class="form-container1" id="jointjob"style="display:none;">
+              <label class="radio" >
+                Job desc
+                <input type="text"  name="job_desc1" class="form3" placeholder="job descritpion">
+              </label>
+              <label class="radio" >
+                Sector
+                <select name="sectors1" class="form4">
+                  <% sector.forEach(sectorr =>{%>
+                    <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+                  <%})%>
+                </select>
+              </label>
+              <label class="radio" >
+                Adress
+                <input type="text"  name="job_address1" class="form3" placeholder="adress">
+              </label>
+              <label class="radio" >
+                Salary
+                <input type="text"  name="job_salary1" class="form3" placeholder="salary">
+              </label>
+              <label class="radio">
+                Remarque
+                <input type="text"  name="job_remark1" class="form-input" placeholder="remark">
+              </label>
+            </div>
+            <div class="form-field-title">
+              <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+            </div>
+            <div class="form-container">
+              <% services.forEach(service =>{%>
+                <label class ="radio">
+                <input type="radio" name="health_service1" class="radio2"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
+              <%})%>
+              <label class="radio" >
+                <input type="text" name="health_service_other1"  class="form3" placeholder="other" >
+              </label>
+              <label class="radio">
+                Remarque
+                <input type="text" name="health1" class="formrem" placeholder="Social Service Remark" >       </label>
+            </div>
+            <div class="form-field-title">
+              <label class="form-label title">HEALTH SITUATION</label>
+            </div>
+            <label  style="font-weight: bold;">
+            <input  type="checkbox" id="check2"  >Add to the list
+            </label>
+            <table style="display: none;" border="1" id="mytable1">
+              <thead>
+                <tr>
+                  <th>Disease</th>
+                  <th>Medication</th>
+                  <th>To buy</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Comment</th>
+                  <th>
+                    <button type="button" class="form-row" onclick="addRow1()">ADD</button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="row2">
+                <td>
+                  <select  name="medi1[]"  class="form5" >
+                  <% medications.forEach(medication =>{ %>
+                    <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+      
+                  <%})%>
+                  </select>
+                </td>
+                <td>
+                  <select  name="dis1[]" class="form5" >
+                    <% disease.forEach(diseases =>{%>
+                      <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+                    <%})%>
+                    </select>
+                </td>
+                <td>
+                  <select  name="buy1[]" class="form5" >
+                    <option value="yes">yes</option>
+                    <option value="no">no</option>
+    
+                  </select>
+                </td>
+                <td>
+                  <input id="start" name="std1[]" type="date"   class="form5" placeholder="start date" >
+                </td>
+                <td><input id="end"name="endt1[]" type="date"  class="form5" placeholder="end date" ></td>
+                <td>
+                  <input id="comment" name="comments1[]" type="text"   class="form5" placeholder="comment" >
+                </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="form-container">
+            <label class="radio">
+              Remarque
+              <input type="text" name="healthyremark1"   class="form-input" placeholder="health_remark" >
+              </label>
+              </div>
+        </div>
+       
+              <div class="container" id="childrenFromContainer">
+                <h1 style="text-decoration: underline; font-size: 24px; font-weight: bold;">Children Section</h1>
+                <button type="button" class="form-sub" id="addChildButton" >Add new children form</button>
+                <div class="container m-3" id="childrenForm">
+    
+                </div>
+            </div>
+            
+    
+        <!-------Children form for cloning------>
+        <div id="childrenFromToClone" style="display: none;">
+            <h5 style="text-decoration: underline; font-size: 18px;">childNumberTitle</h5>
+            <hr>
+            <div class="form-field" >
+                <div class="form-field">
+                    <label for="FirstName" class="form-label1">FirstName</label>
+                    <input type="text" class="form-input" name="FirstName" id="FirstName" placeholder="First Name">
+                </div>
+                <div class="col-md-5">
+                  <label for="BirthDate" class="form-label1">BirthDate</label>
+                  <input type="date" class="form-input" name="BirthDate" id="BirthDate" >
+              </div>
+            </div>
+            <div class="form-field-title">
+              <label class="form-label title">PROFESIONAL STATUS</label>
+            </div>
+            <div  class="form-container">
+              <label id="checkss" style="font-weight: bold;">
+                <input type="checkbox" class="markaziye">Student
+                </label>
+              
+              <% profesional.forEach(profesional =>{%> 
+                <label class ="radio">
+                <input type="radio" name="profesional_status3" class="estez" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" data-child><%= profesional.p_desc %></label>
+              <%})%>
+              <label class="radio">
+                <input type="text"  name="profesional_status_other2" class="form1" placeholder="other">
+              </label>
+            </div>
+            <div class="form-container1"  style="display:none;" id="room" >
+              <label class="radio" >
+                Class
+                <input type="text"  name="cls" class="form3" placeholder="Class">
+              </label>
+              <label class="radio" >
+                Establishment
+                <input type="text"  name="establishment" class="form3" placeholder="Establishment">
+              </label>
+              <label class="radio" >
+                Address
+                <input type="text"  name="sch_Address" class="form3" placeholder="Address">
+              </label>
+             </div>
+          <div class="form-container1" id="moulouk" style="display: none;">
+             <label class="radio" >
+            Job desc
+            <input type="text"  name="job_desc2" class="formes" placeholder="job descritpion">
+             </label>
+             <label class="radio" >
+               Sector
+              <select name="sectors2" class="sectour">
+              <% sector.forEach(sectorr =>{%>
+                <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+              <%})%>
+              </select>
+              </label>
+             <label class="radio" >
+               Adress
+             <input type="text"  name="job_address2" class="formes" placeholder="adress">
+             </label>
+             <label class="radio" >
+              Salary
+             <input type="text"  name="job_salary2" class="formes" placeholder="salary">
+             </label>
+             <div class="form-container">
+             <label class="radio">
+              Remarque
+             <input type="text"  name="job_remark2" class="form-input" placeholder="remark">
+            </label>
+            </div>
+          </div>
+         <div class="form-field-title">
+            <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+         </div>
+         <div class="form-container">
+           <% services.forEach(service =>{%>
+            <label class ="radio">
+            <input type="radio" name="health_service2" class="service"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
+           <%})%>
+           <label class="radio" >
+             <input type="text" name="health_service_other2"  class="form3" placeholder="other">
+           </label>
+          <label class="radio">
+              Remarque
+             <input type="text" name="healthes2" class="formrem" placeholder="Social Service Remark">       </label>
+         </div>
+         <div class="form-field-title">
+          <label class="form-label title">HEALTH SITUATION</label>
+        </div>
+                    <input type="checkbox" class="toggleTable">Add to the list
+                    <table id="healthTable" border="1" style="display: none;">
+                        <thead>
+                            <th>disease</th>
+                            <th>mediaction</th>
+                            <th>ToBuy</th>
+                            <th>start date</th>
+                            <th>end date</th>
+                            <th>comment</th>
+                            <th><button type="button"  onclick="addRowToTable()" class="addRowButton">add</button></th>
+                        </thead>
+                        <tbody id="tbody">
+                            <tr id="healthRow">
+                                <td>
+                                  <select  name="medicationss[]"  class="form5" >
+                                    <% medications.forEach(medication =>{ %>
+                                      <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+                        
+                                    <%})%>
+                                    </select>
+                                </td>
+                                <td>
+                                  <select  name="diseasess[]" class="form5" >
+                                    <% disease.forEach(diseases =>{%>
+                                      <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+                                    <%})%>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="toBuy[]">
+                                      <option value="yes">yes</option>
+                                      <option value="no">no</option>
+                                  </select>
+                                </td>
+                                <td>
+                                    <input type="date" name="startDate[]">
+                                </td>
+                                <td>
+                                    <input type="date" name="endDate[]">
+                                </td>
+                                <td>
+                                    <input type="text" name="comment[]">
+                                </td>
+                            </tr>
+                        </tbody>
+                       
+                    </table>
+                    <div class="form-container">
+                    <label class="radio">
+                      Remarque
+                     <input type="text" name="healthyremark2" class="formrem" placeholder="Health Remark"></label>
+                     </div>
+        </div>
+        <div class="container" id="OtherFromContainer">
+          <h1 style="text-decoration: underline; font-size: 24px;">Other member</h1>
+          <button type="button" class="form-sub"id="addOtherButton" >Add new member form</button>
+          <div class="container m-3" id="otherForm">
+            <input type="hidden" name="othersnumber" id="othernum">
+
+          </div>
+      </div>
+      
+
+  <!-------Children form for cloning------>
+  <div id="otherFromToClone" style="display: none;">
+      <h4 style="text-decoration: underline; font-size: 18px;">otherNumberTitle</h4>
+      <hr>
+      <div class="form-field" >
+       
+          <div class="form-field">
+              <label for="FirstName5" class="form-label1" >FirstName</label>
+              <input type="text" class="form-input" name="FirstName5" id="FirstName5" placeholder="First Name" >
+          </div>
+          <div class="form-field">
+            <label for="FatheName5" class="form-label1" >FatherName</label>
+            <input type="text" class="form-input" name="FatherName5" id="FatherName5" placeholder="Father Name">
+        </div>
+          <div class="form-field">
+            <label for="LastName5" class="form-label1" >LastName</label>
+            <input type="text" class="form-input" name="LastName5" id="LastName5" placeholder="Last Name">
+        </div>
+          <div class="col-md-5">
+            <label for="BirthDate5" class="form-label1">BirthDate</label>
+            <input type="date" class="form-input" name="BirthDate5" id="BirthDate5">
+        </div>
+        <div class="form-field">
+          <label for="FamilyLink5" class="form-label1">Family Link</label>
+          <input type="text" class="form-input" name="FamilyLink5" id="FamilyLink5" placeholder="Family_link">
+      </div>
+      </div>
+      <div class="form-field-title">
+        <label class="form-label title">PROFESIONAL STATUS</label>
+      </div>
+      <div  class="form-container">
+        <% profesional.forEach(profesional =>{%> 
+          <label class ="radio">
+          <input type="radio" name="profesional_status5" class="estez5" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
+        <%})%>
+        <label class="radio">
+          <input type="text" name="profesional_status_other3"  class="form1" placeholder="other">
+        </label>
+      </div>
+    <div class="form-container1" id="moulouk5" style="display: none;" >
+       <label class="radio" >
+      Job desc
+      <input type="text"  name="job_desc5" class="formes" placeholder="job descritpion">
+       </label>
+       <label class="radio" >
+         Sector
+        <select name="sectors5" class="sectour">
+        <% sector.forEach(sectorr =>{%>
+          <option   value="<%= sectorr.sector_id %>"><%= sectorr.sector_type %></option>
+        <%})%>
+        </select>
+        </label>
+       <label class="radio" >
+         Adress
+       <input type="text"  name="job_address5" class="formes" placeholder="adress">
+       </label>
+       <label class="radio" >
+        Salary
+       <input type="text"  name="job_salary5" class="formes" placeholder="salary">
+       </label>
+      
+       <label class="radio">
+        Remarque
+       <input type="text"  name="job_remark5" class="formes" placeholder="remark">
+      </label>
+     
+    </div>
+   <div class="form-field-title">
+      <label class="form-label title">HEALTH AND SOCIAL SERVICES</label>
+   </div>
+   <div class="form-container">
+     <% services.forEach(service =>{%>
+      <label class ="radio">
+      <input type="radio" name="health_service5" class="ser"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
+     <%})%>
+     <label class="radio" >
+       <input type="text" name="health_service_other3"  class="form3" placeholder="other">
+     </label>
+     <div class="form-container">
+    <label class="radio">
+        Remarque
+       <input type="text" name="healthes5" class="formrem" placeholder="Social Service Health Remark">       </label>
+       </div>
+   </div>
+   <div class="form-field-title">
+    <label class="form-label title">HEALTH SITUATION</label>
+  </div>
+              <input type="checkbox" class="toggleTable5">Add to The List
+              <table id="healthTable5" border="1" style="display: none;">
+                  <thead>
+                      <th>disease</th>
+                      <th>mediaction</th>
+                      <th>to buy</th>
+                      <th>start date</th>
+                      <th>end date</th>
+                      <th>comment</th>
+                      <th> <button type="button"  onclick="addRowToTable5()" class="addRowButton5">Add</button></th>
+                  </thead>
+                  <tbody id="tbody5" class="steph">
+                      <tr id="healthRow5">
+                          <td>
+                            <select  name="medicationss5[]"  class="form5" >
+                              <% medications.forEach(medication =>{ %>
+                                <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+                  
+                              <%})%>
+                              </select>
+                          </td>
+                          <td>
+                            <select  name="diseasess5[]" class="form5" >
+                              <% disease.forEach(diseases =>{%>
+                                <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+                              <%})%>
+                              </select>
+                          </td>
+                          <td>
+                              <select name="toBuy5[]">
+                                <option value="yes">yes</option>
+                                <option value="no">no</option>
+                            </select>
+                          </td>
+                          <td>
+                              <input type="date" name="startDate5[]">
+                          </td>
+                          <td>
+                              <input type="date" name="endDate5[]">
+                          </td>
+                          <td>
+                              <input type="text" name="comment5[]">
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <div class="form-container">
+              <label class="radio">
+                Remarque
+               <input type="text" name="healthyremark5" class="formrem" placeholder="Health Remark"></label>
+               </div>
+  </div>
+            
+          
+          <div class="form-field-title">
+            <label class="form-label title">FINANCIAL SITUATION</label>
+            </div>
+              <div class="form-field">
+                <label for="fname" class="form-label1">monthly income</label>
+                <input type="text" id="fname" name="monthly_gain" class="form-input" placeholder="Monthly income" required>
+              </div>
+              <div class="form-field">
+                <label for="fathername" class="form-label1">monthly spend</label>
+                <input type="text" id="monthly_spend" class="form-input" name="monthly_spend" readonly>
+              </div>
+              <div class="form-field">
+                <label for="lname" class="form-label1">home rental</label>
+                <input type="number" id="ajar" name="price_of_rent" oninput="calculateSum()" class="form-input" placeholder="home rental" required>
+              </div>
+              <div class="form-field">
+                <label for="phone" class="form-label1">dish</label>
+                <input type="number" id="dish" name="price_of_dish" oninput="calculateSum()" class="form-input" placeholder="dish" required>
+              </div>
+              <div class="form-field">
+                <label for="fname" class="form-label1">telephone/internet</label>
+                <input type="number" id="internet" name="price_of_internet_phone" oninput="calculateSum()" class="form-input" placeholder="telephone_internet" required>
+              </div>
+              <div class="form-field">
+                <label for="fathername" class="form-label1">Pohne</label>
+                <input type="number" id="cellulare" name="price_of_cellulare" oninput="calculateSum()" class="form-input" placeholder="phone" required>
+              </div>
+              <div class="form-field">
+                <label for="lname" class="form-label1">Electricity</label>
+                <input type="number" id="electricity" name="price_of_electricity" oninput="calculateSum()" class="form-input" placeholder="Electricity" required>
+              </div>
+              <div class="form-field">
+                <label for="phone" class="form-label1">generator</label>
+                <input type="number" id="generator" name="price_of_generator" oninput="calculateSum()" class="form-input" placeholder="generator" required>
+              </div>
+              <div class="form-field">
+                <label for="fname" class="form-label1">loan repayment</label>
+                <input type="number" id="loan" name="price_of_loan" class="form-input" oninput="calculateSum()" placeholder="loan repayment" required>
+              </div>
+              <div class="form-field">
+                <label for="fathername" class="form-label1">Other</label>
+                <input type="number" id="others" name="price_others" class="form-input" oninput="calculateSum()" placeholder="other" required>
+              </div>
+              <div class="form-field">
+                <label for="lname" class="form-label1">remark</label>
+                <input type="text" id="remark" name="financial_remark" class="form-input" placeholder="remark" required>
+              </div>
+              <hr>
+            <br>
+            <br>
+            
+              <div class="form-field">
+                <label for="BirthDate5" class="form-label1" >Date Of interview</label>
+                <input type="date" class="form-input" name="date_interview" required>
+            </div>
+            <div class="form-field">
+              <label for="fathername" class="form-label1">Interviewer</label>
+            <select  name="interviewer" class="form-input" required>
+              <% users.forEach(u =>{%>
+                <option value="<%= u.user_id %>" ><%= u.user_name %></option>
+              <%})%>
+              </select>
+            </div>
+              <div class="form-field">
+                <label for="fathername" class="form-label1">Place of Interview</label>
+                <input type="text"  name="place_interview" class="form-input"  placeholder="Place of Interview" required>
+              </div>
+              <br>
+              <br>
+              <hr>
+              <div class="form-field-title">
+                <label class="form-label title">PASTORALE DECISION</label>
+                </div>
+                <div>
+                <% decision.forEach(dec =>{%>
+                  <label style="font-weight: bold;">
+                  <input type="checkbox" id="<%= dec.aid_type %>" value="<%= dec.aid_id %>" name="decision[]"><%= dec.aid_type %>
+               </label>
+                  <%})%>
+                </div>
+                <div id="jik" style="display: none;">
+                <input type="text" name="Financial_decision" class="form3" placeholder="Financial_decision" >
+                </div>
+                <div id="jik1" style="display: none;">
+                  <input type="text" name="Scholar" class="form3" placeholder="Scholar_decision" >
+                  </div>
+                  <div id="jik2" style="display: none;">
+                    <input type="text" name="other_decision" class="form3" placeholder="Other_decision" >
+                    </div>
+                    <div class="form-field">
+                      <label for="lname" class="form-label1">remark</label>
+                      <input type="text" id="remark" name="Decision_remark" class="form-input" placeholder="Remark" required>
+                    </div>
+                    
+                  
+              
+
+
+    
+          
+        
+        
+              
+            
+                                 
+      <button type="submit" class="form-submit">Submit</button>
+      
+    </form>
+
+      
+  </div>
+</body>
+<script src="./code.js">
+</script>
+</html>

@@ -6,5 +6,4 @@ const pool = mysql.createPool({
     database: 'pastorale_db',
     password: ''
 });
-
 module.exports = pool.promise();

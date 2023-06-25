@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const path = require('path');
-const session = require('express-session');
-const bodyParser = require('body-parser');
+const session = require('express-session')
+const bodyParser = require('body-parser')
 // const csrf = require('csurf');
 const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
 const settingsRoute = require('./routes/settings');
 const allBeneficiariesRoute = require('./routes/beneficiary_table');
-
+const formRoute =require('./routes/form')
 const exportRoute = require('./routes/exportRoute')
 const donationRoute = require('./routes/donations')
 //const csrfProtection = csrf();
@@ -49,6 +49,7 @@ app.use((req, res, next) => {
   }
 });
 
+app.use(formRoute);
 app.use(settingsRoute);
 app.use(allBeneficiariesRoute);
 app.use(adminRoute);

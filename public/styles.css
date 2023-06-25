@@ -1,0 +1,324 @@
+/* Form container */
+body {
+  background-color: midnightplum;
+}
+table {
+  margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table input[type="text"],
+table input[type="date"]{
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background-color: #f2f2f2;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #333;
+}
+table input[type="text"]:focus,
+table input[type="date"]:focus,
+table select:focus {
+  outline: none;
+  background-color: #fff;
+  border: 1px solid #aaa;
+}
+
+table select {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background-color: #f2f2f2;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.form-container {
+    max-width: 820px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .form-container1 {
+    max-width: 820px;
+    margin: 0 auto;
+    
+  }
+  .form-container2 {
+    max-width: 820px;
+    margin: 0 auto;
+    
+  }
+  .form-container3 {
+    max-width: 820px;
+    margin: 0 auto;
+    
+  }
+  
+  /* Form header */
+  .form-header {
+    text-align: center;
+    margin-bottom: 20px;
+    white-space: nowrap;
+  }
+  
+  .title{
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 24px;
+
+  }
+  
+  /* Form fields */
+  .form-field {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .form-field-title {
+    margin-bottom: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  
+  /* Label */
+  .form-label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top:0px
+  }
+  .form-label1 {
+    display: inline-block;
+    font-size: 20px;;
+    margin-bottom: 0px;
+    margin-top:5px;
+    font-weight: bold;
+    
+  }
+  
+  /* Input field */
+  .form-input {
+    width: 40%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0px;
+  }
+  .form-input1 {
+    width: 50%;
+    padding: 10px;
+    font-size: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .radio {
+    padding: 5px;
+    font-weight: bold;
+    font-size: 20px;
+
+    margin-bottom: 5px;
+    margin-top:20px;
+    width:5%
+    
+  }
+  .radio1 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:5%
+  }
+  .estez {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:5%
+  }
+  .radio4 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:5%
+  }
+  .radio2 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:5%
+  }
+  .service {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:5%
+  }
+  .radio3 {
+    padding: 5px;
+    font-weight: bold;
+    margin-top:15px;
+    width:5%
+  }
+  
+  /* Submit button */
+  .form-submit {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top:15px
+  }
+  .form-sub {
+    width: 30%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top:15px
+  }
+  .form-row {
+    height: 30px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .addRowButton{
+    height: 30px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .addRowButton5{
+    height: 30px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .addRowButton7{
+    height: 30px;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  /* Submit button hover effect */
+  .form-submit:hover {
+    background-color: #45a049;
+  }
+ 
+  .form {
+    display: inline-block;
+    width: 30%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    width: 50%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form1 {
+    display: inline-block;
+    width: 20%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form4 {
+    width: 20%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    width: 17%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .sectour {
+    width: 20%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    width: 17%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form5 {
+    width: 100%;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form2 {
+    display: inline-block;
+    width: 50%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form3 {
+    display: inline-block;
+    width: 16%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+  }
+  .formrem {
+    display: inline-block;
+    width: 40%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+  }
+  .formes {
+    display: inline-block;
+    width: 20%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add some spacing between forms */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+  }
+  
