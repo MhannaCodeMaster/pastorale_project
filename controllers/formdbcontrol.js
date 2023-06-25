@@ -10,24 +10,53 @@ function editForm(req,res){
     const decisions=[]
     const healthO=[]
     const aidid=[]
+    let joints
+    const jointHeal=[]
     
- 
+ console.log(benid)
   selectModel.financial(benid).then(([masare])=>{
     
     selectModel.selectMainBeni(benid).then(([mainbeni])=>{
         selectModel.selectMainHealth(benid).then(([healthes])=>{
             selectModel.selectRelation(benid,"joint").then(([joint])=>{
-                selectModel.selectMainBeni(joint[0].beneficiary2_id).then(([joints])=>{
-                    selectModel.selectMainHealth(joint[0].beneficiary2_id).then(([jointhealth])=>{
+            
+                if(joint.length!=0){  
+                selectModel.selectMainBeni(joint[0].beneficiary2_id).then(([join])=>{
+                    joints=join
+                    console.log("jojo",joints)
+                    console.log("result",joint[0].beneficiary2_id)
+                    selectModel.selectMainHealth(joint[0].beneficiary2_id).then(([jointo])=>{
+                        
+                        jointHeal.push(jointo)
+                        console.log("heal",jointHeal)
+
+
+                    }).catch((err)=>{
+                        console.log(err)
+                        res.status(400).send("something went wrong 4")
+                    })
+                       
+                }).catch((err)=>{
+                    console.log(err)
+                    res.status(400).send("something went wrong 2")
+                })
+            }
+            
                         selectModel.selectRelation(benid,"child").then(([child])=>{
                             if(child.length>0){
                               child.forEach(childs =>{                          
                                 selectModel.selectMainBeni(childs.beneficiary2_id).then(([childs])=>{
                                    children.push(childs)
 
+                                }).catch((err)=>{
+                                    console.log(err)
+                                    res.status(400).send("something went wrong 2")
                                 })
                                  selectModel.selectMainHealth(childs.beneficiary2_id).then(([mom])=>{
                                     healthCare.push(mom);                
+                                }).catch((err)=>{
+                                    console.log(err)
+                                    res.status(400).send("something went wrong 2")
                                 })
                              })
                             }
@@ -35,10 +64,16 @@ function editForm(req,res){
                             othersss.forEach(oo =>{
                                 selectModel.selectMainBeni(oo.beneficiary2_id).then(([otherss])=>{
                                     members.push(otherss)
+                                }).catch((err)=>{
+                                    console.log(err)
+                                    res.status(400).send("something went wrong 2")
                                 })
                                 selectModel.selectMainHealth(oo.beneficiary2_id).then(([dad])=>{
                                     healthO.push(dad)
 
+                                }).catch((err)=>{
+                                    console.log(err)
+                                    res.status(400).send("something went wrong 2")
                                 })
                             })
                             
@@ -61,11 +96,11 @@ function editForm(req,res){
                                                                                             insertModel.selectDecision().then(([decision])=>{
                                                                                                 insertModel.SelectUser().then(([users])=>{
 
-                                                                                            console.log(healthCare)
+                                                                                            
                                                                                                 res.render('../view/formedit',{
                                                                                                        mainbeni,moment,property,profesional,
                                                                                                        sector,services,medications,disease,
-                                                                                                       family,healthes,joints,jointhealth,children,healthCare,members,masare,decision,deci,healthO,aidid,users
+                                                                                                       family,healthes,joints,jointHeal,children,healthCare,members,masare,decision,deci,healthO,aidid,users
                                                                                                 })
                                                                                             })
                                                                                          })
@@ -79,19 +114,16 @@ function editForm(req,res){
                                         })  
                                     })                    
                                               
-                    }) 
-                
-                }).catch((err)=>{
-                    res.status(400).send("something went wrong 1")
-                })
+                    
+             
             }).catch((err)=>{
-                res.status(400).send("something went wrong 1")
+                res.status(400).send("something went wrong 3")
             })
         }).catch((err)=>{
-            res.status(400).send("something went wrong 1")
+            res.status(400).send("something went wrong 4")
         })
     }).catch((err)=>{
-        res.status(400).send("something went wrong ")
+        res.status(400).send("something went wrong 5 ")
     })
  }).catch((err)=>{
     res.status(400).send("masare ")
@@ -121,7 +153,7 @@ function updateForm(req,res){
         const health_service_others1=health_service_other1 || null
         const profesional_status_others1=profesional_status_other1 || null
         const medio=req.body.medi.length
-        let len=-1
+        let len=0
         
         const rel1="child"
         const rel2="joint"
@@ -158,14 +190,15 @@ function updateForm(req,res){
                
             }
             selectModel.selectRelation(beni_id,"joint").then(([joint])=>{
+                if(joint.length>0){
                 selectModel.updatejoint(fname1,fathername1,lname1,phone1,date1,profesional_status1,sectorss1,job_descs1,job_addresss1,job_remarks1,health1,health_service1,healthyremark1,health_service_other1,profesional_status_other1,joint[0].beneficiary2_id).then(([res3])=>{
 
                 }).catch((err)=>{
                         console.log(err)
                          res.status(400).send("something went wrong bel update")
                     })
-    
-            
+                }
+            if(Array.isArray(req.body.medi1) && req.body.length>0){
             for(let i=1;i<req.body.medi1.length;i++){
                 // console.log(buy[i])
                 // console.log(std[i])
@@ -186,7 +219,9 @@ function updateForm(req,res){
                      res.status(400).send("something went wrong bel delte")
                 })
             }
+        }
         })
+    
         if(numchildren>0){
 
             selectModel.selectRelation(beni_id,"child").then(([wled1])=>{
@@ -250,55 +285,74 @@ function updateForm(req,res){
 
             }
         }
-            selectModel.selectRelation(beni_id,"other").then(([otherss])=>{
-                otherss.forEach((o,index) =>{
-                    selectModel.deleteChilds(o.beneficiary2_id).then(([res2])=>{
+        //     selectModel.selectRelation(beni_id,"other").then(([otherss])=>{
+        //         if(otherss.length>0){
+        //         otherss.forEach((o,index) =>{
+        //             selectModel.deleteChilds(o.beneficiary2_id).then(([res2])=>{
 
-                    }).catch((err)=>{
-                        console.log(err)
-                         res.status(400).send("something went wrong bi tedlit el other")
-                    })
-                    selectModel.deleteMainHealth200(o.beneficiary2_id).then(([healdelete])=>{
+        //             }).catch((err)=>{
+        //                 console.log(err)
+        //                  res.status(400).send("something went wrong bi tedlit el other")
+        //             })
+        //             selectModel.deleteMainHealth200(o.beneficiary2_id).then(([healdelete])=>{
 
-                    }).catch((err)=>{
-                        console.log(err)
-                         res.status(400).send("something went wrong bi tedlit el other")
-                    })
-                    len=index
+        //             }).catch((err)=>{
+        //                 console.log(err)
+        //                  res.status(400).send("something went wrong bi tedlit el other")
+        //             })
+        //             len=index
                 
-                })
+        //         })
+        //     }
                 
-            })
-            selectModel.deleteRel(beni_id,rel3).then(([ros])=>{
+        //     })
+        //     selectModel.deleteRel(beni_id,rel3).then(([ros])=>{
 
-            })
+        //     })
             
-            console.log(len)
-         if(len!=-1){
-            let l=len+1
+        //     console.log(len)
+         
+            
         
-            for(let j=1;j<=l;j++){
-                const job_descs5=req.body[`job_desc5_${j}`]||null
-                const job_addresss5=req.body[`job_address5_${j}`]||null
-                const job_salarys10=req.body[`job_salary5_${j}`]||null
-                const job_remarks5=req.body[`job_remark5_${j}`]||null
-                const sectorss5=req.body[`sectors5_${j}`]||null
-                const healo1=req.body[`health_service_other3_${j}`]||null
-                const prof1=req.body[`profesional_status_other3_${j}`]||null
-                selectModel.fillInfor(req.body[`FirstName5_${j}`],req.body[`FatherName5_${j}`],req.body[`LastName5_${j}`],req.body[`BirthDate5_${j}`],req.body[`profesional_status5_${j}`],sectorss5,job_descs5,job_addresss5,job_salarys10,job_remarks5,req.body[`healthes5_${j}`],req.body[`health_service5_${j}`],req.body[`healthyremark5_${j}`],healo1,prof1,"no",req.body[`FamilyLink5_${j}`]).then(([chilll])=>{
-                    insertModel.relationss(beni_id,chilll.insertId,"other").then(([relo])=>{
+        //     for(let j=1;j<=len+1;j++){
+        //         const job_descs5=req.body[`job_desc5_${j}`]||null
+        //         const job_addresss5=req.body[`job_address5_${j}`]||null
+        //         const job_salarys10=req.body[`job_salary5_${j}`]||null
+        //         const job_remarks5=req.body[`job_remark5_${j}`]||null
+        //         const sectorss5=req.body[`sectors5_${j}`]||null
+        //         const healo1=req.body[`health_service_other3_${j}`]||null
+        //         const prof1=req.body[`profesional_status_other3_${j}`]||null
+        //         selectModel.fillInfor(req.body[`FirstName5_${j}`],req.body[`FatherName5_${j}`],req.body[`LastName5_${j}`],req.body[`BirthDate5_${j}`],req.body[`profesional_status5_${j}`],sectorss5,job_descs5,job_addresss5,job_salarys10,job_remarks5,req.body[`healthes5_${j}`],req.body[`health_service5_${j}`],req.body[`healthyremark5_${j}`],healo1,prof1,"no",req.body[`FamilyLink5_${j}`]).then(([chilll])=>{
+        //             console.log(req.body[`job_salary5_${j}`])
+        //             insertModel.relationss(beni_id,chilll.insertId,"other").then(([relo])=>{
 
-                    })
+        //             }).catch((err)=>{
+        //                 console.log(err)
+        //                 res.status(400).send("bi sohet el others")
+        //             })
+        //             if (req.body[`medicationss5_${j}`] && Array.isArray(req.body[`medicationss5_${j}`])) {
+
+        //                 for(let i=0;i<req.body[`medicationss5_${j}`].length;i++){
+                           
+                            
+        //                     insertModel.fillHealthSituation1(req.body[`toBuy5_${j}`][i],req.body[`startDate5_${j}`][i],req.body[`endDate5_${j}`][i],req.body[`comment5_${j}`][i],req.body[`diseasess5_${j}`][i],req.body[`medicationss5_${j}`][i],wlod.insertId).then(([sette])=>{
+        
+        //                     }).catch((err)=>{
+        //                         console.log(err)
+        //                         res.status(400).send("bi sohet el others")
+        //                     })
+        //                 }
+        //             }
                    
             
                     
     
-                }).catch((err)=>{
-                    console.log(err)
-                    res.status(400).send("bel others")
-                })
-            }
-        }
+        //         }).catch((err)=>{
+        //             console.log(err)
+        //             res.status(400).send("bel others")
+        //         })
+            
+        // }
         
           
 
@@ -324,10 +378,8 @@ function updateForm(req,res){
        console.log(err)
        res.status(400).send("something went wrong bel decision")
     })
-     }
-
-            
-            
+     }       
+     res.redirect("/all-beneficiaries")       
 }
 function insertInfo(req,res){
 

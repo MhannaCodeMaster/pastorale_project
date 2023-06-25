@@ -370,37 +370,17 @@ document.addEventListener("change", (event) => {
 addotherButton.addEventListener('click',addNewOtherForm);
 var checkbox20 = document.getElementById('check10');
 var table20 = document.getElementById('table10');
-var inputs = table20.querySelectorAll("input[required]");
-var selects = table20.querySelectorAll("select[required]");
 
 checkbox20.addEventListener('click', function() {
   if (this.checked) {
     table20.style.display = 'block';
-    setRequiredAttribute(inputs, selects);
+  
   } else {
     table20.style.display = 'none';
-    removeRequiredAttribute(inputs, selects);
+    
   }
 });
-function setRequiredAttribute(inputs, selects) {
-  inputs.forEach(function(input) {
-    input.setAttribute("required", "required");
-  });
 
-  selects.forEach(function(select) {
-    select.setAttribute("required", "required");
-  });
-}
-
-function removeRequiredAttribute(inputs, selects) {
-  inputs.forEach(function(input) {
-    input.removeAttribute("required");
-  });
-
-  selects.forEach(function(select) {
-    select.removeAttribute("required");
-  });
-}
 
 var financialCheckbox = document.getElementById('Financial');
 
@@ -575,7 +555,7 @@ handleJointChange();
 
 
 function addRow() {
-  var table = document.getElementById("mytable");
+  var table = document.getElementById("table10");
   var row = document.getElementById("row1");
   var newRow = table.insertRow(-1); // Insert a new row at the end of the table
 

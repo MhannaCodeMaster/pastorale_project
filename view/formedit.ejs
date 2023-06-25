@@ -132,8 +132,8 @@
             <table  border="1" style="display:none ;" id="mytable">
               <thead>
                 <tr>
-                  <th>Disease</th>
                   <th>Medication</th>
+                  <th>Disease</th>
                   <th>To buy</th>
                   <th>Start Date</th>
                   <th>End Date</th>
@@ -234,7 +234,7 @@
                 </label>
                 </div>
               </div>
-              <% if (joints.length >0 ) { %>
+              <% if (joints) { %>
               <div class="form-field-title">
                 <label class="form-label title">JOINT</label>
                 </div>
@@ -325,8 +325,8 @@
                     <table  border="1" id="mytable1">
                       <thead>
                         <tr>
-                          <th>Disease</th>
                           <th>Medication</th>
+                          <th>Disease</th>
                           <th>To buy</th>
                           <th>Start Date</th>
                           <th>End Date</th>
@@ -366,11 +366,9 @@
                           <td><input id="end"name="endt1[]" type="date"  class="form5" placeholder="end date"></td>
                           <td>
                             <input id="comment" name="comments1[]" type="text"    class="form5" placeholder="comment">
-                          </td>
-            
-                           
+                          </td>      
                           </tr>
-                        <% jointhealth.forEach(heals=>{ %>
+                        <% jointHeal[0].forEach(heals=>{  %>
                         <tr>
                         <td>
                           <div id="arr">
@@ -403,7 +401,7 @@
                           <input id="comment" name="comments1[]" type="text" value="<%= heals.remark %>"   class="form5" placeholder="comment">
                         </td>
                         </tr>
-                        <%})%>
+                        <% }) %>
                       </tbody>
                   
                     </table>
@@ -509,8 +507,8 @@
                                 <input type="checkbox" class="toggleTable">
                                 <table id="<%= index + 1 %>_healthTable7" border="1" >
                                     <thead>
+                                        <th>medication</th>
                                         <th>disease</th>
-                                        <th>mediaction</th>
                                         <th>to buy</th>
                                         <th>start date</th>
                                         <th>end date</th>
@@ -528,7 +526,7 @@
                                         <td>
                                           <select  name="<%= index + 1 %>_medicationss7[]"  class="form5" >
                                             <% medications.forEach(medication =>{ %>
-                                              <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
+                                              <option value="<%= medication.medicine_id %>" <%= medication.medicine_id == hil.medicine_id ? 'selected' : '' %>><%= medication.medicine_name %></option>
                                 
                                             <%})%>
                                             </select>
@@ -536,21 +534,21 @@
                                         <td>
                                           <select  name="<%= index + 1 %>_diseasess7[]" class="form5" >
                                             <% disease.forEach(diseases =>{%>
-                                              <option value="<%= diseases.disease_id %>"><%= diseases.disease_name %></option>
+                                              <option value="<%= diseases.disease_id %>" <%= diseases.disease_id == hil.disease_id ? 'selected' : '' %> ><%= diseases.disease_name %></option>
                                             <%})%>
                                             </select>
                                         </td>
                                         <td>
                                             <select name="<%= index + 1 %>_toBuy7[]">
-                                              <option value="yes">yes</option>
-                                              <option value="no">no</option>
+                                              <option value="yes" <%= hil.bought == "yes" ? 'selected' : '' %>>yes</option>
+                                              <option value="no" <%= hil.bought == "no" ? 'selected' : '' %>>no</option>
                                           </select>
                                         </td>
                                         <td>
-                                            <input type="date" name="<%= index + 1 %>_startDate7[]">
+                                            <input type="date"  value="<%= moment(hil.start_date).format('yyyy-MM-DD') %>" name="<%= index + 1 %>_startDate7[]" >
                                         </td>
                                         <td>
-                                            <input type="date" name="<%= index + 1 %>_endDate7[]">
+                                            <input type="date" value="<%= moment(hil.end_date).format('yyyy-MM-DD') %>"  %>" name="<%= index + 1 %>_endDate7[]">
                                         </td>
                                         <td>
                                             <input type="text" value="<%= hil.remark %>" name="<%= index + 1 %>_comment7[]">
@@ -660,7 +658,7 @@
                           <input type="checkbox" class="toggleTable5">
                           <table id="healthTable5" border="1" >
                               <thead>
-                                  <th>medeication</th>
+                                  <th>medication</th>
                                   <th>disease</th>
                                   <th>to buy</th>
                                   <th>start date</th>
