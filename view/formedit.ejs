@@ -227,10 +227,12 @@
                     <input type="radio" name="familysituation" id="<%= families.situation_desc %>"class="radio3" value="<%= families.situation_id %>" <%= families.situation_id == mainbeni[0].family_situation_id ? 'checked' : '' %>><%= families.situation_desc %></label>
       
                 <%})%>
+                <div class="form-container">
                 <label class="radio">
                   Children number
                   <input type="text" name="numchildren" value="<%= mainbeni[0].number_of_children %>" class="form3" placeholder="children_number">
                 </label>
+                </div>
               </div>
               <% if (joints.length >0 ) { %>
               <div class="form-field-title">
@@ -524,7 +526,7 @@
                                       
                                       <tr id="healthRowii" >
                                         <td>
-                                          <select  name="<%= index + 1 %>_medicationss[]"  class="form5" >
+                                          <select  name="<%= index + 1 %>_medicationss7[]"  class="form5" >
                                             <% medications.forEach(medication =>{ %>
                                               <option value="<%= medication.medicine_id %>"><%= medication.medicine_name %></option>
                                 
@@ -762,40 +764,7 @@
            
                       
                       
-                     <table style="display: none;"> 
-                    <tr id="healtho" class="moussa" >
-                      <td>
-                        <select  name="medicationss7[]"  class="form5"  >
-                          <% medications.forEach(medication =>{ %>
-                            <option value="<%= medication.medicine_id %>" ><%= medication.medicine_name %></option>
-              
-                          <%})%>
-                          </select>
-                      </td>
-                      <td>
-                        <select  name="diseasess7[]" class="form5" >
-                          <% disease.forEach(diseases =>{%>
-                            <option value="<%= diseases.disease_id %>" ><%= diseases.disease_name %></option>
-                          <%})%>
-                          </select>
-                      </td>
-                      <td>
-                          <select name="toBuy7[]">
-                            <option value="yes">yes</option>
-                            <option value="no">no</option>
-                        </select>
-                      </td>
-                      <td>
-                          <input type="date" name="startDate7[]">
-                      </td>
-                      <td>
-                          <input type="date" name="endDate7[]">
-                      </td>
-                      <td>
-                          <input type="text"  name="comment7[]">
-                      </td>
-                  </tr>
-                  </table>
+                    
                   <hr>
                   <br>
                   <br>

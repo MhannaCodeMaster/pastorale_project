@@ -24,14 +24,11 @@ function updatemain(FirstName,FatherName,LastName,Phone,date,ngadd,stadd,housead
     const query='UPDATE beneficiary SET first_name= ?,middle_name =?,last_name =?,phone_number =?,birth_date =?,neighborhood_address =?,street_address =?,house_address =?,house_floor =?,address_details =?,price_of_rent =?,property_status_id = ?,professional_status_id =?,sector_id =?,job_desc =?,job_address =?,job_salary=?,job_remark=?,social_service_remark =?,hss_id =?,health_remark =?,family_situation_id =?,number_of_children =?,health_service_other =?,profesional_status_other=?,interview_date=?,interview_location=?,interviewer_id=? WHERE b_id= ?'
     return pool.execute(query,[FirstName,FatherName,LastName,Phone,date,ngadd,stadd,houseadd,housefloor,adddetails,price,propertyid,profstatid,secid,jobdesc,jobadd,jobsal,jobrem,social_service_remark,hss_id,hremark,famsitu,childnum,healthother,profother,interview_date,interview_location,interviewer_id,benid])
 }
-function deleteMainHealth1(beni_id){
-    const query= 'DELETE FROM health_situation  WHERE beneficiary_id = ?;'
+function deleteMainHealth200(beni_id){
+    const query= 'DELETE FROM health_situation  WHERE beneficiary_id = ?'
     return pool.execute(query,[beni_id])
 }
-// function deleteMainHealth(){
-//     const query= 'DELETE t1 FROM health_situation t1    INNER JOIN health_situation t2    WHERE t1.s_id < t2.s_id AND t1.remark = t2.remark '
-//     return pool.execute(query)
-// }
+
 function deleteChilds(childsid){
     const query='DELETE FROM beneficiary WHERE b_id=?;'
     return pool.execute(query,[childsid])
@@ -72,5 +69,5 @@ function deleteDec(beni_id){
 
 
 module.exports={
-    selectMainBeni,selectMainHealth,selectRelation,other,financial,updatemain,deleteMainHealth1,updatefinancial,updateChildrens,deleteChilds,fillInformatio,deleteRel,fillInfor,selectdecisions,updatejoint,deleteDec
+    selectMainBeni,selectMainHealth,selectRelation,other,financial,updatemain,updatefinancial,updateChildrens,deleteChilds,fillInformatio,deleteRel,fillInfor,selectdecisions,updatejoint,deleteDec,deleteMainHealth200
 }

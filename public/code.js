@@ -34,7 +34,7 @@ const addNewChildForm = () =>{
     const toggleTable = newChildFormLayout.querySelector("input[class=toggleTable");
     const markaziye= newChildFormLayout.querySelector("input[class=markaziye");
     const room=newChildFormLayout.querySelector("div[id=room]")
-    const malak=newChildFormLayout.querySelector("div[id=malak]")
+    const malak=newChildFormLayout.querySelector("div[id=moulouk]")
     const cls = newChildFormLayout.querySelector("input[name='cls']");
     const establishment = newChildFormLayout.querySelector("input[name='establishment']");
     const schoolAddress = newChildFormLayout.querySelector("input[name='sch_Address']")
@@ -52,6 +52,7 @@ const addNewChildForm = () =>{
       cheghlos.id=childId
       cheghlos.setAttribute("data-child",`${childId}`)
     });
+   
     services.forEach(servicess =>{
       servicess.name=`${childId}_health_service2`
       servicess.id=childId
@@ -89,7 +90,7 @@ const addNewChildForm = () =>{
     healthTable.id= childId+"_healthTable";
     healthRow.id = childId+"_healthRow"
     room.id=childId+"_room"
-    malak.id=childId+"_malak"
+    malak.id=childId+"_moulouk"
   
     medicationField.name = `${childId}_medicationss[]`;
     diseaseField.name = `${childId}_diseasess[]`;
@@ -103,6 +104,10 @@ const addNewChildForm = () =>{
     toggleTable.name = `${childId}_toggleTable[]`;
     addRowButton.setAttribute("data-child", `${childId}`);
     toggleTable.setAttribute("data-child", `${childId}`);
+    const radioButtons = newChildFormLayout.querySelectorAll("input[name='profesional_status3']");
+
+  
+
 
   
   
@@ -158,9 +163,7 @@ document.addEventListener("change", (event) => {
         }
         
     }
-})
-document.addEventListener("change", (event) => {
-  if (event.target.classList.contains("markaziye")) {
+    if (event.target.classList.contains("markaziye")) {
       const childId = event.target.getAttribute("data-child");
       const table = document.getElementById(`${childId}_room`);
       
@@ -168,8 +171,18 @@ document.addEventListener("change", (event) => {
           table.style.display = "block";
       }else{
           table.style.display = "none";
-      }
-      
+      }  
+  }
+  if(event.target.classList.contains("estez")){
+    const childId = event.target.getAttribute("data-child");
+    const malakSection = document.getElementById(`${childId}_moulouk`);
+    const selectedType = document.querySelector( `input[name='${childId}_profesional_status3']:checked`).value;
+  if (selectedType === '1') {
+    malakSection.style.display = 'block';
+  } else {
+    malakSection.style.display = 'none';
+  }
+
   }
 })
 
@@ -177,7 +190,10 @@ document.addEventListener("change", (event) => {
 
 
 
+
+
 addChildButton.addEventListener('click',addNewChildForm);
+
 let otherCounter = 0;
 const otherFromToClone = document.getElementById("otherFromToClone");
 const addotherButton = document.getElementById("addOtherButton");
@@ -215,7 +231,7 @@ const addNewOtherForm = () =>{
     const comment5 = newOtherFormLayout.querySelector("input[name='comment5[]']");
     const addRowButton5 = newOtherFormLayout.querySelector("button[class=addRowButton5");
     const toggleTable5 = newOtherFormLayout.querySelector("input[class=toggleTable5");
-    const malak5=newOtherFormLayout.querySelector("div[id=malak5]");
+    const malak5=newOtherFormLayout.querySelector("div[id=moulouk5]");
     const cheghlo5=newOtherFormLayout.querySelectorAll("input[class=estez5")
     const jobdes5=newOtherFormLayout.querySelector("input[name='job_desc5']")
     const jobadd5=newOtherFormLayout.querySelector("input[name='job_address5']")
@@ -266,7 +282,7 @@ const addNewOtherForm = () =>{
     otherNumberTitle.innerText = "Other "+otherCounter;
     healthTable5.id= otherId+"_healthTable5";
     healthRow5.id = otherId+"_healthRow5"
-    malak5.id=otherId+"_malak5"
+    malak5.id=otherId+"_moulouk5"
   
     medicationField5.name = `${otherId}_medicationss5[]`;
     diseaseField5.name = `${otherId}_diseasess5[]`;
@@ -279,6 +295,11 @@ const addNewOtherForm = () =>{
     toggleTable5.name = `${otherId}_toggleTable5[]`;
     addRowButton5.setAttribute("data-other", `${otherId}`);
     toggleTable5.setAttribute("data-other", `${otherId}`);
+    
+
+
+// Function to handle the display change event
+
 
   
   
@@ -334,8 +355,53 @@ document.addEventListener("change", (event) => {
         }
         
     }
+    if(event.target.classList.contains("estez5")){
+      const otherId = event.target.getAttribute("data-other");
+      const malakSections = document.getElementById(`${otherId}_moulouk5`);
+      const selectedTypes = document.querySelector( `input[name='${otherId}_profesional_status5']:checked`).value;
+    if (selectedTypes === '1') {
+      malakSections.style.display = 'block';
+    } else {
+      malakSections.style.display = 'none';
+    }
+  
+    }
 })
 addotherButton.addEventListener('click',addNewOtherForm);
+var checkbox20 = document.getElementById('check10');
+var table20 = document.getElementById('table10');
+var inputs = table20.querySelectorAll("input[required]");
+var selects = table20.querySelectorAll("select[required]");
+
+checkbox20.addEventListener('click', function() {
+  if (this.checked) {
+    table20.style.display = 'block';
+    setRequiredAttribute(inputs, selects);
+  } else {
+    table20.style.display = 'none';
+    removeRequiredAttribute(inputs, selects);
+  }
+});
+function setRequiredAttribute(inputs, selects) {
+  inputs.forEach(function(input) {
+    input.setAttribute("required", "required");
+  });
+
+  selects.forEach(function(select) {
+    select.setAttribute("required", "required");
+  });
+}
+
+function removeRequiredAttribute(inputs, selects) {
+  inputs.forEach(function(input) {
+    input.removeAttribute("required");
+  });
+
+  selects.forEach(function(select) {
+    select.removeAttribute("required");
+  });
+}
+
 var financialCheckbox = document.getElementById('Financial');
 
 // Get the input text element
@@ -384,24 +450,22 @@ OtherCheckbox.addEventListener('click', function() {
     inputText2.style.display = 'none';
   }
 });
-var checkbox20 =document.getElementById('check10');
-var table20=document.getElementById('table10');
-checkbox20.addEventListener('click',function(){
-  if(this.checked){
-    table20.style.display='block'
-  }else{
-    table20.style.display='none'
-  }
-})
+
 var checkbox1 =document.getElementById('check2');
 var table1=document.getElementById('mytable1');
+
 checkbox1.addEventListener('click',function(){
   if(this.checked){
     table1.style.display='block'
+
   }else{
     table1.style.display='none'
+
   }
 })
+
+
+
 const Displayrent = document.getElementById('rento');
 const property_type = document.getElementsByName('property_type');
 const benijobs = document.getElementById('benijob');
@@ -411,13 +475,17 @@ const profesional_status1 = document.getElementsByName('profesional_status1');
 const DisplayJoint = document.getElementById('join');
 const familysituation = document.getElementsByName('familysituation');
 
+
 // Function to handle the recipient type change event
 const handleJointChange = () => {
   const selectedfamilyType = document.querySelector('input[name="familysituation"]:checked').value;
+ 
   if (selectedfamilyType === '2') {
     DisplayJoint.style.display = 'block';
+    
   } else {
     DisplayJoint.style.display = 'none';
+   
   }
 };
 
@@ -471,6 +539,21 @@ handleRentChange();
 handlebeniTypeChange();
 handlejointTypeChange();
 handleJointChange();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

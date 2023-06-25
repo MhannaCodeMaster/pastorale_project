@@ -121,7 +121,7 @@ function updateForm(req,res){
         const health_service_others1=health_service_other1 || null
         const profesional_status_others1=profesional_status_other1 || null
         const medio=req.body.medi.length
-        let len=0
+        let len=-1
         
         const rel1="child"
         const rel2="joint"
@@ -143,7 +143,7 @@ function updateForm(req,res){
                     // console.log(dis[i])
                     // console.log(medi[i])
                     console.log(req.body.buy)
-                    selectModel.deleteMainHealth1(beni_id).then(([ostphen])=>{
+                    selectModel.deleteMainHealth200(beni_id).then(([ostphen])=>{
                       insertModel.fillHealthSituation(buy[i],std[i],endt[i],comments[i],dis[i],medi[i],beni_id).then(([res])=>{
                 
                       }).catch((err)=>{
@@ -174,7 +174,7 @@ function updateForm(req,res){
                 // console.log(dis[i])
                 // console.log(medi[i])
                 
-                selectModel.deleteMainHealth1(joint[0].beneficiary2_id).then(([ostphen])=>{
+                selectModel.deleteMainHealth200(joint[0].beneficiary2_id).then(([ostphen])=>{
                   insertModel.fillHealthSituation(buy1[i],std1[i],endt1[i],comments1[i],dis1[i],medi1[i],joint[0].beneficiary2_id).then(([res])=>{
             
                   }).catch((err)=>{
@@ -192,6 +192,12 @@ function updateForm(req,res){
             selectModel.selectRelation(beni_id,"child").then(([wled1])=>{
                 wled1.forEach(w =>{
                     selectModel.deleteChilds(w.beneficiary2_id).then(([res2])=>{
+
+                    }).catch((err)=>{
+                        console.log(err)
+                         res.status(400).send("something went wrong bi tedlit el wled")
+                    })
+                    selectModel.deleteMainHealth200(w.beneficiary2_id).then(([healdeleted])=>{
 
                     }).catch((err)=>{
                         console.log(err)
@@ -221,7 +227,19 @@ function updateForm(req,res){
                         console.log(err)
                         res.status(400).send("bel fin")
                     })
-                   
+                 if (req.body[`${j}_medicationss7`] && Array.isArray(req.body[`${j}_medicationss7`])) {
+
+                    for(let i=0;i<req.body[`${j}_medicationss7`].length;i++){
+                       
+                        
+                        insertModel.fillHealthSituation1(req.body[`${j}_toBuy7`][i],req.body[`${j}_startDate7`][i],req.body[`${j}_endDate7`][i],req.body[`${j}_comment7`][i],req.body[`${j}_diseasess7`][i],req.body[`${j}_medicationss7`][i],wlod.insertId).then(([sette])=>{
+    
+                        }).catch((err)=>{
+                            console.log(err)
+                            res.status(400).send("bi sohet el others")
+                        })
+                    }
+                }
 
                     
 
@@ -240,7 +258,7 @@ function updateForm(req,res){
                         console.log(err)
                          res.status(400).send("something went wrong bi tedlit el other")
                     })
-                    selectModel.deleteMainHealth1(o.beneficiary2_id).then(([healdelete])=>{
+                    selectModel.deleteMainHealth200(o.beneficiary2_id).then(([healdelete])=>{
 
                     }).catch((err)=>{
                         console.log(err)
@@ -256,8 +274,10 @@ function updateForm(req,res){
             })
             
             console.log(len)
-            if(len>0){
-            for(let j=1;j<=len+1;j++){
+         if(len!=-1){
+            let l=len+1
+        
+            for(let j=1;j<=l;j++){
                 const job_descs5=req.body[`job_desc5_${j}`]||null
                 const job_addresss5=req.body[`job_address5_${j}`]||null
                 const job_salarys10=req.body[`job_salary5_${j}`]||null
@@ -269,14 +289,7 @@ function updateForm(req,res){
                     insertModel.relationss(beni_id,chilll.insertId,"other").then(([relo])=>{
 
                     })
-                    for(let i=0;i<req.body[`medicationss5_${j}`].length;i++){
-                        insertModel.fillHealthSituation1(req.body[`toBuy5_${j}`][i],req.body[`startDate5_${j}`][i],req.body[`endDate5_${j}`][i],req.body[`comment5_${j}`][i],req.body[`diseasess5_${j}`][i],req.body[`medicationss5_${j}`][i],chilll.insertId).then(([sette])=>{
-    
-                        }).catch((err)=>{
-                            console.log(err)
-                            res.status(400).send("bi sohet el others")
-                        })
-                    }
+                   
             
                     
     
@@ -285,7 +298,9 @@ function updateForm(req,res){
                     res.status(400).send("bel others")
                 })
             }
-            }
+        }
+        
+          
 
             selectModel.updatefinancial(monthly_gain,monthly_spend,price_of_rent,price_of_dish,price_of_internet_phone,price_of_cellulare,price_of_electricity,price_of_generator,price_of_loan,
                 price_others,financial_remark,beni_id).then(([ress])=>{

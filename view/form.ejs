@@ -130,7 +130,7 @@
         <label class="form-label title">HEALTH SITUATION</label>
       </div>
       <label  style="font-weight: bold;">
-      <input  type="checkbox" id="check10">Add to the list
+      <input  type="checkbox" onclick="toggleTableVisibility()" id="check10">Add to the list
       </label>
       <table style="display: none;" border="1" id="table10">
         <thead>
@@ -141,7 +141,7 @@
             <th>Start Date</th>
             <th>End Date</th>
             <th>Comment</th>
-            <th><button type="button" class="form-row" onclick="addRow()">ADD</button></th>
+            <th><button type="button" class="form-row" onclick="addRow()" >ADD</button></th>
           </tr>
         </thead>
         <tbody>
@@ -171,11 +171,11 @@
               </select>
           </td>
           <td>
-            <input id="start" name="std[]" type="date"   class="form5" placeholder="start date">
+            <input id="start" name="std[]" type="date"   class="form5" placeholder="start date" >
           </td>
-          <td><input id="end"name="endt[]" type="date"  class="form5" placeholder="end date"></td>
+          <td><input id="end"name="endt[]" type="date"  class="form5" placeholder="end date" ></td>
           <td>
-            <input id="comment" name="comments[]" type="text"   class="form5" placeholder="comment">
+            <input id="comment" name="comments[]" type="text"   class="form5" placeholder="comment" >
           </td>
           </tr>
         </tbody>
@@ -209,24 +209,24 @@
           </div>
             <div class="form-field">
               <p>
-              <label for="fname1" class="form-label1">First Name</label>
+              <label for="fname1" class="form-label1" >First Name</label>
               <input type="text" id="fname" name="fname1" class="form-input" placeholder="Enter your First Name" >
             </div>
             <div class="form-field">
               <label for="fathername" class="form-label1">Father Name</label>
-              <input type="text" id="fathername" name="fathername1" class="form-input" placeholder="Enter your Father Name">
+              <input type="text" id="fathername" name="fathername1" class="form-input" placeholder="Enter your Father Name" >
             </div>
             <div class="form-field">
               <label for="lname" class="form-label1">Last Name</label>
-              <input type="text" id="lname" name="lname1" class="form-input" placeholder="Enter your Last Name">
+              <input type="text" id="lname" name="lname1" class="form-input" placeholder="Enter your Last Name" >
             </div>
             <div class="form-field">
               <label for="phone" class="form-label1">Phone</label>
-              <input type="text" id="phone" name="phone1" class="form-input" placeholder="Enter your phone">
+              <input type="text" id="phone" name="phone1" class="form-input" placeholder="Enter your phone" >
             </div>
             <div class="form-container">
                 <label for="date" class="form-label1">BirthDate</label>
-                <input type="date" id="date" name="date1" class="form" placeholder="Enter your phone">
+                <input type="date" id="date" name="date1" class="form" placeholder="Enter your phone" >
             </div>
             <div class="form-field-title">
               <label class="form-label title">PROFESIONAL STATUS</label>
@@ -237,7 +237,7 @@
                 <input type="radio" name="profesional_status1" class="radio1" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
               <%})%>
               <label class="radio">
-                <input type="text" name="profesional_status_other1"   class="form1" placeholder="other">
+                <input type="text" name="profesional_status_other1"   class="form1" placeholder="other" >
               </label>
             </div>
             <div class="form-container1" id="jointjob"style="display:none;">
@@ -275,11 +275,11 @@
                 <input type="radio" name="health_service1" class="radio2"  value="<%= service.hss_id %>" ><%= service.hss_desc %></label>
               <%})%>
               <label class="radio" >
-                <input type="text" name="health_service_other1"  class="form3" placeholder="other">
+                <input type="text" name="health_service_other1"  class="form3" placeholder="other" >
               </label>
               <label class="radio">
                 Remarque
-                <input type="text" name="health1" class="formrem" placeholder="Social Service Remark">       </label>
+                <input type="text" name="health1" class="formrem" placeholder="Social Service Remark" >       </label>
             </div>
             <div class="form-field-title">
               <label class="form-label title">HEALTH SITUATION</label>
@@ -326,11 +326,11 @@
                   </select>
                 </td>
                 <td>
-                  <input id="start" name="std1[]" type="date"   class="form5" placeholder="start date">
+                  <input id="start" name="std1[]" type="date"   class="form5" placeholder="start date" >
                 </td>
-                <td><input id="end"name="endt1[]" type="date"  class="form5" placeholder="end date"></td>
+                <td><input id="end"name="endt1[]" type="date"  class="form5" placeholder="end date" ></td>
                 <td>
-                  <input id="comment" name="comments1[]" type="text"   class="form5" placeholder="comment">
+                  <input id="comment" name="comments1[]" type="text"   class="form5" placeholder="comment" >
                 </td>
                 </tr>
               </tbody>
@@ -338,7 +338,7 @@
             <div class="form-container">
             <label class="radio">
               Remarque
-              <input type="text" name="healthyremark1"   class="form-input" placeholder="health_remark">
+              <input type="text" name="healthyremark1"   class="form-input" placeholder="health_remark" >
               </label>
               </div>
         </div>
@@ -376,7 +376,7 @@
               
               <% profesional.forEach(profesional =>{%> 
                 <label class ="radio">
-                <input type="radio" name="profesional_status3" class="estez" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" ><%= profesional.p_desc %></label>
+                <input type="radio" name="profesional_status3" class="estez" id="<%= profesional.p_desc %>" value="<%= profesional.p_id %>" data-child><%= profesional.p_desc %></label>
               <%})%>
               <label class="radio">
                 <input type="text"  name="profesional_status_other2" class="form1" placeholder="other">
@@ -396,7 +396,7 @@
                 <input type="text"  name="sch_Address" class="form3" placeholder="Address">
               </label>
              </div>
-          <div class="form-container1" id="malak" >
+          <div class="form-container1" id="moulouk" style="display: none;">
              <label class="radio" >
             Job desc
             <input type="text"  name="job_desc2" class="formes" placeholder="job descritpion">
@@ -447,7 +447,7 @@
                         <thead>
                             <th>disease</th>
                             <th>mediaction</th>
-                            <th>to buy</th>
+                            <th>ToBuy</th>
                             <th>start date</th>
                             <th>end date</th>
                             <th>comment</th>
@@ -513,7 +513,7 @@
        
           <div class="form-field">
               <label for="FirstName5" class="form-label1" >FirstName</label>
-              <input type="text" class="form-input" name="FirstName5" id="FirstName5" placeholder="First Name">
+              <input type="text" class="form-input" name="FirstName5" id="FirstName5" placeholder="First Name" >
           </div>
           <div class="form-field">
             <label for="FatheName5" class="form-label1" >FatherName</label>
@@ -544,7 +544,7 @@
           <input type="text" name="profesional_status_other3"  class="form1" placeholder="other">
         </label>
       </div>
-    <div class="form-container1" id="malak5" >
+    <div class="form-container1" id="moulouk5" style="display: none;" >
        <label class="radio" >
       Job desc
       <input type="text"  name="job_desc5" class="formes" placeholder="job descritpion">
@@ -698,14 +698,14 @@
             <br>
             
               <div class="form-field">
-                <label for="BirthDate5" class="form-label1">Date Of interview</label>
-                <input type="date" class="form-input" name="date_interview" >
+                <label for="BirthDate5" class="form-label1" >Date Of interview</label>
+                <input type="date" class="form-input" name="date_interview" required>
             </div>
             <div class="form-field">
               <label for="fathername" class="form-label1">Interviewer</label>
-            <select  name="interviewer" class="form-input" >
+            <select  name="interviewer" class="form-input" required>
               <% users.forEach(u =>{%>
-                <option value="<%= u.user_id %>"><%= u.user_name %></option>
+                <option value="<%= u.user_id %>" ><%= u.user_name %></option>
               <%})%>
               </select>
             </div>
