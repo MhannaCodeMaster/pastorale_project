@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../includes/head.ejs')%>
+</head>
+<body class="text-center" data-new-gr-c-s-check-loaded="14.1111.0" data-gr-ext-installed="">
+    
+    <main>
+        <div class="container-xxl" style="padding: 0;">
+            <div class="row" style="height: 100vh;">
+                <div class="col-md-5 p-4 d-flex align-items-center">
+                    
+                    <form style="width: 100%;" action="/login" method="post">
+                        <h1 class="h3 mb-5 fw-normal"><b>Login</b></h1>
+                        
+                        <% if(error===true){%>
+                            <span style="color: red;">email or password are incorrect!</span><br>
+                        <%}%>
+                
+                        <div class="form-floating mb-3">
+                            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username" required autocomplete="off">
+                            <label for="floatingInput">username</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                    
+                        <div class="checkbox mb-3">
+                            <a href="/forgot-password">forgot password</a>
+                        </div>
+                
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+                        <p class="mt-5 mb-3 text-muted">© 2017–2023</p>
+                    </form>
+                    
+                </div>
+                <div class="col-md-7 p-0">
+                    <img src="" alt="image">
+                </div>
+            </div>
+        </div>
+    </main>
+        
+</body>
+</html>

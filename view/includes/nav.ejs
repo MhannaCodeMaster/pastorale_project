@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg custom-nav p-0">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Organization Name</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <%if(pageTitle !=='Home'){%>
+          <li class="nav-item">
+            <a class="nav-link"href="/"><i class="bi bi-home"></i>Home</a>
+          </li>
+          <li class="nav-item <%=pageTitle=='Add Form' ? 'active' : '' %>">
+            <a class="nav-link" href=""><i class="bi bi-home"></i>Add Form</a>
+          </li>
+          <li class="nav-item <%=pageTitle=='All Forms' ? 'active' : '' %>">
+            <a class="nav-link" href="/all-beneficiaries"><i class="bi bi-home"></i>All Forms</a>
+          </li>
+          <li class="nav-item <%=pageTitle=='Export' ? 'active' : '' %>">
+            <a class="nav-link" href="/donations"><i class="bi bi-home"></i>Donations</a>
+          </li>
+          <li class="nav-item <%=pageTitle=='Export' ? 'active' : '' %>">
+            <a class="nav-link" href="/export"><i class="bi bi-home"></i>Export</a>
+          </li>
+        <%}%>
+      </ul>
+      <ul class="navbar-nav">
+          <li class="nav-item">
+              
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/settings"><i class="bi bi-gear-fill"></i></a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/logout"><i class="bi bi-box-arrow-right custom-icon"></i></a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>

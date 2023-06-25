@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./includes/head')%>
+    <link rel="stylesheet" href="./css/all-form.css">
+</head>
+<body>
+    <%-include('./includes/nav.ejs')%>
+    <div class="container-xl mt-1">
+        <div class="row mb-1">
+            <div class="col-md-6 p-0">
+              <div class="d-flex">
+                <a href="/all-beneficiaries?show=all"><button class="btn-primary me-2 <%= active==='all'? 'button-active':''%>">Show All</button></a>
+                <a href="/all-beneficiaries?show=closed"><button class="btn-primary me-2 <%= active==='closed'? 'button-active':''%>">Closed Cases</button></a>
+                <a href="/all-beneficiaries?show=current"><button class="btn-primary me-2 <%= active==='current'? 'button-active':''%>">Current</button></a>
+                <button onclick="submitForm()" class="btn-export" style="display: none;" id="exportButton">Export</button>
+                <span class="p-0 m-0" id="selectedCheckBoxes" style="display: none;"></span>
+              </div>
+            </div>
+            <div class="col-md-6 p-0">
+              <form action="/all-beneficiaries" id="searchFrom" method="get">
+                <div class="input-group">
+                  <input type="text" name="search" maxlength="30" class="form-control" required placeholder="name, last name" value="<%= search ? search : ''%>">
+                  <button class="btn-primary" type="submit">Search</button>
+                </div>
+              </form>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 shadow-box">
+            <div class="table-container">
+              <form action="/export/beneficiary" method="post" id="exportForm">
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="text-center"><input id="checkAll" type="checkbox"></th>
+                      <th>Beneficiary Name <a href="<%=sortByName%>" title="sort by name"><i class="bi bi-arrow-down-up arrow-icon"></i></a></th>
+                      <th>Interview Date <a href="<%=sortByDate%>" title="sort by date"><i class="bi bi-arrow-down-up arrow-icon"></i></a></th>
+                      <th>Case Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <%result.forEach(b=>{%>
+                        <tr class="table-row">
+                          <td class="text-center"><input type="checkbox" name="selected[]" class="checkbox-control" value="<%=b.b_id%>"></td>
+                          <td><%=b.first_name+" "+b.middle_name+" "+b.last_name%></td>
+                          <td><%=b.interview_date.toLocaleDateString()%></td>
+                          <td><%=b.decision_closure_date === null ? 'OPEN' : 'CLOSED at '+b.decision_closure_date.toLocaleDateString() %></td>
+                          <td class="no-hover">
+                            <a href="/edit-form/<%=b.b_id%>" style="text-decoration: none;"><button class="btn-primary">Edit/View</button></a>
+                            <%if(b.decision_closure_date === null){%>
+                              <button type="button" class="btn-primary close-file-btn" data-ben-name="<%=b.first_name+" "+b.middle_name+" "+b.last_name%>" data-ben-id="<%=b.b_id%>" data-bs-toggle="modal" data-bs-target="#confirmationModal" >Close</button>
+                            <%}%>
+                          </td>
+                        </tr>
+                      <%})%>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+    
+    </div>
+
+      <!----Modal for close button---->
+      <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmationModalLabel">Close Beneficiary File</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="all-beneficiaries/close" method="post">
+              <div class="modal-body">
+                <label class="form-label" for="close_date">Closure Date</label>
+                <input type="date" id="closure_date" name="closure_date" class="form-control mb-3" required>
+                <label class="form-label" for="comment">Reason</label>
+                <textarea name="closure_reason" class="form-control" type="text" id="comment" name="comment"></textarea>
+              </div>
+              <div class="modal-footer">
+                  <button type="reset" class="btn-primary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn-primary">Close File</button>
+                  <input type="hidden" value="" name="close_ben_id" id="close_ben_id">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+</body>
+<script src="./JS/script.js"></script>
+<script src="./JS/all-form.js"></script>
+</html>

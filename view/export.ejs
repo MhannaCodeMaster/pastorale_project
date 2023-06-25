@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./includes/head.ejs')%>
+    <link rel="stylesheet" href="./css/export.css">
+</head>
+<body>
+    <%- include('./includes/nav.ejs')%>
+    <div class="mt-2">
+        <div class="row mb-3 align-items-center justify-content-center m-0">
+            <div class="col-md-7 p-4 column-style">
+                <h1>Beneficiaries</h1>
+                <hr>
+                <form onsubmit="return checkDate('start_date','end_date')" action="/export/beneficiaries" method="post">
+                    <select name="selected_data" class="form-control mt-2" id="select_table" required>
+                        <option value="" selected>Select Which data to export</option>
+                        <option value="all">All Data</option>
+                        <option value="address">Address</option>
+                        <option value="health">Health</option>
+                    </select>
+                    <button type="submit" class="btn-export w-100 p-3 mt-2">Export</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center m-0">
+            <div class="col-md-7 p-4 column-style">
+                <h1>Donations</h1>
+                <hr>
+                <form action="/export/donations" method="get">
+                    <div style="display:flex;">
+                        <div class="w-100 me-1">
+                            <label for="from_date">From</label>
+                            <input class="form-control" type="date" name="from_date" id="from_date">
+                        </div>
+                        <div class="w-100">
+                            <label for="to_date">To</label>
+                            <input type="date" name="to_date" class="form-control" id="tp_date">
+                        </div>
+                    </div>
+                    <button class="btn-export w-100 mt-2 p-3">Export All Donations</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="../JS/export.js"></script>
+</html>

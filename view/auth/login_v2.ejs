@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../includes/head.ejs')%>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="text-center" data-new-gr-c-s-check-loaded="14.1111.0" data-gr-ext-installed="">
+    
+    <main>
+        <div id="container" class="container align-items-center justify-content-center  vh-100">
+            <!--Handling error message for reset password page-->
+            <%if(success === 'Password Reset Successful'){%>
+                <div class="p-0 m-0 align-items-center justify-content-center success_message">
+                    <h6 class="p-0 m-0"><%=success%></h6>
+                    <p class="p-0 m-0"><%=msg%></p>
+                </div>
+            <%}%>
+            <%if(err === 'Password Reset Failed'){%>
+                <div class="p-0 m-0 align-items-center justify-content-center error_message">
+                    <h6 class="p-0 m-0"><i class="bi bi-exclamation-triangle"></i> <%=err%></h6>
+                    <p class="p-0 m-0"><%=msg%></p>
+                </div>
+            <%}%>
+
+            <div class="row vh-100">
+                <div class="col d-flex align-items-center justify-content-center">
+                    <!-------Login form------->
+                    <form action="/login" method="post" id="loginForm" <%= ( (err === 'Password Reset Failed' || err === 'login' || err !== 'forgotPass') && (success==='Password Reset Successful' || !success)) ? 'style=display:block;': 'style=display:none;'%>>
+                        <h1 class="h3 mb-4 fw-normal"><b>Login</b></h1>
+                        <%if(err === 'login'){%>
+                            <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+                        <%}%>
+                        <div class="form-floating mb-3 mt-2">
+                            <input type="text" name="username" class="form-control" id="floatingInput" placeholder="username" required autocomplete="off">
+                            <label for="floatingInput">username</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="d-flex mt-1 mb-3 mx-1" style="align-items: center;">
+                            <input type="checkbox" id="passToggler" onchange="togglePassword('floatingPassword','textPass')">
+                            <p id="textPass" style="font-size: 13px;" class="m-0 mx-1">See password</p>
+                        </div>
+                        <button class="btn-primary w-100 mb-4" type="submit">Login</button>
+                        
+                        <a style="cursor: pointer;" onclick="showForgotPasswordForm()">forgot password?</a>
+                        <p class="mt-5 mb-3 text-muted">© Pastorale</p>
+                    </form>
+                  
+                    <!-------Forgot password form------->
+                    <form action="/forgot-password" method="post" id="forgotPasswordForm" <%= (err === 'forgotPass' || success==='true') ? 'style=display:block;' : 'style=display:none;'%>>
+                        <h1 class="h3 mb-4 fw-normal"><b>Reset Password</b></h1>
+                        
+                        <%if(err === 'forgotPass'){%>
+                            <span class="error_message"><i class="bi bi-exclamation-triangle"></i> <%=msg%></span>
+                        <%}%>
+                        <%if(success =='true'){%>
+                            <span class="success_message"><i class="bi bi-check-circle-fill"></i> <%=msg%></span>
+                        <%}%>
+                        
+                        <div class="form-floating mb-3 mt-2">
+                            <input type="email" name="email" class="form-control" id="floatingInput1" placeholder="username" required autocomplete="off">
+                            <label for="floatingInput1">email</label>
+                        </div>
+                        <button id="sendEmail" onclick="sendEmail()" class="btn-primary w-100 mb-4" type="submit"><%= success ? 'resend link' : 'send a reset link'%></button>
+                        
+                        <a style="cursor: pointer;" onclick="goBack()">Back To Login</a>
+                        <p class="mt-5 mb-3 text-muted">© 2023</p>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+        
+</body>
+<script src="./JS/script.js"></script>
+<script src="./JS/login.js"></script>
+</html>
