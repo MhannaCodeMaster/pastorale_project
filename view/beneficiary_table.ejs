@@ -49,7 +49,7 @@
                           <td><%=b.interview_date.toLocaleDateString()%></td>
                           <td><%=b.decision_closure_date === null ? 'OPEN' : 'CLOSED at '+b.decision_closure_date.toLocaleDateString() %></td>
                           <td class="no-hover">
-                            <a href="/edit-form/<%=b.b_id%>" style="text-decoration: none;"><button class="btn-primary">Edit/View</button></a>
+                            <a href="/form/edit/<%=b.b_id%>" style="text-decoration: none;"><button type="button" class="btn-primary">Edit/View</button></a>
                             <%if(b.decision_closure_date === null){%>
                               <button type="button" class="btn-primary close-file-btn" data-ben-name="<%=b.first_name+" "+b.middle_name+" "+b.last_name%>" data-ben-id="<%=b.b_id%>" data-bs-toggle="modal" data-bs-target="#confirmationModal" >Close</button>
                             <%}%>
