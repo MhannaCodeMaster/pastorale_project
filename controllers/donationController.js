@@ -8,7 +8,8 @@ const familyDonationModel = require('../models/familyDonation')
 function getAllDonations(req, res) {
   donationModel.getAllDonations().then(([donations])=>{
     donationModel.selectDonationTypes().then(([donationTypes])=>{
-      res.render('../view/donations.ejs',{donations, donationTypes, pageTitle: 'donations'})
+      const username = req.session.username;
+      res.render('../view/donations.ejs',{donations, donationTypes, pageTitle: 'donations', username})
 
     }).catch((err)=>{
       res.status(400).send("something went wrong")
@@ -23,6 +24,8 @@ function getAllDonations(req, res) {
 
 //Render the edit donation form
 function editDonationForm(req, res) {
+  const username = req.session.username;
+  const pageTitle = 'Edit donation';
     const donationId = req.params.id;
     console.log(donationId)
     // Retrieve the donation data from the database based on the donationId
@@ -69,7 +72,7 @@ function editDonationForm(req, res) {
                 console.log(shiftedFamilies)
                 console.log(selectedFamilyIds)
                 res.render("../view/edit_donation.ejs", {
-                  donation, donationTypes, recipients, families: shiftedFamilies, familyCommentsMap, moment
+                  username, pageTitle,donation, donationTypes, recipients, families: shiftedFamilies, familyCommentsMap, moment
                 })
               })
             })
@@ -85,12 +88,6 @@ function editDonationForm(req, res) {
         res.status(500).send("Something went wrong");
       });
   }
-
-
-
-
-  
-
 
 // Update a donation
 function updateDonation(req, res) {
@@ -134,8 +131,12 @@ function emptyDonationForm(req, res){
   beneficiaryModel.selectAllAvailableFamilies().then(([families])=>{
     donationModel.selectDonationTypes().then(([donationTypes])=>{
       donationModel.selectRecipient().then(([recipients])=>{
-        console.log(recipients)
+        //console.log(recipients)
+        const username = req.session.username;
+        const pageTitle = 'Add donation';
         res.render('../view/add_donation', {
+          username,
+          pageTitle,
           families: families,
           donationTypes: donationTypes,
           recipients: recipients

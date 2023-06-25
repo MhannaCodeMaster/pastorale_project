@@ -2,11 +2,15 @@ const donationModel = require('../models/donation');
 const familyModel = require('../models/familyDonation');
 const XLSX = require('xlsx');
 // const XLSX = require('xlsx-style');
+const ExcelJS = require('exceljs');
+
+const { Alignment, Fill, Font } = ExcelJS;
 
 
-async function exportDonationsSelected(req, res) {
+async function exportDonations(req, res) {
   try {
-    const [results] = await donationModel.getSelectedDonations(req.body.export);
+    const [results] = await donationModel.getAllDonations(req.body.export);
+    console.log(results.length)
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Donation Report');
@@ -113,53 +117,12 @@ async function exportDonationsSelected(req, res) {
 
 
 
-// async function exportDonationsSelected(req, res) {
-//   try {
-//     const [results] = await donationModel.getSelectedDonations(req.body.export);
-
-//     console.log(results)
-//     const filteredResults = results.map(({ donation_id, ...rest }) => rest);
-//     const workbook = XLSX.utils.book_new();
-//     const worksheet = XLSX.utils.json_to_sheet(filteredResults);
-//     const range = XLSX.utils.decode_range(worksheet['!ref']);
-
-//     for (let i = 0; i < results.length; i++) {
-//       const donation = results[i];
-      
-//       const [relatedFamilies] = await familyModel.selectSelectedFamilies(donation.donation_id);
-
-//       let bulletPoints = '';
-//       for (let j = 0; j < relatedFamilies.length; j++) {
-//         bulletPoints += '\u2022 ' + relatedFamilies[j].first_name + ' ' + relatedFamilies[j].middle_name + ' ' + relatedFamilies[j].last_name + '\n';
-//       }
-
-//       worksheet[`F${i + 2}`] = { t: 's', v: bulletPoints };
-
-//       if (i === results.length - 1) {
-//         range.e.c++;
-//         worksheet['!ref'] = XLSX.utils.encode_range(range);
-
-//         XLSX.utils.book_append_sheet(workbook, worksheet, 'Donation Report');
-//         const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-
-//         res.setHeader('Content-Disposition', 'attachment; filename="donation_report.xlsx"');
-//         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
-//         res.send(excelBuffer);
-//       }
-//     }
-//   } catch (err) {
-//     res.send('Something went wrong');
-//     console.log(err);
-//   }
-// }
 
 
 
 
-const ExcelJS = require('exceljs');
 
-const { Alignment, Fill, Font } = ExcelJS;
+
 
 
 
