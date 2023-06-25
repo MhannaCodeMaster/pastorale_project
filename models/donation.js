@@ -4,8 +4,25 @@ const pool = require('../util/database');
 
 // Get all donations from the database
 async function getAllDonations() {
-  const query = 'SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type ORDER BY d.donation_id DESC';
+  const query = 'SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type ORDER BY d.donation_date DESC';
   return pool.execute(query)
+}
+async function getDonationsDate(start, end) {
+  console.log(start, end)
+  if(start == '' && end == ''){
+    const query = 'SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type ORDER BY d.donation_date DESC';
+  return pool.execute(query)
+  }
+  if(start==''){
+    const query = 'SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type AND d.donation_date < ? ORDER BY d.donation_date DESC';
+  return pool.execute(query, [end])
+  }
+  if(end==''){
+    const query = 'SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type AND d.donation_date > ? ORDER BY d.donation_date DESC';
+  return pool.execute(query, [start])
+  }
+  const query = `SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type AND d.donation_date BETWEEN ? AND ? ORDER BY d.donation_date DESC`;
+  return pool.execute(query, [start, end])
 }
 async function getSelectedDonations(donationIds) {
   const selectedDonations = [];
@@ -82,7 +99,8 @@ module.exports = {
   selectRecipient,
   insertDonation,
   insertDonationType,
-  getSelectedDonations
+  getSelectedDonations,
+  getDonationsDate
   
   
 };

@@ -73,14 +73,18 @@ input[type=text]{
 #donationsTable {
   width: 100%;
   border-collapse: collapse;
+  text-align: center;
 }
 
 #donationsTable thead th {
-  background-color: #f8f9fa;
+  background-color: #000408;
+  color: white;
   padding: 5px;
   position: sticky; /* Added sticky positioning */
   top: 0; /* Stick the header to the top */
   z-index: 1; /* Added z-index to keep the header on top */
+   /* Use flexbox */
+  text-align: center;
 }
 #donationsTable thead {
   position: sticky;

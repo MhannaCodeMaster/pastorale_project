@@ -9,8 +9,10 @@ const { Alignment, Fill, Font } = ExcelJS;
 
 async function exportDonations(req, res) {
   try {
-    const [results] = await donationModel.getAllDonations(req.body.export);
+    console.log(req.body)
+    const [results] = await donationModel.getDonationsDate(req.body.from_date, req.body.to_date);
     console.log(results.length)
+    console.log(results)
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Donation Report');
@@ -55,7 +57,7 @@ async function exportDonations(req, res) {
       };
 
       // Set data row values
-      dataRow.getCell(1).value = donation.donation_date;
+      dataRow.getCell(1).value = donation.donation_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
       dataRow.getCell(2).value = donation.donator_name;
       dataRow.getCell(3).value = donation.donation_type;
       dataRow.getCell(4).value = donation.donation_content;
@@ -95,7 +97,7 @@ async function exportDonations(req, res) {
     
     // Auto-fit columns
     worksheet.columns.forEach((column) => {
-      column.width = 15;
+      column.width = 20;
     });
 
     // Generate buffer for the workbook
@@ -173,8 +175,7 @@ async function exportDonationsSelected(req, res) {
       };
 
       // Set data row values
-      dataRow.getCell(1).value = donation.donation_date;
-      dataRow.getCell(2).value = donation.donator_name;
+      dataRow.getCell(1).value = donation.donation_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });      dataRow.getCell(2).value = donation.donator_name;
       dataRow.getCell(3).value = donation.donation_type;
       dataRow.getCell(4).value = donation.donation_content;
       dataRow.getCell(5).value = donation.recipient_desc;
@@ -213,7 +214,7 @@ async function exportDonationsSelected(req, res) {
     
     // Auto-fit columns
     worksheet.columns.forEach((column) => {
-      column.width = 15;
+      column.width = 20;
     });
 
     // Generate buffer for the workbook

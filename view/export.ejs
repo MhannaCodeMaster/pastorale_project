@@ -27,7 +27,7 @@
             <div class="col-md-7 p-4 column-style">
                 <h1>Donations</h1>
                 <hr>
-                <form action="/export/donations" method="get">
+                <form action="/export/donationsDate" method="post">
                     <div style="display:flex;">
                         <div class="w-100 me-1">
                             <label for="from_date">From</label>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="w-100">
                             <label for="to_date">To</label>
-                            <input type="date" name="to_date" class="form-control" id="tp_date">
+                            <input type="date" name="to_date" class="form-control" id="to_date">
                         </div>
                     </div>
                     <button class="btn-export w-100 mt-2 p-3">Export All Donations</button>

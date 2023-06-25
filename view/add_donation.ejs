@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include("./includes/head.ejs")%>
+    
     <link rel="stylesheet" type="text/css" href="../css/donation_form.css"> 
+    <%-include('./includes/head.ejs') %>
   </head>
   <body>
-    <div id="donationFormContainer" class="form-container">
+    <%-include('./includes/nav.ejs') %>
+    <div class="main-div">
+    <div id="donationFormContainer" class="form-container1">
      
       <form action="/donations/submit" method="POST">
-        <div class="form-group">
-          <div class="input-row">
-            <div class="input-group">
+        <div class="form-group1">
+          <div class="input-row1">
+            <div class="input-group1">
               <label for="donationDate">Date of Donation</label>
               <input type="date" id="donationDate" name="donationDate" required>
             </div>
-            <div class="input-group">
+            <div class="input-group1">
               <label for="donatorName">Donator Name</label>
               <input type="text" id="donatorName" name="donatorName" required>
             </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="input-row">
-            <div class="input-group">
+        <div class="form-group1">
+          <div class="input-row1">
+            <div class="input-group1">
               <label for="donationType">Donation Type</label>
               <select id="donationType" name="donationType">
                 <% donationTypes.forEach(donationType => { %>
@@ -32,23 +35,23 @@
                 <option value="others">Others</option>
               </select>
             </div>
-            <div class="form-group" id="customDonationTypeContainer" style="display: none;">
+            <div class="form-group1" id="customDonationTypeContainer" style="display: none;">
               <label for="customDonationType">Donation Type</label>
               <input type="text" id="customDonationType" name="customDonationType" >
             </div>
-            <div class="input-group">
+            <div class="input-group1">
               <label for="donationContent">Donation Content</label>
               <input type="text" id="donationContent" name="donationContent" required>
             </div>
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group1">
           <label>Recipient Type</label>
 
           <div style="display: flex;">
             <% recipients.forEach(recipient => { %>
-            <label>
+            <label class="recipient-label">
               <input type="radio" name="recipientType" value="<%= recipient.recipient_id %>" checked>
               <%= recipient.recipient_desc %>
             </label>
@@ -61,7 +64,7 @@
         <div id="familyTable" class="family-table">
           <h3>Available Families</h3>
           <input type="text" id="searchFamily" name="searchFamily" placeholder="Enter family name" oninput="filterFamilies()">
-          <div class="table-container">
+          <div class="table-container1">
             <table>
               <thead>
                 <tr>
@@ -87,12 +90,15 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <input type="submit" value="Save Donation" class="btn">
+        <div class="form-group1">
+          <div class="button-container">
+          <input type="submit" value="Save Donation" class="btn1">
         </div>
+      </div>
       </form>
       
     </div>
+  </div>
 
     <script src="../JS/donation_form.js"></script>
   </body>

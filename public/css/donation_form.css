@@ -1,14 +1,14 @@
-body {
+.main-div {
   display: flex;
   justify-content: center;
   
-  height: 100vh;
+  align-items: center; /* Add this line */
   background-color: white;
   font-family: Arial, sans-serif;
   
 }
 
-.form-container {
+.form-container1 {
   width: 90%;
   
   background-color: #fff;
@@ -16,6 +16,10 @@ body {
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 100vh;
+  
+}
+.recipient-label {
+  margin-right: 50px; /* Add desired margin */
 }
 
 h2 {
@@ -23,13 +27,13 @@ h2 {
   margin-bottom: 30px;
 }
 
-.input-row {
+.input-row1 {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.input-group {
+.input-group1 {
   flex: 1;
   margin-right: 10px; /* Add margin-right for spacing */
 }
@@ -43,36 +47,36 @@ label {
 input[type="text"],
 input[type="date"],
 select {
-  width: 80%;
+  width: 60%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
 }
 
-.table-container {
+.table-container1 {
   position: relative;
-  max-height: 250px;
+  max-height: 300px;
   overflow-y: auto;
   margin-bottom: 20px;
   scrollbar-width:thin;
   scrollbar-color: #aaa #eee;
 }
-.table-container::-webkit-scrollbar {
+.table-container1::-webkit-scrollbar {
   width: 8px;
 }
 
-.table-container::-webkit-scrollbar-track {
+.table-container1::-webkit-scrollbar-track {
   background-color: #eee;
   border-radius: 5px;
 }
 
-.table-container::-webkit-scrollbar-thumb {
+.table-container1::-webkit-scrollbar-thumb {
   background-color: #0e0d0d;
   border-radius: 5px;
 }
 
-.table-container::-webkit-scrollbar-thumb:hover {
+.table-container1::-webkit-scrollbar-thumb:hover {
   background-color: #888;
 }
 table {
@@ -97,17 +101,27 @@ td {
 }
 
 
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
+.button-container {
+  display: flex;
+  justify-content: center;
 }
 
-.btn:hover {
-  background-color: #45a049;
+.btn1 {
+  display: inline-block;
+  padding: 15px 30px; /* Increase the padding to make the button bigger */
+  background-color: #15bf3d;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 18px; /* Increase the font size to make the button bigger */
+  cursor: pointer;
+  width: 100vh;
+  margin-top: 40px;
+  border-color: #15bf3d;
+  transition: 0.3s;
+}
+
+.btn1:hover {
+  background-color: #dcdbdb;
+  color: #15bf3d;
 }

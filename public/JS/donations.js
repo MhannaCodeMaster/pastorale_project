@@ -67,13 +67,16 @@ function filterDonations() {
 
   // Loop through the rows and hide/show based on the selected type and search text
   donationRows.forEach(row => {
-    const donationType = row.querySelector("td:nth-child(4)").textContent;
-    const donationAmount = row.querySelector("td:nth-child(3)");
-    const donatorName = row.querySelector("td:nth-child(2)");
+    const donationType = row.querySelector("td:nth-child(5)").textContent;
+    const donationAmount = row.querySelector("td:nth-child(4)");
+    const donatorName = row.querySelector("td:nth-child(3)");
 
     // Reset the row's text content
     donationAmount.innerHTML = donationAmount.innerHTML.replace(/<mark>|<\/mark>/gi, '');
     donatorName.innerHTML = donatorName.innerHTML.replace(/<mark>|<\/mark>/gi, '');
+    console.log(selectedType)
+
+    
 
     if ((selectedType === "all" || donationType === selectedType || donationAmount.textContent.toLowerCase() === selectedType) && (donatorName.textContent.toLowerCase().includes(searchText) || donationAmount.textContent.toLowerCase().includes(searchText))) {
       // Highlight the matched text if search text is not empty
@@ -98,20 +101,32 @@ document.getElementById("donationTypeFilter").addEventListener("change", filterD
 
 // Get the table container element
 var tableContainer = document.getElementById('donationsTableContainer');
-
+const checkBoxes = document.querySelectorAll('input[type="checkbox"]');
+const exportButton = document.getElementById('exportButton');
 // Add scroll event listener to the table container
-tableContainer.addEventListener('scroll', function() {
-  // Get the table header element
-  var tableHeader = document.getElementById('donationsTableHeader');
+function handleExportButton(selectedBoxes){
+  if (selectedBoxes === 0) {
+    exportButton.style.display = "none";
+    return;
+  } 
+  exportButton.style.display = "block";
+  exportButton.innerText = "Export ("+selectedBoxes+")";
+}
 
-  // Set the left position of the table header to match the scroll position
-  tableHeader.style.left = -tableContainer.scrollLeft + 'px';
-});
 function toggleRowSelection(event, donationId) {
+  var count = 0
   // Check if the click event was triggered by the checkbox itself
   if (event.target.tagName !== 'INPUT') {
+    
     var checkbox = document.getElementById('export_' + donationId);
     checkbox.checked = !checkbox.checked;
+    checkBoxes.forEach(box =>{
+      if(box.checked){
+        count++
+      }
+      
+    })
+    handleExportButton(count)
   }
 }
-  
+

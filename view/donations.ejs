@@ -1,20 +1,16 @@
-<!-- views/donations.ejs -->
-
 <!DOCTYPE html>
 <html>
 <head>
-  
   <link rel="stylesheet" type="text/css" href="../css/donations.css"> 
   <%-include('./includes/head.ejs') %>
 </head>
 <body>
   <%-include('./includes/nav.ejs') %>
   <div class="container">
-   
     <div class="button-container">
-      <div class="left-buttons">
+      <div class="left-buttons d-flex">
         <a href="/donations/add"><button class="add-button btn-primary px-5">Add Donation</button></a>
-        <button class="btn-export" onclick="exportForm.submit()">Export</button>
+        <button id="exportButton" class="btn-export" onclick="exportForm.submit()" style="display: none;">Export</button>
       </div>
       <div class="right-buttons">
         <input class="form-control" type="text" id="searchInput" onkeyup="filterDonations()" placeholder="Search donator">
@@ -27,15 +23,15 @@
           <tr>
             <th></th>
             <th>Date</th>
-            <th>Name </th>
+            <th>Name</th>
             <th>Donation</th>
-            <th style="display: flex;">
-              <label class="me-1" for="donationTypeFilter">Donation Type:</label>
+            <th>
+              <label class="me-1" for="donationTypeFilter">Donation Type:<br></label>
               <select id="donationTypeFilter">
-              <option value="all">All</option>
-              <% donationTypes.forEach(donationType => { %>
-                <option value="<%= donationType.donation_type %>"><%= donationType.donation_type %></option>
-              <% }) %>
+                <option value="all">All</option>
+                <% donationTypes.forEach(donationType => { %>
+                  <option value="<%= donationType.donation_type %>"><%= donationType.donation_type %></option>
+                <% }) %>
               </select>
             </th>
             <th>Donator</th>
@@ -45,27 +41,24 @@
         <tbody>
           <form method="post" action="/export/donations" id="exportForm">
           <% donations.forEach((donation) => { %>
-            
             <tr onclick="toggleRowSelection(event, '<%= donation.donation_id %>')">
-              
-              <td><input type = "checkbox" name ="export[]" value="<%= donation.donation_id %>" id="export_<%= donation.donation_id %>" onclick="event.stopPropagation();"></td>
+              <td><input type="checkbox" name="export[]" value="<%= donation.donation_id %>" id="export_<%= donation.donation_id %>" onclick="event.stopPropagation();"></td>
               <td><%= donation.donation_date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></td>
               <td><%= donation.donator_name %></td>
               <td><%= donation.donation_content %></td>
               <td><%= donation.donation_type %></td>
               <td><%= donation.recipient_desc %></td>
               <td>
-                <input type ="button" class="btn-primary" value="Edit" onclick="window.location.href='/donations/edit/<%= donation.donation_id %>';">
+                <input type="button" class="btn-primary" value="Edit" onclick="window.location.href='/donations/edit/<%= donation.donation_id %>';">
               </td>
             </tr>
-          
           <% }) %>
         </form>
         </tbody>
       </table>
     </div>
-
   </div>
 </body>
 <script src="../JS/donations.js"></script>
+
 </html>
