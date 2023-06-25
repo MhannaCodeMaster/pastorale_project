@@ -4,79 +4,162 @@ const XLSX = require('xlsx');
 // const XLSX = require('xlsx-style');
 
 
-function exportDonations(req, res) {
-  donationModel.getAllDonations()
-    .then(([results]) => {
-      const filteredResults = results.map(({ donation_id, ...rest }) => rest);
-      // Create a new workbook
-      const workbook = XLSX.utils.book_new();
-      console.log(results)
-      // Create a new worksheet
-      const worksheet = XLSX.utils.json_to_sheet(filteredResults);
-      
-      
+async function exportDonationsSelected(req, res) {
+  try {
+    const [results] = await donationModel.getSelectedDonations(req.body.export);
 
-      // Generate a range object
-      const range = XLSX.utils.decode_range(worksheet['!ref']);
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Donation Report');
 
-      // Iterate through the results
-      for (let i = 0; i < results.length; i++) {
-        const donation = results[i];
+    // Define colors for row background
+    const rowColors = ['d1d1d1', '9a9a9a'];
+    let rowIndex = 1;
 
-        // Check if the donator is "families"
-        
-          // Retrieve the related families for the donation
-          familyModel.selectSelectedFamilies(donation.donation_id)
-            .then(([relatedFamilies]) => {
-              
-              // Create a bullet point list string
-              let bulletPoints = '';
-              for (let j = 0; j < relatedFamilies.length; j++) {
-                bulletPoints += '\u2022 ' + relatedFamilies[j].first_name +' ' +  relatedFamilies[j].middle_name + ' '+ relatedFamilies[j].last_name +'\n';
-              }
+    // Set header row style
+    const headerRow = worksheet.getRow(rowIndex);
+    headerRow.font = { bold: true };
+    headerRow.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'ff9cadce' }, // Header color
+    };
 
-              // Add the bullet points to the cell
-              worksheet[`F${i + 2}`] = { t: 's', v: bulletPoints };
+    // Set header row data
+    headerRow.getCell(1).value = 'Date';
+    headerRow.getCell(2).value = 'Name';
+    headerRow.getCell(3).value = 'Donation Type';
 
-              // Check if it's the last iteration
-              if (i == results.length - 1) {
-                // Remove the last column from the range
-                range.e.c++;
-
-                // Reencode the range
-                worksheet['!ref'] = XLSX.utils.encode_range(range);
-                console.log(worksheet)
-                
-              
-
-                // Add the worksheet to the workbook
-                XLSX.utils.book_append_sheet(workbook, worksheet, 'Donation Report');
-
-                // Write the workbook to a buffer
-                const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-
-                // Set the response headers for downloading the file
-                res.setHeader('Content-Disposition', 'attachment; filename="donation_report.xlsx"');
-                res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-
-                // Send the Excel file as a response
-                res.send(excelBuffer);
-              }
-            })
-            .catch((err) => {
-              res.send('Something went wrong');
-              console.log(err);
-            });
-        
-      }
-    })
-    .catch((err) => {
-      res.send('Something went wrong');
-      console.log(err);
+    headerRow.getCell(4).value = 'Donation Content';
+    headerRow.getCell(5).value = 'Recipient';
+    headerRow.getCell(6).value = 'Families';
+    headerRow.eachCell((cell) => {
+      cell.alignment = { vertical: 'middle', horizontal: 'center' };
     });
+
+    rowIndex++;
+
+    // Set data rows style and values
+    for (const donation of results) {
+      const dataRow = worksheet.getRow(rowIndex);
+
+      // Apply alternating row background color
+      const rowColor = rowColors[rowIndex % rowColors.length];
+      dataRow.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: rowColor },
+      };
+
+      // Set data row values
+      dataRow.getCell(1).value = donation.donation_date;
+      dataRow.getCell(2).value = donation.donator_name;
+      dataRow.getCell(3).value = donation.donation_type;
+      dataRow.getCell(4).value = donation.donation_content;
+      dataRow.getCell(5).value = donation.recipient_desc;
+      dataRow.eachCell((cell) => {
+        cell.alignment = { vertical: 'top', horizontal: 'center' };
+      });
+      
+      
+
+      // Retrieve the related families for the donation
+      const [relatedFamilies] = await familyModel.selectSelectedFamilies(donation.donation_id);
+
+      // Create bullet points string
+      let bulletPoints = '';
+      for (const family of relatedFamilies) {
+        bulletPoints += `• ${family.first_name} ${family.middle_name} ${family.last_name}: ${family.comment} \n`;
+      }
+      const bulletPointsCell = dataRow.getCell(6);
+      bulletPointsCell.value = bulletPoints;
+
+      // Wrap text and adjust row height
+     
+
+      // Wrap text and adjust row height
+      bulletPointsCell.alignment = { wrapText: true };
+      const wrappedLines = bulletPoints.split('\n').length;
+      const minHeight = 20; // Minimum row height
+      const calculatedHeight = minHeight * wrappedLines;
+      const currentHeight = dataRow.height || worksheet.properties.defaultRowHeight;
+      dataRow.height = Math.max(currentHeight, calculatedHeight);
+
+
+
+      rowIndex++;
+    }
+    
+    // Auto-fit columns
+    worksheet.columns.forEach((column) => {
+      column.width = 15;
+    });
+
+    // Generate buffer for the workbook
+    const buffer = await workbook.xlsx.writeBuffer();
+
+    // Set response headers for downloading the file
+    res.setHeader('Content-Disposition', 'attachment; filename="donation_report.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    // Send the Excel file as a response
+    res.send(buffer);
+  } catch (err) {
+    res.send('Something went wrong');
+    console.log(err);
+  }
 }
 
 
+
+
+
+// async function exportDonationsSelected(req, res) {
+//   try {
+//     const [results] = await donationModel.getSelectedDonations(req.body.export);
+
+//     console.log(results)
+//     const filteredResults = results.map(({ donation_id, ...rest }) => rest);
+//     const workbook = XLSX.utils.book_new();
+//     const worksheet = XLSX.utils.json_to_sheet(filteredResults);
+//     const range = XLSX.utils.decode_range(worksheet['!ref']);
+
+//     for (let i = 0; i < results.length; i++) {
+//       const donation = results[i];
+      
+//       const [relatedFamilies] = await familyModel.selectSelectedFamilies(donation.donation_id);
+
+//       let bulletPoints = '';
+//       for (let j = 0; j < relatedFamilies.length; j++) {
+//         bulletPoints += '\u2022 ' + relatedFamilies[j].first_name + ' ' + relatedFamilies[j].middle_name + ' ' + relatedFamilies[j].last_name + '\n';
+//       }
+
+//       worksheet[`F${i + 2}`] = { t: 's', v: bulletPoints };
+
+//       if (i === results.length - 1) {
+//         range.e.c++;
+//         worksheet['!ref'] = XLSX.utils.encode_range(range);
+
+//         XLSX.utils.book_append_sheet(workbook, worksheet, 'Donation Report');
+//         const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+//         res.setHeader('Content-Disposition', 'attachment; filename="donation_report.xlsx"');
+//         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+//         res.send(excelBuffer);
+//       }
+//     }
+//   } catch (err) {
+//     res.send('Something went wrong');
+//     console.log(err);
+//   }
+// }
+
+
+
+
+const ExcelJS = require('exceljs');
+
+const { Alignment, Fill, Font } = ExcelJS;
 
 
 
@@ -84,42 +167,109 @@ async function exportDonationsSelected(req, res) {
   try {
     const [results] = await donationModel.getSelectedDonations(req.body.export);
 
-    console.log(results)
-    const filteredResults = results.map(({ donation_id, ...rest }) => rest);
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(filteredResults);
-    const range = XLSX.utils.decode_range(worksheet['!ref']);
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Donation Report');
 
-    for (let i = 0; i < results.length; i++) {
-      const donation = results[i];
+    // Define colors for row background
+    const rowColors = ['d1d1d1', '9a9a9a'];
+    let rowIndex = 1;
+
+    // Set header row style
+    const headerRow = worksheet.getRow(rowIndex);
+    headerRow.font = { bold: true };
+    headerRow.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'ff9cadce' }, // Header color
+    };
+
+    // Set header row data
+    headerRow.getCell(1).value = 'Date';
+    headerRow.getCell(2).value = 'Name';
+    headerRow.getCell(3).value = 'Donation Type';
+
+    headerRow.getCell(4).value = 'Donation Content';
+    headerRow.getCell(5).value = 'Recipient';
+    headerRow.getCell(6).value = 'Families';
+    headerRow.eachCell((cell) => {
+      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+    });
+
+    rowIndex++;
+
+    // Set data rows style and values
+    for (const donation of results) {
+      const dataRow = worksheet.getRow(rowIndex);
+
+      // Apply alternating row background color
+      const rowColor = rowColors[rowIndex % rowColors.length];
+      dataRow.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: rowColor },
+      };
+
+      // Set data row values
+      dataRow.getCell(1).value = donation.donation_date;
+      dataRow.getCell(2).value = donation.donator_name;
+      dataRow.getCell(3).value = donation.donation_type;
+      dataRow.getCell(4).value = donation.donation_content;
+      dataRow.getCell(5).value = donation.recipient_desc;
+      dataRow.eachCell((cell) => {
+        cell.alignment = { vertical: 'top', horizontal: 'center' };
+      });
       
+      
+
+      // Retrieve the related families for the donation
       const [relatedFamilies] = await familyModel.selectSelectedFamilies(donation.donation_id);
 
+      // Create bullet points string
       let bulletPoints = '';
-      for (let j = 0; j < relatedFamilies.length; j++) {
-        bulletPoints += '\u2022 ' + relatedFamilies[j].first_name + ' ' + relatedFamilies[j].middle_name + ' ' + relatedFamilies[j].last_name + '\n';
+      for (const family of relatedFamilies) {
+        bulletPoints += `• ${family.first_name} ${family.middle_name} ${family.last_name}: ${family.comment} \n`;
       }
+      const bulletPointsCell = dataRow.getCell(6);
+      bulletPointsCell.value = bulletPoints;
 
-      worksheet[`F${i + 2}`] = { t: 's', v: bulletPoints };
+      // Wrap text and adjust row height
+     
 
-      if (i === results.length - 1) {
-        range.e.c++;
-        worksheet['!ref'] = XLSX.utils.encode_range(range);
+      // Wrap text and adjust row height
+      bulletPointsCell.alignment = { wrapText: true };
+      const wrappedLines = bulletPoints.split('\n').length;
+      const minHeight = 20; // Minimum row height
+      const calculatedHeight = minHeight * wrappedLines;
+      const currentHeight = dataRow.height || worksheet.properties.defaultRowHeight;
+      dataRow.height = Math.max(currentHeight, calculatedHeight);
 
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Donation Report');
-        const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
 
-        res.setHeader('Content-Disposition', 'attachment; filename="donation_report.xlsx"');
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-        res.send(excelBuffer);
-      }
+      rowIndex++;
     }
+    
+    // Auto-fit columns
+    worksheet.columns.forEach((column) => {
+      column.width = 15;
+    });
+
+    // Generate buffer for the workbook
+    const buffer = await workbook.xlsx.writeBuffer();
+
+    // Set response headers for downloading the file
+    res.setHeader('Content-Disposition', 'attachment; filename="donation_report.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    // Send the Excel file as a response
+    res.send(buffer);
   } catch (err) {
     res.send('Something went wrong');
     console.log(err);
   }
 }
+
+
+
 
 module.exports = {
   exportDonations,

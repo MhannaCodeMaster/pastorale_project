@@ -3,7 +3,7 @@
 const pool = require('../util/database');
 
 // Get all donations from the database
-function getAllDonations() {
+async function getAllDonations() {
   const query = 'SELECT d.donation_id, d.donator_name, dt.donation_type, d.donation_content,  d.donation_date, r.recipient_desc FROM donation d, donation_type dt, recipient r WHERE d.recipient_type = r.recipient_id AND dt.type_id = d.donation_type ORDER BY d.donation_id DESC';
   return pool.execute(query)
 }
