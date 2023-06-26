@@ -112,6 +112,7 @@ exports.getResetPage = (req,res,next) =>{
                     console.log('Invalid token');
                     return next();
                 }
+                console.log('session:',req.session.page_sent);
                 const hours = req.session.page_sent.getHours();
                 const minutes = req.session.page_sent.getMinutes();
                 const seconds = req.session.page_sent.getSeconds();

@@ -69,14 +69,18 @@ function exportAllData(req,res,next){
       {name: 'Name'},
       {name: 'Birth Date'},
       {name: 'Phone Number'},
+      {name: 'profesional_status_other'},
+      {name: 'school_address'},
+      {name: 'class'},
+      {name: 'establishment'},
       {name: 'Professional Status'},
       {name: 'Job Description'},
+      {name: 'Job address'},
       {name: 'Job Salary'},
       {name: 'Job Remark'},
       {name: 'Sector Type'},
       {name: 'Health Social Service'},
-      {name: 'Column1'},
-      {name: 'Column2'},
+      {name: 'health_service_other'},
     ],
     rows:[],
   });
@@ -108,15 +112,7 @@ function exportAllData(req,res,next){
   let beneficiary_ids = req.body.selected;
   if(!beneficiary_ids) beneficiary_ids = null;
   //console.log('export ids:' ,beneficiary_ids);
-  Beneficiary.Beneficiary.getBeneficiariesHealth()
-  .then(([result])=>{
-    const health_row = result.map(obj => Object.values(obj));
-    health_row.forEach(row=>{
-      health_table.addRow(row);
-    });
-    health_table.commit();
-    return Beneficiary.Beneficiary.getAllBeneficiariesData(beneficiary_ids)
-  })
+  Beneficiary.Beneficiary.getAllBeneficiariesData(beneficiary_ids)
   .then((result) => {
     //console.log('Beneficiary data: ',result);
     if(!beneficiary_ids) mainBeneficiary = result[0];
@@ -131,13 +127,36 @@ function exportAllData(req,res,next){
   
     let numberOfRowsAdded=1;
     const relatedPromises = mainBeneficiary.map(ben => {
-      return Beneficiary.Beneficiary.getRealtedBeneficiaries(ben.b_id)
-        .then(([related]) => {
-          if (related.length !== 0) {
+      return Beneficiary.Beneficiary.getMainBeneficiaryHealth(ben.b_id)
+      .then(([result])=>{
+        if(result.length != 0){
+          const health_row = result.map(obj => Object.values(obj));
+          
+          health_row.forEach(row=>{
+            health_table.addRow(row);
+          })
+          health_table.commit();
+        }
+        return Beneficiary.Beneficiary.getRealtedBeneficiaries(ben.b_id)
+      })
+      .then(([related]) => {
+        if (related.length !== 0) {
+          return Beneficiary.Beneficiary.getBeneficiariesHealth(related)
+          .then((relatedHealth)=>{
+            if(relatedHealth != 0){
+              const relatedHealth_row = relatedHealth.map(obj => {
+                return Object.values(obj);
+              });
+  
+              relatedHealth_row.forEach(row=>{
+                health_table.addRow(row);
+              });
+            }
+
             const related_rows = related.map(obj => {
-              const value = Object.values(obj);
-              value.unshift("");
-              return value;
+              const [b_id,...rest] = Object.values(obj);
+              rest.unshift("");
+              return rest;
             });
             related_rows[0][0] = ben.main_beneficiary_full_name;
             related_rows.forEach(row=>{
@@ -159,15 +178,18 @@ function exportAllData(req,res,next){
               };
             }
 
-          }
-        });
-    });
+          })
 
+        }
+        return;
+      });
+    });
 
     Promise.all(relatedPromises)
       .then(() => {
         main_table.commit();
         related_table.commit();
+        health_table.commit();
         for(let i = 1;i<=mainBeneficiary_Sheet.columnCount;i++){
           mainBeneficiary_Sheet.getColumn(i).width = 26;
         }
@@ -217,6 +239,7 @@ function exportAddress(req,res,next){
       },
       columns:[
         {name: 'Beneficiary'},
+        {name:'Phone Number'},
         {name: 'Neighborhood Address'},
         {name: 'Street Address'},
         {name: 'House Address'},

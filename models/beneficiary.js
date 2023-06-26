@@ -87,7 +87,7 @@ class Beneficiary{
           LEFT JOIN
             property_status ON main_beneficiary.property_status_id = property_status.status_id
           LEFT JOIN
-            financial_situation ON main_beneficiary.financial_situation_id = financial_situation.f_id
+            financial_situation ON main_beneficiary.b_id = financial_situation.beni_id
           WHERE
             main_beneficiary.main_beneficiary = "YES" AND decision_closure_date IS NULL
           ORDER BY
@@ -134,7 +134,7 @@ class Beneficiary{
           LEFT JOIN
             property_status ON main_beneficiary.property_status_id = property_status.status_id
           LEFT JOIN
-            financial_situation ON main_beneficiary.financial_situation_id = financial_situation.f_id
+            financial_situation ON main_beneficiary.b_id = financial_situation.beni_id
           WHERE
             main_beneficiary.main_beneficiary = "YES" AND main_beneficiary.b_id = ?
           ORDER BY
@@ -161,23 +161,23 @@ class Beneficiary{
 
     static getRealtedBeneficiaries(b_id){
         const q = `SELECT
+        b2.b_id,
         br.relation_desc,
-        CONCAT(
-            b2.first_name,
-            ' ',
-            b2.middle_name,
-            ' ',
-            b2.last_name
-        ) AS Beneficiary_Name,
+        b2.first_name AS Beneficiary_Name,
         b2.birth_date,
         b2.phone_number,
+        b2.profesional_status_other,
+        b2.school_address,
+        b2.class,
+        b2.establishment,
         prof_status.p_desc,
         b2.job_desc,
         b2.job_address,
         b2.job_salary,
         b2.job_remark,
         s.sector_type,
-        hss.hss_desc
+        hss.hss_desc,
+        b2.health_service_other
     FROM
         beneficiar_relation br
     JOIN
@@ -196,25 +196,76 @@ class Beneficiary{
 
     static getBeneficiariesAddress(){
         const q = `SELECT CONCAT(first_name," ", middle_name," ", last_name) as main_full_name,
+          phone_number,
          neighborhood_address, street_address, house_address, house_floor, address_details 
          FROM beneficiary WHERE main_beneficiary ="YES" AND decision_closure_date IS NULL`;
         return db.execute(q);
     }
 
-    static getBeneficiariesHealth(){
+    static getBeneficiariesHealth(related){
+      if(!related){
         const q = `
-        SELECT CONCAT(b.first_name, " ", b.middle_name, " ", b.last_name) AS beneficiary_full_name,
-          medication.medicine_name,
-          disease.disease_name,
-          health_situation.bought,
-          health_situation.start_date,
-          health_situation.end_date,
-          health_situation.remark
-        FROM beneficiary as b JOIN health_situation JOIN medication JOIN disease
-        WHERE health_situation.beneficiary_id = b.b_id AND b.decision_closure_date IS NULL
+        SELECT
+        CONCAT(COALESCE(b.first_name, ''), ' ', COALESCE(b.middle_name, ''), ' ', COALESCE(b.last_name, '')) AS beneficiary_full_name,
+    medication.medicine_name,
+    disease.disease_name,
+    health_situation.bought,
+    health_situation.start_date,
+    health_situation.end_date,
+    health_situation.remark
+FROM
+    beneficiary AS b
+LEFT JOIN health_situation ON b.b_id = health_situation.beneficiary_id 
+LEFT JOIN medication ON health_situation.medicine_id = medication.medicine_id
+LEFT JOIN disease ON health_situation.disease_id = disease.disease_id
+WHERE
+    health_situation.beneficiary_id = b.b_id AND b.decision_closure_date IS NULL
         `;
         return db.execute(q);
+      }
+
+      const relatedHealth = [];
+      const healthPromise = related.map(r=>{
+        const q = `
+        SELECT
+        CONCAT(COALESCE(b.first_name, ''), ' ', COALESCE(b.middle_name, ''), ' ', COALESCE(b.last_name, '')) AS beneficiary_full_name,
+        medication.medicine_name,
+        disease.disease_name,
+        health_situation.bought,
+        health_situation.start_date,
+        health_situation.end_date,
+        health_situation.remark
+        FROM
+            beneficiary AS b
+        LEFT JOIN health_situation ON b.b_id = health_situation.beneficiary_id 
+        LEFT JOIN medication ON health_situation.medicine_id = medication.medicine_id
+        LEFT JOIN disease ON health_situation.disease_id = disease.disease_id
+        WHERE
+            health_situation.beneficiary_id = ? AND b.decision_closure_date IS NULL
+        `;
+        return db.execute(q,[r.b_id]).then(([result])=>{if(result.length !=0) relatedHealth.push(result[0])});
+      })
+
+      return Promise.all(healthPromise).then(()=>{return relatedHealth});
+
     }
+
+    static getMainBeneficiaryHealth(b_id){
+      const q = `SELECT CONCAT(b1.first_name, " ", b1.middle_name, " ", b1.last_name) AS beneficiary_full_name,
+          m1.medicine_name,
+          d1.disease_name,
+          hs1.bought,
+          hs1.start_date,
+          hs1.end_date,
+          hs1.remark
+          FROM beneficiary AS b1
+          JOIN health_situation AS hs1 ON b1.b_id = hs1.beneficiary_id
+          JOIN medication AS m1 ON hs1.medicine_id = m1.medicine_id
+          JOIN disease AS d1 ON hs1.disease_id = d1.disease_id
+          WHERE b1.b_id = ? AND b1.decision_closure_date IS NULL`;
+      return db.execute(q,[b_id]);
+
+   }
 
 }
 
