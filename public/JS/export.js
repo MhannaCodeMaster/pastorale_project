@@ -1,21 +1,20 @@
-function checkDate(startId, endId) {
-    var startDate = document.getElementById(startId).value;
-    var endDate = document.getElementById(endId).value;
+const startDate = document.getElementById('from_date')
+const endDate = document.getElementById('to_date')
 
-    if (startDate && !endDate) {
-      alert('Please enter the end date');
-      return false;
-    }
+  startDate.addEventListener('input', checkDate)
+  endDate.addEventListener('input', checkDate)
 
-    if (!startDate && endDate) {
-      alert('Please enter the start date');
-      return false;
-    }
+function checkDate(event) {
+    var sDate = startDate.value;
+    var eDate = endDate.value;
 
-    if (startDate && endDate && startDate > endDate) {
+    if (sDate && eDate && sDate > eDate) {
       alert('Start date must be before end date');
+      event.target.value = ''
       return false;
     }
 
     return true;
   }
+
+  
