@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Transaction</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300&family=Koulen&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../res_addTransfer/styles.css">
+</head>
+
+<body>
+
+    <p class="hidden" id="hidden-data">
+        <%= JSON.stringify({currencies: currencies, donators: donators, transferTypes: transferTypes, beneficiaries: beneficiaries}) %>
+    </p>
+
+    <nav class="navbar-my">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1 nav-buttons">
+                    <a href="/api/account/?id_currency=<%=queries.id_currency%>" class="back-button"><i class="fa-solid fa-circle-left"></i></a>
+                </div>
+                <div class="col-10">
+                    <h1>New Transfer</h1>
+                </div>
+            <div class="col"></div>
+            </div>
+        </div>
+        
+    </nav>
+    <form action="" method="post" autocomplete="off" onkeydown="return event.key != 'Enter';">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-2">
+                <label for="currencypost">Account: <span class="error asterisk" id="currency-asterisk"> *</span></label><br>
+                <select name="currencypost" class="input" onchange="updateAmountPlaceholder()" id="currency-input">
+                    <% for(var i=0; i<currencies.length; i++){ %>
+                    <option value="<%= currencies[i].id_currency %>" <%if(currencies[i].id_currency == queries.id_currency){%>
+                        selected
+                    <% } %>>
+                        <%= currencies[i].name_currency %>
+                    </option>
+                    <% } %>
+                        </select>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+    <div class="row main-row">
+            <div class="col"></div>
+
+            <div class="col-7 main-div border-danger">
+
+                
+
+                    <div class="row date-time">
+                        <div class="col"></div>
+                        <div class="col-4">
+                            <label for="datepost">Date: <span class="error asterisk" id="date-asterisk"> *</span></label>
+                            <input type="date" name="datepost" class="input" id="date-input" oninput="checkForm()" value="<%if(queries.date){%><%=queries.date%><%}%>"><br>
+                        </div>
+
+                        <div class="col"></div>
+
+                        <div class="col-4">
+                            <label for="timepost">Time: <span class="error asterisk" id="time-asterisk"> *</span></label>
+                            <input type="time" name="timepost" class="input" id="time-input" oninput="checkForm()" value="<%if(queries.time){%><%=queries.time%><%}%>"><br>
+                        </div>
+
+                        <div class="col"></div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col"></div>
+
+                        <div class="col-4">
+                            <label for="transfertypepost">Transfer Type: <span class="error asterisk" id="transfertype-asterisk"> *</span></label><br>
+                            <div class="autocomplete">
+                                <input type="text" name="transfertypepost" class="input" id="transfertype-input" oninput="checkForm(this)" maxlength="254">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col"></div>
+                    </div><br>
+
+
+                    <div class="row">
+                        <div class="col"></div>
+
+                        <div class="col-4">
+                            <label for="frompost">Donator: <span class="error hidden asterisk" id="from-asterisk"> *</span></label> <br>
+                            <div class="autocomplete">
+                                <input type="text" class="input faded" id="from-input" name="frompost" oninput="checkForm()" maxlength="254">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col"></div>
+                        <div class="col-4">
+                            <label for="topost">Beneficiary: <span class="error hidden asterisk" id="to-asterisk"> *</span></label> <br>
+                            <div class="autocomplete">
+                                <input type="text" name="topost" class="input faded" id="to-input" oninput="checkForm()" maxlength="254">
+                            </div>
+
+
+                            <br>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-4">
+                            <label for="amountpost">Amount: <span class="error asterisk" id="amount-asterisk"> *</span></label><br>
+                            <input type="number" step="0.00000000001" oninput="checkForm()" name="amountpost" class="input" placeholder="<%= currencies.find(element=>element.id_currency == queries.id_currency).symbol_currency%>" id="amount-input">
+                        </div>
+                        <div class="col"></div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-4">
+                            <label for="descriptionpost">Description: </label>
+                            <textarea name="descriptionpost" type="textarea" maxlength="255" class="input"></textarea> <br>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col"></div>
+                        <input type="submit" value="add" class="btn-success btn faded" id="submit-btn">
+                        <div class="col"></div>
+                    </div>
+
+                </form>
+
+
+            </div>
+
+            <div class="col"></div>
+        </div>
+    </div>
+    
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/5853267fcd.js" crossorigin="anonymous"></script>
+    <script src="../../res_addTransfer/dynamic.js"></script>
+</body>
+
+</html>

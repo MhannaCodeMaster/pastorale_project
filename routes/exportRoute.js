@@ -10,6 +10,4 @@ app.post('/export/beneficiary', exportBen_controller.exportAll);
 app.post('/export/beneficiaries', exportBen_controller.postExport);
 app.get('/export',exportBen_controller.getPage);
 
-
-
 module.exports = app

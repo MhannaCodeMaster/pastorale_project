@@ -1,0 +1,132 @@
+nav.navbar-my {
+  background: linear-gradient(to bottom, #444, #333);
+  margin: 0;
+  margin-bottom: 0.2rem;
+  width: 100%;
+  padding: 0.4rem;
+  display: inline-block; }
+  nav.navbar-my h1, nav.navbar-my h3 {
+    color: #DDD;
+    margin: 0.2rem;
+    font-family: Koulen, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    text-align: center; }
+  nav.navbar-my .nav-buttons {
+    margin: auto 0; }
+  nav.navbar-my .menu-button {
+    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0.6rem 1rem 1rem 1rem;
+    cursor: pointer;
+    color: #d7dfeb;
+    transition: 0.2s; }
+    nav.navbar-my .menu-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+  nav.navbar-my .back-button {
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: -0.7rem 0 0rem 1rem;
+    cursor: pointer;
+    color: #d7dfeb;
+    transition: 0.2s; }
+    nav.navbar-my .back-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+  nav.navbar-my .add-record {
+    right: 2.2rem; }
+
+.hidden {
+  position: absolute;
+  right: 999999px;
+  opacity: 0; }
+
+table.main-table {
+  margin: 0.2rem 1.5rem;
+  border-color: #333; }
+  table.main-table tr th {
+    background-color: #888;
+    border-bottom: 0.2rem solid #333;
+    padding: 0.5rem; }
+  table.main-table th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    box-shadow: inset 0 0 0 2px black; }
+  table.main-table td {
+    text-transform: capitalize;
+    padding: 0.2rem;
+    vertical-align: middle;
+    font-weight: 600;
+    border-color: #777; }
+  table.main-table .null {
+    background-color: #EEE;
+    opacity: 30%; }
+  table.main-table .amount {
+    font-weight: 600; }
+  table.main-table .light-row {
+    background-color: #DDD; }
+  table.main-table .dark-row {
+    background-color: #BBB; }
+
+.comment {
+  padding: 0.5rem;
+  width: 25%; }
+
+.clear-filters {
+  margin: 0.17rem 0 0 0;
+  vertical-align: middle;
+  color: #444;
+  font-size: 1.5rem;
+  cursor: pointer;
+  float: right;
+  transition: 0.2s; }
+  .clear-filters:hover {
+    transform: scale(0.8); }
+
+.select-input {
+  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 0.2rem;
+  font-size: 1.15rem;
+  margin: 0.5rem 0 0 -0.8rem;
+  padding: 0.1rem 0; }
+
+.filter-div {
+  padding: 0.2rem 0;
+  margin: 0.5rem 0;
+  border-radius: 0.5rem;
+  background-color: #DDD;
+  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif; }
+  .filter-div input[type="month"] {
+    width: 10rem; }
+  .filter-div label {
+    font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0.5rem 1rem 0.4rem 1rem;
+    cursor: pointer; }
+  .filter-div label[for="transferTypeFilter"] {
+    margin: 0 0 0 0.5rem; }
+  .filter-div label[for="personFilter"] {
+    margin: 0 0 0 0.5rem; }
+  .filter-div select {
+    margin: 0; }
+
+.totals-div {
+  background-color: #999;
+  padding: 0; }
+  .totals-div p {
+    display: block;
+    font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0.5rem 0;
+    text-align: center; }
+
+body::-webkit-scrollbar {
+  display: none; }
+
+/*# sourceMappingURL=styles.css.map */

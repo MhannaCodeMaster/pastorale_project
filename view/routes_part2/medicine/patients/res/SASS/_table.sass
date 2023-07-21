@@ -1,0 +1,62 @@
+.form-control
+table.main-table
+    margin: 0
+    border: 0.15rem solid
+    border-color: $color-dark-7
+    tr th
+        background-color: $color-dark-2
+    td
+        text-transform: capitalize
+        padding: 0.5rem 0.6rem
+        text-transform: capitalize
+    .null
+        background-color: $color-light-5
+        opacity: 30%
+    .amount
+        font-weight: 600
+    
+    
+button.add-record
+    padding: 2% 10% 3% 10%
+    margin-bottom: -35%
+
+.del-icon
+    color: red
+    cursor: pointer
+    padding: 0.3rem
+
+.hidden
+    position: absolute
+    left: 9999999999
+    display: none
+
+.submit
+    margin: 1rem 0 0 0
+
+select, input[type="text"]
+    width: 100%
+    margin: 0.1rem 0
+    padding: 0.1rem 0rem
+    border-radius: 0.5rem
+    border-color: $color-dark-7
+    border-width: 2%
+    border-style: solid
+    font-size: 120%
+    color: $color-dark-6
+    text-transform: capitalize
+
+label[class="checkboxLabel"]
+    color: red
+    border: none
+    border-radius: 0.5rem
+    background-color: #ed969e
+    padding: 0.3rem 0.8rem
+    cursor: pointer
+
+input[type="checkbox"]
+        display: none
+        &:checked + label[class="checkboxLabel"]
+            color: green
+            border: none
+            border-radius: 0.5rem
+            background-color: #8fd19e

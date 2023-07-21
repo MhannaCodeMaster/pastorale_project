@@ -1,0 +1,63 @@
+body
+    overflow-x: hidden
+.hidden
+    position: absolute
+    left: 999999px
+    
+.add-record
+    cursor: pointer 
+    padding: 0rem 0.4rem
+    margin: 0 0 0.4rem 0rem
+
+div.main-row
+    transition: 0.5s  
+    label
+        font-family: Roboto
+        font-size: 1.2rem
+
+    .main-div
+        background-color: $color-light-5
+        border-radius: 2rem
+        padding: 2rem 0.5rem 2rem 0.5rem
+        border: 0.2rem solid $color-dark-5
+        label[for="date-input"]
+            margin-left: 2rem
+        label[for="title-input"]
+            margin-left: 2rem
+
+    .input
+        padding: 0.2rem 0.7rem
+        border-radius: 0.5rem
+        border-color: $color-dark-7
+        border-width: 2%
+        border-style: solid
+        font-size: 120%
+        color: $color-dark-6
+    .faded
+        opacity: 50%
+        pointer-events: none
+        transition: 0.5s
+        transform: scale(0.9)
+    .notFaded
+        transition: 0.5s
+    .hidden1, .hidden2, .hidden3
+        visibility: hidden
+        padding: 0
+        margin: 0
+    .no-padding
+        padding: 0
+
+.submit-btn
+    display: block
+    margin-top: 3rem
+
+td
+    input
+        padding: 0rem 0.7rem
+        border-radius: 0.5rem
+        border-color: $color-dark-7
+        border-width: 2%
+        border-style: solid
+        font-size: 120%
+        color: $color-dark-6
+

@@ -1,0 +1,135 @@
+nav.navbar-my {
+  background-color: #444;
+  margin: 0;
+  margin-bottom: 2%;
+  width: 100%; }
+  nav.navbar-my h1 {
+    text-align: center;
+    color: #DDD;
+    vertical-align: middle;
+    margin: 0.2rem;
+    font-family: Koulen, Verdana, Geneva, Tahoma, sans-serif; }
+  nav.navbar-my .nav-buttons {
+    margin: auto 0; }
+  nav.navbar-my .back-button {
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: -0.7rem 0 0rem 1rem;
+    cursor: pointer;
+    color: #d7dfeb;
+    transition: 0.2s; }
+    nav.navbar-my .back-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+
+table.main-table {
+  border: 0.15rem solid;
+  border-color: #333;
+  margin: 0 0 1rem 1rem;
+  width: 95%; }
+  table.main-table tr {
+    background-color: #888; }
+  table.main-table th {
+    width: 0.2rem;
+    border-color: #777;
+    background-color: #999; }
+  table.main-table td {
+    text-transform: capitalize;
+    padding: 0.5rem;
+    width: 0.2rem;
+    background-color: #AAA;
+    border-color: #777; }
+  table.main-table .null {
+    background-color: #EEE;
+    opacity: 30%; }
+  table.main-table .amount {
+    font-weight: 600; }
+  table.main-table .last-col {
+    padding: 1.5rem 0.55rem; }
+  table.main-table .data-row input[type="number"] {
+    width: 5rem; }
+  table.main-table .data-row input[type="text"] {
+    width: 10rem; }
+
+button.add-record {
+  padding: 2% 10% 3% 10%;
+  margin-bottom: -35%; }
+
+.del-icon {
+  color: red;
+  cursor: pointer;
+  padding: 0.3rem; }
+
+.hidden {
+  position: absolute;
+  left: 9999999999;
+  display: none; }
+
+body {
+  overflow-x: hidden; }
+
+body {
+  overflow-x: hidden; }
+
+.hidden {
+  position: absolute;
+  left: 999999px; }
+
+.add-record {
+  cursor: pointer;
+  padding: 0rem 0.4rem;
+  margin: 0 0 0.4rem 0rem; }
+
+div.main-row {
+  transition: 0.5s; }
+  div.main-row label {
+    font-family: Roboto;
+    font-size: 1.2rem; }
+  div.main-row .main-div {
+    background-color: #EEE;
+    border-radius: 2rem;
+    padding: 2rem 0.5rem 2rem 0.5rem;
+    border: 0.2rem solid #555; }
+    div.main-row .main-div label[for="date-input"] {
+      margin-left: 2rem; }
+    div.main-row .main-div label[for="title-input"] {
+      margin-left: 2rem; }
+  div.main-row .input {
+    padding: 0.2rem 0.7rem;
+    border-radius: 0.5rem;
+    border-color: #333;
+    border-width: 2%;
+    border-style: solid;
+    font-size: 120%;
+    color: #444; }
+  div.main-row .faded {
+    opacity: 50%;
+    pointer-events: none;
+    transition: 0.5s;
+    transform: scale(0.9); }
+  div.main-row .notFaded {
+    transition: 0.5s; }
+  div.main-row .hidden1, div.main-row .hidden2, div.main-row .hidden3 {
+    visibility: hidden;
+    padding: 0;
+    margin: 0; }
+  div.main-row .no-padding {
+    padding: 0; }
+
+.submit-btn {
+  display: block;
+  margin-top: 3rem; }
+
+td input {
+  padding: 0rem 0.7rem;
+  border-radius: 0.5rem;
+  border-color: #333;
+  border-width: 2%;
+  border-style: solid;
+  font-size: 120%;
+  color: #444; }
+
+/*# sourceMappingURL=styles.css.map */

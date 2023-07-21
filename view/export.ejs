@@ -3,6 +3,7 @@
 <head>
     <%- include('./includes/head.ejs')%>
     <link rel="stylesheet" href="./css/export.css">
+    <link rel="stylesheet" href="./res_export/style.css">
 </head>
 <body>
     <%- include('./includes/nav.ejs')%>
@@ -43,7 +44,144 @@
             </div>
         </div>
 
+        <div class="row mt-3">
+            <div class="col">
+                <div class="container-fluid">
+                    <div class="row main-row">
+                        <div class="col"></div>
+                        <div class="col-8 main-div">
+                            <form action="export/part2" method="post" autocomplete="off" onkeydown="return event.key != 'Enter';">
+            
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-4">
+                                        <input type="checkbox" id="accounts" name="inclusions" value="account" onclick="greyOut()" data-toggle="collapse" data-target="#money-collapse" aria-expanded="true" aria-controls="#money-collapse">
+                                        <label for="accounts">Money Accounts </label>
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="collapse" id="money-collapse">
+                                            <div class="card card-body">
+                                                <div class="row">
+                                                    <div class="col"></div>
+                                                    <div class="col-1">
+                                                        <label>From: </label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="month" onchange="greyOutDates(), dateFix(this)" name="accountsmonthfrom" class="account-month faded">
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <label>To: </label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="month" onchange="greyOutDates(), dateFix(this)" name="accountsmonthto" class="account-month faded">
+                                                    </div>
+                                                    <div class="col"></div>
+                                                </div>
+                                                
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+            
+            
+                                
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-4">
+                                        <input type="checkbox" id="activities" name="inclusions" value="activity"  onclick="greyOut()" data-toggle="collapse" data-target="#activity-collapse" aria-expanded="true" aria-controls="#activity-collapse">
+                                        <label for="activities">Activities </label> 
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="collapse" id="activity-collapse">
+                                            <div class="card card-body">
+                                                <div class="row">
+                                                    <div class="col"></div>
+                                                    <div class="col-1">
+                                                        <label>From: </label>
+                                                    </div>
+                                                    <div class="col-3 activity-dates notFaded">
+                                                        <input type="month" onchange="greyOutDates(), dateFix(this)" name="activitiesmonthfrom" class="activity-month faded">
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <label>To: </label>
+                                                    </div>
+                                                    <div class="col-3 activity-dates notFaded">
+                                                        <input type="month" onchange="greyOutDates(), dateFix(this)" name="activitiesmonthto" class="activity-month faded">
+                                                    </div>
+                                                    <div class="col"></div>
+                                                </div>
+                                                <br>
+                                                <div class="singleActivities">
+                                                    <h5>Or choose a specific activity:</h5>
+                                                    <div class="row">
+                                                        <div class="col"></div>
+                                                        <div class="col-4">
+                                                            <select name="activities" class="input notFaded" id="single-activities" onchange="greyOutActivityDates()">
+                                                                    <option value="" selected></option>
+                                                                <%for(let i=0; i<activities.length; i++){%>
+                                                                    <option value="<%=activities[i].activityID%>"><%=activities[i].activityTitle%></option><br>
+                                                                <%}%>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col"></div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-4">
+                                        <input type="checkbox" id="patients" name="inclusions" value="medicationreceipt"  onclick="greyOut()" data-toggle="collapse" data-target="#medicine-collapse" aria-expanded="true" aria-controls="#medicine-collapse">
+                                        <label for="patients">Medicine List </label>
+                                    </div>
+                                </div>
+            
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="collapse" id="medicine-collapse">
+                                            <div class="card card-body">
+                                                <div class="row">
+                                                    <div class="col"></div>
+                                                    <div class="col-1">
+                                                        <label>From: </label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="month" onchange="greyOutDates(), dateFix(this)" name="medicinemonthfrom" class="medicine-month faded">
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <label>To: </label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="month" onchange="greyOutDates(), dateFix(this)" name="medicinemonthto" class="medicine-month faded">
+                                                    </div>
+                                                    <div class="col"></div>
+                                                </div>
+                                                
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+            
+                                <input class="btn btn-success submit-btn faded" type="submit" id="submit-btn">
+                            </form>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="../JS/export.js"></script>
+<script src="../res_export/dynamic.js"></script>
 </html>

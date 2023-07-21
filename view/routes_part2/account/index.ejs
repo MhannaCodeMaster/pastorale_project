@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Account</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../res_account/styles.css">
+</head>
+
+<body>
+
+    <% let currentCurrency = currencies.find(element => element.id_currency == queries.id_currency) %>
+    <p id="hidden-data" class="hidden">
+        <%= JSON.stringify({currencies: currencies, queries: queries, currentCurrency: currentCurrency}) %>
+    </p>
+
+    <% function convertAMPM(ts) { %>
+    <%   var H = +ts.substr(0, 2); %>
+    <%   var h = (H % 12) || 12; %>
+    <%   h = (h < 10)?("0"+h):h; %>
+    <%   var ampm = H < 12 ? " AM" : " PM"; %>
+    <%  ts = h + ts.substr(2, 3) + ampm; %>
+    <%   return ts; %>
+    <% }; %>
+
+    <% function addCommas(x) { %>
+    <%  var str = x.toString().split("."); %>
+    <%  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); %>
+    <%  return str.join("."); %>
+    <% } %>
+
+    <nav class="navbar-my container-fluid">
+        <div class="row">
+            <div class="col-1 nav-buttons">
+                <a href="/" class="back-button"><i class="fa-solid fa-house"></i></a>
+            </div>
+            <div class="col-10">
+                <h1>
+                    <%= currentCurrency.name_currency%> Account</h1>
+            </div>                                                                    
+            <div class="col-1">
+                <a href="/account/addTransfer/?id_currency=<%= currentCurrency.id_currency%>" class="menu-button" title="new transfer"><i class="fa-solid fa-plus"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="filter-menu container-fluid">
+        <div class="row">
+            <div class="inline-list">
+                <ul>
+                    <% for (var i=0; i < currencies.length; i++){ %>
+                    <li>
+                        <button class="btn btn-primary currency-btn<% if(currencies[i].id_currency == currentCurrency.id_currency){%> selected-btn<%} %>" title="<%= currencies[i].name_currency %>">
+                            <%= currencies[i].symbol_currency %>
+                        </button>
+                    </li>
+                    <% }%>
+                    <li><button class="btn btn-add" title="new account" id="add-currency">+</button></li>
+                </ul>
+            </div>
+
+        </div>
+            <div class="container-fluid ">
+                <div class="row filter-div">
+                    <div class="col-11">
+                        <form method="get" id="filters-form" autocomplete="off" onkeydown="return event.key != 'Enter';">
+
+                            <input type="hidden" value="<%= currentCurrency.id_currency%>" name="id_currency">
+
+
+                            <label>Date: <input id="main-month" type="month" name="month" onchange="dateAlert(this)" value="<%=queries.month%>"></label>
+                            
+
+                            <label for="transferTypeFilter">Type:</label>
+                            <select id="transferTypeFilter" class="select-input" name="transferType" onchange="submitFiltersTransferType()">
+                                <option selected> </option>
+                                    <% for (var i=0; i < transferTypes.length; i++){ %>
+                                        <option value="<%=transferTypes[i].transferCode%>" <%if(queries.transferType==transferTypes[i].transferCode){%>selected<%}%>><%=transferTypes[i].transferTitle%></option>
+                                    <%}%>
+                                </select>
+
+
+                                <label for="personFilter">Person:</label>
+                                <select id="personFilter" class="select-input" name="person" onchange="submitFiltersTransferType()">
+                                    <option selected> </option>
+                                    <optgroup label="--beneficiaries--">
+                                        <% for (var i=0; i < beneficiaries.length; i++){ %>
+                                            <option value="<%=beneficiaries[i].b_id%>" <%if(queries.person == beneficiaries[i].b_id){%>selected<%}%>><%=beneficiaries[i].first_name + " " + beneficiaries[i].middle_name + " " + beneficiaries[i].last_name%></option>
+                                        <%}%>
+                                    </optgroup>
+                                    <optgroup label="--donators--">
+                                        <% for (var i=0; i < donators.length; i++){ %>
+                                            <option value="<%=donators[i].id_donator%>" <%if(queries.person == donators[i].id_donator){%>selected<%}%>><%=donators[i].name_donator%></option>
+                                        <%}%>
+                                    </optgroup>
+                                </select>
+
+
+                                <input id="isGain" type="radio" name="isGain" <%if(queries.isGain == "gain"){%>checked<%}%> value="gain" onclick="submitFilters()"><label for="isGain">+</label>
+                                <input id="isLoss" type="radio" name="isGain" <%if(queries.isGain == "loss"){%>checked<%}%> value="loss" onclick="submitFilters()"><label for="isLoss">-</label>
+                    </div>
+                </form>
+
+                    <div class="col-1">
+                        <form method="get" id="clear-filters-form" autocomplete="off" onkeydown="return event.key != 'Enter';">
+                            <input type="hidden" value="<%= currentCurrency.id_currency%>" name="id_currency">
+                            <input type="hidden" value="1" name="r">
+                            <input type="hidden" value="<%=queries.month%>" name="month">
+                            <p title="clear filters" class="clear-filters" onclick="submitClearFilters()"><i class="fa-solid fa-rectangle-xmark"></i></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="row">
+
+        <table class="table table-bordered main-table text-center" id="main-table">
+            <tr class="text-center bg-dark" id="first-row">
+                <th>Date & Time</th>
+                <th>Type <a href="/account/addTransferType"><i class="fa-solid fa-plus"></i></a></th>
+                <th>Amount</th>
+                <th>Balance</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Description</th>
+            </tr>
+
+            <% var balance = 0%>
+
+            <% if(transfers.length == 0){%>
+                <tr><td colspan="7"><p class="no-transfers">no <%if(queries.isGain=="gain"){%> gaining<%} else if(queries.isGain=="loss"){%> losing<%}%> <%if(queries.transferType){%><%=transferTypes.find(e=>e.transferCode == queries.transferType).transferTitle%><%}%> transfers on <%=currentCurrency.name_currency%> <%if(queries.month){%>for <%= queries.month%><%}%></p></td></tr>
+            <%}%>
+
+                <% for(var i=0; i<transfers.length; i++){ %>
+                    <% let transferType = transferTypes.find(element => element.transferCode == transfers[i].transferCode) %>
+
+                        <tr class="<% if(transferType.isGain || transfers[i].moneyTransferred >= 0){ %>
+                                            table-success
+                                        <% } else { %>
+                                            table-danger
+                                        <% } %>">
+
+                            <td>
+                                <%= transfers[i].transferDate %>
+                                    <% if(transfers[i].transferTime){ %>
+                                        <%="@ "+ convertAMPM(transfers[i].transferTime) %>
+                                            <%}%>
+                            </td>
+
+                            <!-- <td>
+                                <% if(transfers[i].transferTime){ %>
+                                    <%= convertAMPM(transfers[i].transferTime) %>
+                                        <%}%>
+                            </td> -->
+
+                            <td>
+                                <%= transferType.transferTitle %>
+                            </td>
+
+                            <td class="amount">
+                                <%= currentCurrency.symbol_currency + " " + addCommas(parseFloat(transfers[i].moneyTransferred).toFixed(currentCurrency.precisionIndex)) %>
+
+                            </td>
+                                <td class="amount">
+                                    <%= currentCurrency.symbol_currency + " " + addCommas(transfers[i].balance)%>
+                                </td>
+
+                                <td>
+                                    <% if(transferType.hasFrom){ %>
+                                        <%= donators.find(element => element.id_donator == transfers[i].id_donator).name_donator %>
+                                            <% } %>
+                                </td>
+
+                                <%let currentTo = beneficiaries.find(element => element.b_id == transfers[i].id_beneficiary)%>
+                                <td>
+                                    <% if(transferType.hasTo){ %>
+                                       
+                                            <% } %>
+
+
+                                </td>
+
+                                <td <% if(transfers[i].description.length>= 27){%> title="
+                                    <%= transfers[i].description%>"
+                                        <%}%>>
+                                            <% if(transferType.isActivity){ %>
+                                                <a href="/activities/details/?activityid=<%=transfers[i].activityID %>">
+                                                    <%= activities.find(e=>e.activityID == transfers[i].activityID).activityTitle %>
+                                                </a>
+                                                <% } else { %>
+                                                    <% if(transfers[i].description.length >= 27){%>
+                                                        <%= transfers[i].description.substr(0,26)+"..." %>
+                                                            <% }else { %>
+                                                                <%= transfers[i].description %>
+                                                                    <% } %>
+                                                                        <% } %>
+                                </td>
+                        </tr>
+                        <% } %>
+
+
+                            <tr>
+
+                            </tr>
+
+
+
+
+        </table>
+    </div>
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/5853267fcd.js" crossorigin="anonymous"></script>
+    <script src="../../res_account/dynamic.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+
+table.main-table
+    margin: 0.2rem 1.5rem
+    border-color: $color-dark-7
+    tr th
+        background-color: $color-dark-2
+        border-bottom: 0.2rem solid $color-dark-7
+        padding: 0.5rem
+    th
+        position: sticky
+        top: 0
+        z-index: 5
+        box-shadow: inset 0 0 0 2px black
+    td
+        text-transform: capitalize
+        padding: 0.2rem
+        vertical-align: middle
+        font-weight: 600
+        border-color: $color-dark-3
+        
+    .null
+        background-color: $color-light-5
+        opacity: 30%
+    .amount
+        font-weight: 600
+    .light-row
+        background-color: $color-light-4
+    .dark-row
+        background-color: $color-light-2  
+
+.comment
+    padding: 0.5rem
+    width: 25%
+
+.clear-filters
+    margin: 0.17rem 0 0 0
+    vertical-align: middle
+    color: $color-dark-6
+    font-size: 1.5rem
+    cursor: pointer
+    float: right
+    transition: 0.2s
+    &:hover
+        transform: scale(0.8)
+
+.select-input
+    font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif
+    border-radius: 0.2rem
+    font-size: 1.15rem
+    margin: 0.5rem 0 0 -0.8rem
+    padding: 0.1rem 0
+
+.filter-div
+    padding: 0.2rem 0
+    margin: 0.5rem 0
+    border-radius: 0.5rem
+    background-color: $color-light-4
+    font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif
+    input[type="month"]
+        width: 10rem
+    label
+        font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif
+        margin: 0
+        padding: 0.5rem 1rem 0.4rem 1rem
+        cursor: pointer
+    label[for="transferTypeFilter"]
+        margin: 0 0 0 0.5rem
+    label[for="personFilter"]
+        margin: 0 0 0 0.5rem
+    select
+        margin: 0
+
+.totals-div
+    background-color: $color-dark-1
+    padding: 0
+    p
+        display: block
+        font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif
+        margin: 0.5rem 0
+        text-align: center
+
+body::-webkit-scrollbar
+    display: none
+
+        

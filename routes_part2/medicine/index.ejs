@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Medicine
+    </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" href="res/styles.css">
+</head>
+
+<body>
+    <p class="hidden" id="hidden-data">
+        <%= JSON.stringify({queries: queries}) %>
+    </p>
+    <% function addCommas(x) { %>
+        <% var str = x.toString().split("."); %>
+            <% str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); %>
+                <% return str.join("."); %>
+                    <% } %>
+
+                        <nav class="navbar-my">
+                            <div class="container-fluid">
+                                <div class="row">
+                                <div class="col-1 nav-buttons">
+                                    <a href="/api/homepage" class="back-button"><i class="fa-solid fa-house"></i></a>
+                                </div>
+                                <div class="col-10">
+                                    <h1>Medicine</h1>
+                                </div>
+                                <div class="col-1">
+                                    <a href="addMedicationReceipt" title="new medication receipt" class="menu-button"><i class="fa-solid fa-plus"></i></a>
+                                    <a href="/api/medicine/patients" class="add-record menu-button" title="edit patients"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </div>
+                                </div>
+                            </div>
+                            
+                        </nav>
+
+                        <% if(monthlyReceipts[0]){ %>
+                            <div class="container-fluid">
+                                <div class="row totals-div">
+                                    <div class="col"></div>
+                                    <div class="col-3"><p><b>Pharmacy:</b> <%= currencies.find(e=>e.name_currency == "LBP" || e.name_currency == "Lebanese Pound" || e.symbolCurrency == "L.L").symbol_currency + " " + addCommas(monthlyReceipts[0].totalPharmacyCost)%></p></div>
+                                    <div class="col-3"><p><b>Dispensary:</b> <%= currencies.find(e=>e.name_currency == "LBP" || e.name_currency == "Lebanese Pound" || e.symbolCurrency == "L.L").symbol_currency + " " + addCommas(monthlyReceipts[0].totalDispensaryCost)%></p></div>
+                                    <div class="col-3"><p><b>Total:</b> <%=currencies.find(e=>e.name_currency == "LBP" || e.name_currency == "Lebanese Pound" || e.symbolCurrency == "L.L").symbol_currency + " " + addCommas(monthlyReceipts[0].totalMonthlyMedCost)%></p></div> 
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                        <%}%>
+
+                        <form method="get" id="filters-form" autocomplete="off" onkeydown="return event.key != 'Enter';">
+                        <div class="container-fluid ">
+                            <div class="row filter-div">
+                                <div class="col-11">
+
+                                    <label>Date: </label><input id="main-month" name="month" type="month" value="<%= queries.month%>" onchange="dateAlert(this)">
+
+                                    <label for="medicinefilterpost">Medicine:</label>
+                                    <select id="medicinefilterpost" class="select-input" name="medicine" onchange="submitFiltersForm()">
+                                        <option selected> </option>
+                                        <% for (var i=0; i < medications.length; i++){ %>
+                                        <option value="<%=medications[i].id_medicine%>" <%if(queries.medicine == medications[i].id_medicine){%>selected<%}%>><%=medications[i].description_medicine%></option>
+                                        <%}%>
+                                    </select>
+            
+            
+                                    <label for="personFilter">Beneficiary:</label>
+                                    <select id="personFilter" class="select-input" name="beneficiary" onchange="submitFiltersForm()">
+                                        <option selected> </option>
+                                        <% for (var i=0; i < beneficiaries.length; i++){ %>
+                                        <option value="<%=beneficiaries[i].id_beneficiary%>" <%if(queries.beneficiary == beneficiaries[i].id_beneficiary){%>selected<%}%>><%=beneficiaries[i].name_beneficiary + " " + beneficiaries[i].father_name_beneficiary + " " + beneficiaries[i].family_name_beneficiary%></option>
+                                        <%}%>
+                                    </select>
+
+                                    <label for="sourceFilter">Source:</label>
+                                    <select id="sourceFilter" class="select-input" name="source" onchange="submitFiltersForm()">
+                                        <option selected> </option>
+                                        <% for (var i=0; i < sourceCodes.length; i++){ %>
+                                        <option value="<%=sourceCodes[i].sourceCode%>" <%if(queries.source == sourceCodes[i].sourceCode){%>selected<%}%>><%=sourceCodes[i].sourceName%></option>
+                                        <%}%>
+                                    </select>
+
+                                </div>
+                            </form>
+            
+                                <div class="col-1">
+                                    <form method="get" id="clear-filters-form" autocomplete="off" onkeydown="return event.key != 'Enter';">
+                                        <input type="hidden" value="<%=queries.month%>" name="month">
+                                        <p title="clear filters" class="clear-filters" onclick="submitClearFilters()"><i class="fa-solid fa-rectangle-xmark"></i></p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <table class="table table-bordered main-table text-center" id="main-table">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Medication</th>
+                                        <th>Source</th>
+                                        <th>Price</th>
+                                        <th>Comment</th>
+                                    </tr>
+
+                                    <!-- START BUILDING: -->
+                                    <% var classColor = true %>
+                                    <% for(let i=0; i<beneficiaries.length; i++){%>
+                                        <% let currentPerson = medReceipts.filter(r=> r.id_beneficiary == beneficiaries[i].id_beneficiary)%>
+                                        
+                                            <% for(let j=0; j<currentPerson.length; j++){ %>
+                                                <tr class="<%if(classColor){%>light-row<%} else {%>dark-row<%}%>">
+                                                    <% if(j==0){%>
+                                                        <td rowspan="<%=currentPerson.length%>">                                                            <% let currentBeneficiary = beneficiaries.find(p=> p.id_beneficiary == currentPerson[j].id_beneficiary)%>
+                                                            <a href="/api/medicine/patients?patientid=<%=beneficiaries.find(p=> p.id_beneficiary == currentPerson[j].id_beneficiary).id_beneficiary%>" title="<%=currentBeneficiary.name_beneficiary + ' ' + currentBeneficiary.father_name_beneficiary + ' ' + currentBeneficiary.family_name_beneficiary%>">
+                                                                <%=currentBeneficiary.name_beneficiary + " " + currentBeneficiary.family_name_beneficiary%>
+                                                            </a>
+                                                        </td>
+                                                        
+                                                        <%}%>
+                                                            <td>
+                                                                <%=medications.find(m=>m.id_medicine == currentPerson[j].id_medicine).description_medicine  %>
+                                                            </td>
+                                                            <td>
+                                                                <%= sourceCodes.find(s=>s.sourceCode == currentPerson[j].sourceCode).sourceName %>
+                                                            </td>
+                                                            <td>
+                                    
+                                                                <%= currencies.find(e=>e.name_currency == "LBP" || e.name_currency == "Lebanese Pound" || e.symbolCurrency == "L.L").symbol_currency + " " + addCommas(currentPerson[j].price)%>
+                                                            </td>
+                                                            <td class="comment" <%if(currentPerson[j].comment.length>= 22){ %> title="
+                                                                <%= currentPerson[j].comment%>"
+                                                                    <%}%>>
+                                                                    <% if(currentPerson[j].comment.length >= 22){%>
+                                                                        <%= currentPerson[j].comment.substr(0,21)+"..." %>
+                                                                    <% }else { %>
+                                                                        <%= currentPerson[j].comment %>
+                                                                    <% } %>
+                                                            </td>
+                                                </tr>      
+                                                        
+                                                
+                                                
+                                                <%}%>
+                                                <%classColor = !classColor %>
+                                                    <%}%>
+
+
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                        <script src="https://kit.fontawesome.com/5853267fcd.js" crossorigin="anonymous"></script>
+                        <script src="res/dynamic.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+nav.navbar-my {
+  background: linear-gradient(to bottom, #444, #333);
+  margin: 0;
+  margin-bottom: 0.2rem;
+  width: 100%;
+  padding: 0.4rem;
+  display: inline-block; }
+  nav.navbar-my h1, nav.navbar-my h3 {
+    color: #DDD;
+    margin: 0.2rem;
+    font-family: Koulen, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    text-align: center; }
+  nav.navbar-my .menu-button {
+    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0.6rem -1rem 1rem 1rem;
+    cursor: pointer;
+    color: #d7dfeb;
+    transition: 0.2s; }
+    nav.navbar-my .menu-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+  nav.navbar-my .back-button {
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: -0.7rem 0 0rem 1rem;
+    cursor: pointer;
+    color: #d7dfeb;
+    transition: 0.2s; }
+    nav.navbar-my .back-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+  nav.navbar-my .dropdown {
+    width: 10%; }
+  nav.navbar-my .dropdown-menu {
+    width: 10%;
+    padding: 0.2rem; }
+  nav.navbar-my .dropdown-item {
+    padding: 0.2rem;
+    text-align: center; }
+  nav.navbar-my .nav-buttons {
+    margin: auto 0; }
+
+table.main-table {
+  border: 0.15rem solid;
+  border-color: #333; }
+  table.main-table tr th {
+    background-color: #888; }
+  table.main-table td {
+    text-transform: capitalize;
+    padding: 0.5rem 0.3rem; }
+  table.main-table .null {
+    background-color: #EEE;
+    opacity: 30%; }
+  table.main-table .amount {
+    font-weight: 600; }
+
+.add-record {
+  cursor: pointer; }
+
+.del-icon {
+  color: red;
+  cursor: pointer;
+  padding: 0.3rem; }
+
+.hidden {
+  position: absolute;
+  left: 9999999999;
+  display: none; }
+
+.table-select {
+  width: 100%;
+  padding: 0;
+  border-radius: 0.5rem;
+  border-color: #333;
+  border-width: 2%;
+  border-style: solid;
+  font-size: 120%;
+  color: #444;
+  text-transform: capitalize; }
+
+.table-input {
+  text-transform: capitalize;
+  width: 13rem;
+  padding: 0 0.5rem;
+  border-radius: 0.5rem;
+  border-color: #333;
+  border-width: 2%;
+  border-style: solid;
+  font-size: 120%;
+  color: #444; }
+
+option {
+  text-transform: capitalize; }
+
+body {
+  overflow-x: hidden; }
+
+.main-div {
+  background-color: red; }
+
+label[for="personNameInput"] {
+  font-family: Roboto;
+  margin: 2rem 0 0 0; }
+
+.input {
+  font-family: Roboto;
+  width: 100%; }
+
+select.person {
+  width: 100%;
+  padding: 0.2rem 1.7rem;
+  border-radius: 0.5rem;
+  border-color: #333;
+  border-width: 2%;
+  border-style: solid;
+  font-size: 120%;
+  color: #444; }
+
+.faded {
+  opacity: 50%;
+  pointer-events: none;
+  transform: scale(0.9);
+  transition: 0.5s; }
+
+.notFaded {
+  transform: scale(1);
+  opacity: 100;
+  transition: 0.5s; }
+
+/*# sourceMappingURL=styles.css.map */

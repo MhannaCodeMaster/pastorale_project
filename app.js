@@ -4,6 +4,9 @@ const path = require('path');
 const session = require('express-session')
 const bodyParser = require('body-parser')
 // const csrf = require('csurf');
+//const csrfProtection = csrf();
+
+//Routes
 const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
 const settingsRoute = require('./routes/settings');
@@ -11,10 +14,9 @@ const allBeneficiariesRoute = require('./routes/beneficiary_table');
 const formRoute =require('./routes/form')
 const exportRoute = require('./routes/exportRoute')
 const donationRoute = require('./routes/donations')
-//const csrfProtection = csrf();
+
 
 app.set('view engine','ejs');
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({secret: 'my secret', resave: false, saveUninitialized: false}));
 app.set('views', path.join(__dirname, 'view'));
@@ -56,6 +58,24 @@ app.use(adminRoute);
 app.use(donationRoute);
 app.use(exportRoute);
 
+
+//Part 2
+
+/*----------ROUTES------------*/
+const account = require("./routes_part2/account/route")
+const activities = require("./routes_part2/activities/route")
+const medicine = require("./routes_part2/medicine/route")
+const exportt = require("./routes_part2/export/route")
+
+app.use("/account", account)
+
+app.use("/activities", activities)
+
+app.use("/medicine",  medicine)
+
+app.use("/export/part2", [express.static("./routes_part2/export"), exportt])
+
+
 //Error 500 middlerware
 app.use((err, req, res, next) => {
   console.error(err);
@@ -67,6 +87,6 @@ app.use((req, res, next) => {
   res.status(404).render('error404', { pageTitle: 'Page Not Found' });
 });
 
-app.listen(3000, () => {
+app.listen(4000, () => {
   console.log('Server listening on port 3000');
 });

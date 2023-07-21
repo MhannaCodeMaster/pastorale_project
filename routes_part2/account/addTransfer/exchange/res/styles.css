@@ -1,0 +1,112 @@
+nav.navbar-my {
+  background: linear-gradient(to bottom, #444, #333);
+  margin: 0;
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: 0.4rem;
+  display: inline-block; }
+  nav.navbar-my h1, nav.navbar-my h3 {
+    color: #DDD;
+    margin: 0.2rem;
+    font-family: Koulen, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    text-align: center; }
+  nav.navbar-my .nav-buttons {
+    margin: auto 0; }
+  nav.navbar-my .back-button {
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: -0.7rem 0 0rem 1rem;
+    cursor: pointer;
+    color: #d7dfeb;
+    transition: 0.2s; }
+    nav.navbar-my .back-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+
+div.autocomplete {
+  position: relative;
+  display: inline-block; }
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0; }
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4; }
+
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; }
+
+.autocomplete-active {
+  background-color: DodgerBlue !important;
+  color: #ffffff; }
+
+.error {
+  color: red;
+  font-family: Kanit, Geneva;
+  font-weight: 600;
+  margin-bottom: 3rem; }
+
+body {
+  overflow-x: hidden; }
+
+.hidden {
+  position: absolute;
+  left: 999999px;
+  opacity: 0; }
+
+div {
+  font-family: Roboto;
+  font-size: 1rem;
+  transition: 0.25s; }
+  div .date-time {
+    margin: 0 0 1.5rem 0; }
+  div .main-div {
+    background-color: #888;
+    border-radius: 2rem;
+    padding: 2rem 0.5rem 2rem 0.5rem;
+    border: 0.2rem solid #555; }
+  div .input {
+    width: 100%;
+    padding: 0.2rem 1.7rem;
+    border-radius: 0.5rem;
+    border-color: #333;
+    border-width: 2%;
+    border-style: solidl;
+    font-size: 120%;
+    color: #444; }
+  div .faded {
+    opacity: 50%;
+    pointer-events: none;
+    transition: 0.5s; }
+  div .notFaded {
+    transition: 0.5s; }
+  div .hidden1, div .hidden2, div .hidden3 {
+    visibility: hidden;
+    padding: 0;
+    margin: 0; }
+
+label {
+  font-family: Roboto;
+  font-size: 1rem; }
+
+select[name="fromcurrencypost"] {
+  margin: 0 0 1.5rem 0; }
+
+select[name="tocurrencypost"] {
+  margin: 0 0 1.5rem 0; }
+
+/*# sourceMappingURL=styles.css.map */

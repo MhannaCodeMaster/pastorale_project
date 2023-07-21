@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Patients</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../res_patients/styles.css">
+</head>
+
+<body>
+    <p class="hidden" id="hidden-data">
+        <%= JSON.stringify({medications: medications, beneficiaries: beneficiaries, patients: patients, sicknesses: sicknesses}) %>
+    </p>
+    <% let currentPatient = patients.filter(e=> e.beneficiary_id == queries.patientid)%>
+    <nav class="navbar-my container-fluid">
+        <div class="row">
+            <div class="col-1 nav-buttons">
+                <a href="/medicine" class="back-button"><i class="fa-solid fa-circle-left"></i></a>
+            </div>
+            <div class="col-10">
+                <h1>Patients</h1>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </nav>
+
+        <form method="post" autocomplete="off" autocomplete="off" onkeydown="return event.key != 'Enter';">
+
+        <div class="row">
+            <div class="col"></div>
+                <div class="col-3">
+                    <label for="personNameInput">Person:</label>
+                    <select name="patientid" onchange="newRedirect()" id="personNameInput" class="person">
+                        <% let peopleArray = beneficiaries %>
+                        <option></option>
+                        <% for(let i=0; i<peopleArray.length; i++){ %>
+                        <option value="<%= peopleArray[i].b_id %>" <%if(peopleArray[i].b_id == queries.patientid){%>selected<%}%>>
+                        <%= peopleArray[i].first_name + " " + peopleArray[i].middle_name + " " + peopleArray[i].last_name%>
+                        </option>
+                            <% } %>
+                    </select>
+                </div>
+            <div class="col"></div>
+        </div>
+
+            <br>
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-8">
+
+                    <div class="row">
+                        <div class="col"></div>
+                        <div class="col-1">
+                            <p class="btn btn-primary" onclick="addNewRow(), updateIDs(), fixCheckboxes(), checkForm()">+</p>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered main-table text-center" id="main-table">
+                        <tr class="text-center bg-dark" id="first-row">
+                            <th>#</th>
+                            <th>Sickness</th>
+                            <th>Medication</th>
+                            <th>Active</th>
+                            <th>Comment</th>
+                            <th></th>
+                        </tr>
+                        <input id="form-meta" class="hidden" name="sicknessqty" value="1">
+                        <% for(let j=0; j<currentPatient.length; j++){ %>
+                            <tr class="data-row" id="<%= j+1%>">
+
+                                <td class="id-td">
+                                    <%=j+1%>
+                                </td>
+
+
+                                <td><select name="sicknesspost" class="sickness-select" onchange="checkForm()">
+                                            <option></option>
+                                            <% for(let i=0; i<sicknesses.length;i++){%>
+                                            <option value="<%=sicknesses[i].disease_id%>" <%if(sicknesses[i].disease_id == currentPatient[j].disease_id){%>selected<%}%>>
+                                                <%= sicknesses[i].disease_name%>
+                                            </option>
+                                            <%}%>
+                                            </select>
+                                </td>
+
+
+
+                                <td><select name="medicationpost" class="medication-select" onchange="checkForm()">
+                                            <option selected></option>
+                                            <% for(let i=0; i<medications.length; i++){%>
+                                            <option value="<%=medications[i].medicine_id%>" <%if(medications[i].medicine_id == currentPatient[j].medicine_id){%> selected<%}%>><%= medications[i].medicine_name%></option>
+                                            <% } %>
+                                            </select>
+                                </td>
+
+                                <td><input id="o<%=j%>"class="checkbox notChecked" onchange="fixIsActive(), fixCheckboxes()" type="checkbox" name="isActive" <% if(currentPatient[j].bought === "yes"){%>checked<%}%>><label class="checkboxLabel" for="o<%=j%>">On</label></td>
+
+                                <input type="hidden" class="isActivehidden" name="isActivehidden">
+
+                                <td><input type="text" name="commentpost" value="<%=currentPatient[j].remark %>" maxlength="254">
+
+                                </td>
+
+                                <td><i class="fa-solid fa-trash del-icon" id="<%=j+1%>" onclick="removeRow(this), checkForm()"></i></td>
+                            </tr>
+                            <% } %>
+
+                    </table>
+                    <div class="row">
+                        <div class="col"></div>
+                        <input type="submit" value="Update" class="btn btn-success submit faded" id="submit-btn">
+                        <div class="col"></div>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+
+        </form>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/5853267fcd.js" crossorigin="anonymous"></script>
+        <script src="../../res_patients/dynamic.js"></script>
+</body>
+
+</html>

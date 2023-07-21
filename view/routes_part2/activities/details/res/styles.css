@@ -1,0 +1,58 @@
+nav.navbar-my {
+  background-color: #CCC;
+  margin: 0;
+  margin-bottom: 2%;
+  width: 100%; }
+  nav.navbar-my h1 {
+    text-align: center;
+    color: #333;
+    margin: 2%;
+    font-family: Koulen, Verdana, Geneva, Tahoma, sans-serif; }
+  nav.navbar-my .nav-buttons {
+    margin: auto 0; }
+  nav.navbar-my .back-button {
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: -0.7rem 0 0rem 1rem;
+    cursor: pointer;
+    color: #333;
+    transition: 0.2s; }
+    nav.navbar-my .back-button:hover {
+      text-decoration: none;
+      transform: scale(1.5); }
+
+table.main-table {
+  margin: 2% 5%;
+  border: 0.15rem solid;
+  border-color: #333; }
+  table.main-table tr th {
+    background-color: #888; }
+  table.main-table td {
+    font-weight: 600; }
+  table.main-table .null {
+    background-color: #EEE;
+    opacity: 30%; }
+  table.main-table .amount {
+    font-weight: 600; }
+
+button.add-record {
+  padding: 2% 10% 3% 10%;
+  margin-bottom: -35%; }
+
+body {
+  overflow: hidden;
+  text-transform: capitalize; }
+  body h5 {
+    display: block;
+    margin: auto; }
+  body .date-title {
+    color: #444;
+    padding: 1.2rem 1.2rem;
+    border-radius: 1rem;
+    max-width: 17%;
+    background-color: #EEE; }
+
+/*# sourceMappingURL=styles.css.map */

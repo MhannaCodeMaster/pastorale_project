@@ -1,6 +1,6 @@
 const excelJS = require('exceljs');
 const Beneficiary = require('../models/beneficiary')
-
+const db = require('../util/database');
 
 /*------Functions that handle chosen export data------*/
 function exportAllData(req,res,next){
@@ -349,7 +349,9 @@ exports.exportAll = (req, res, next) => {
 exports.getPage = (req, res, next) => {
   const pageTitle = 'Export';
   const username = req.session.username;
-  res.render('../view/export.ejs',{pageTitle,username});
+  db.execute("SELECT * FROM activity").then(([activities])=>{
+    res.render('../view/export.ejs',{pageTitle,username,activities});
+  })
 }
 
 exports.postExport = (req, res, next)=>{
